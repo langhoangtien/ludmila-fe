@@ -11,6 +11,7 @@ export const paths = {
   root: '',
   products: '/products',
   product: `/product`,
+  category: `/category`,
   cart: '/cart',
   checkout: `/checkout`,
   orderCompleted: '/order-completed',

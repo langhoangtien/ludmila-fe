@@ -18,6 +18,8 @@ export default function EcommerceProductList({
   page,
   setPage,
   loading,
+  pagination = true,
+  homePage = false,
 }) {
   const handleChangePage = (event, value) => {
     setPage(value);
@@ -30,11 +32,20 @@ export default function EcommerceProductList({
           rowGap={4}
           columnGap={3}
           display="grid"
-          gridTemplateColumns={{
-            xs: 'repeat(2, 1fr)',
-            sm: 'repeat(3, 1fr)',
-            md: 'repeat(4, 1fr)',
-          }}
+          gridTemplateColumns={
+            homePage
+              ? {
+                  xs: 'repeat(2, 1fr)',
+                  sm: 'repeat(3, 1fr)',
+                  md: 'repeat(4, 1fr)',
+                  lg: 'repeat(5, 1fr)',
+                }
+              : {
+                  xs: 'repeat(2, 1fr)',
+                  sm: 'repeat(3, 1fr)',
+                  md: 'repeat(4, 1fr)',
+                }
+          }
         >
           {(loading ? [...Array(16)] : products).map((product, index) =>
             product ? (
@@ -56,19 +67,21 @@ export default function EcommerceProductList({
         </Stack>
       )}
 
-      <Pagination
-        count={count}
-        color="primary"
-        page={page}
-        onChange={handleChangePage}
-        sx={{
-          mt: 10,
-          mb: 5,
-          [`& .${paginationClasses.ul}`]: {
-            justifyContent: 'center',
-          },
-        }}
-      />
+      {pagination && (
+        <Pagination
+          count={count}
+          color="primary"
+          page={page}
+          onChange={handleChangePage}
+          sx={{
+            mt: 10,
+            mb: 5,
+            [`& .${paginationClasses.ul}`]: {
+              justifyContent: 'center',
+            },
+          }}
+        />
+      )}
     </>
   );
 }
@@ -80,4 +93,6 @@ EcommerceProductList.propTypes = {
   page: PropTypes.number,
   loading: PropTypes.bool,
   setPage: PropTypes.func,
+  pagination: PropTypes.bool,
+  homePage: PropTypes.bool,
 };

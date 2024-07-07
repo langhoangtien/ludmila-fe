@@ -1,7 +1,12 @@
 import { HOST_API } from 'src/config-global';
 
 export const endpoints = {
-  home: { selectInfo: `${HOST_API}/home/select-info`, root: `${HOST_API}/home` },
+  home: {
+    selectInfo: `${HOST_API}/home/select-info`,
+    root: `${HOST_API}/home`,
+    menu: `${HOST_API}/home/menu`,
+  },
+
   file: `${HOST_API}/files`,
   chat: `${HOST_API}/chat`,
   kanban: `${HOST_API}/kanban`,

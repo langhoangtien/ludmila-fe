@@ -21,7 +21,7 @@ import { MegaMenuMobile, MegaMenuDesktopHorizontal } from 'src/components/mega-m
 export default function Header() {
   const mdUp = useResponsive('up', 'md');
   const theme = useTheme();
-  const menuOpen = useBoolean();
+
   const pathname = usePathname();
 
   const mobileOpen = useBoolean();

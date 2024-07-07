@@ -202,3 +202,13 @@ ReviewNewForm.propTypes = {
   onClose: PropTypes.func,
   submitComment: PropTypes.func,
 };
+
+ReviewNewFormAuth.propTypes = {
+  onClose: PropTypes.func,
+  submitComment: PropTypes.func,
+};
+ReviewForm.propTypes = {
+  onClose: PropTypes.func,
+  authenticated: PropTypes.bool,
+  submitComment: PropTypes.func,
+};

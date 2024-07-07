@@ -143,6 +143,7 @@ ProductItem.propTypes = {
     name: PropTypes.string,
     price: PropTypes.number,
     quantity: PropTypes.number,
+    image: PropTypes.string,
   }),
 };
 

@@ -1,3 +1,7 @@
+'use client';
+
+import PropTypes from 'prop-types';
+
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { alpha, useTheme } from '@mui/material/styles';
@@ -59,3 +63,7 @@ export default function EcommerceLandingHero({ products }) {
     </Container>
   );
 }
+
+EcommerceLandingHero.propTypes = {
+  products: PropTypes.array.isRequired,
+};

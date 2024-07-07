@@ -74,4 +74,6 @@ export default function ReviewSummary({ star, onOpenForm, setStar }) {
 
 ReviewSummary.propTypes = {
   onOpenForm: PropTypes.func,
+  star: PropTypes.number,
+  setStar: PropTypes.func,
 };

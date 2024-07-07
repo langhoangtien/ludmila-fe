@@ -1,10 +1,7 @@
-'use client';
-
-import { _testimonials } from 'src/_mock';
+import PropTypes from 'prop-types';
 
 import ProductHome from '../landing/product-hompage';
 import EcommerceLandingHero from '../landing/ecommerce-landing-hero';
-import EcommerceTestimonial from '../testimonial/ecommerce-testimonial';
 
 // ----------------------------------------------------------------------
 
@@ -20,17 +17,21 @@ export default function EcommerceLandingView({ data }) {
 
       <EcommerceLandingHotDealToday />
 
-      <EcommerceLandingFeaturedProducts />
+      <EcommerceLandingFeaturedProducts /> */}
 
-      <EcommerceLandingSpecialOffer />
+      {/* <EcommerceLandingSpecialOffer />
 
       <EcommerceLandingFeaturedBrands />
 
       <EcommerceLandingPopularProducts />
 
-      <EcommerceLandingTopProducts /> */}
+      <EcommerceLandingTopProducts />
 
-      <EcommerceTestimonial testimonials={_testimonials} />
+      <EcommerceTestimonial testimonials={_testimonials} /> */}
     </>
   );
 }
+
+EcommerceLandingView.propTypes = {
+  data: PropTypes.object.isRequired,
+};

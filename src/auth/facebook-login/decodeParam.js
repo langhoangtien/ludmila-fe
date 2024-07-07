@@ -10,7 +10,7 @@ export default (paramString, key) =>
   decodeURIComponent(
     paramString.replace(
       new RegExp(
-        `^(?:.*[&\\?]${encodeURIComponent(key).replace(/[\.\+\*]/g, '\\$&')}(?:\\=([^&]*))?)?.*$`,
+        `^(?:.*[&?]${encodeURIComponent(key).replace(/[.*]/g, '\\$&')}(?:=([^&]*))?)?.*$`,
         'i'
       ),
       '$1'

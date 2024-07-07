@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { keyframes } from '@emotion/react';
+import { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -19,6 +19,8 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { useOffSetTop } from 'src/hooks/use-off-set-top';
 import { useResponsive } from 'src/hooks/use-responsive';
 
+import { endpoints } from 'src/utils/fetch';
+
 import { bgBlur } from 'src/theme/css';
 import { useAuthContext } from 'src/auth/hooks';
 
@@ -33,7 +35,6 @@ import RegisterBackgroundView from 'src/sections/auth/register-background-view';
 import NavMobile from './nav/mobile';
 import { HEADER } from '../config-layout';
 import SearchDemo from '../common/search-demo';
-import { navConfig } from './config-navigation';
 import HeaderShadow from '../common/header-shadow';
 import AccountPopover from '../common/account-popover';
 
@@ -60,9 +61,45 @@ export default function Header({ headerOnDark }) {
   const [loginPage, setLoginPage] = useState(true);
   const mdUp = useResponsive('up', 'md');
   const { totalProduct, shake } = useCartContext();
+  const [menu, setMenu] = useState([]);
+
+  useEffect(() => {
+    const getMenu = async () => {
+      try {
+        const menuLocal = localStorage.getItem('menu');
+        if (!menuLocal) {
+          const response = await fetch(endpoints.home.menu);
+          const data = await response.json();
+          const dataMapped = data.map((item) => ({
+            subheader: item.name,
+            items: item.children.map((child) => ({
+              title: child.name,
+              path: `${paths.category}/${child.code}-${child._id}`,
+            })),
+          }));
+          const nav = [
+            { title: 'Trang chủ', path: '/' },
+            {
+              title: 'Danh mục',
+              path: paths.pages,
+              children: dataMapped,
+            },
+            { title: 'Sản phẩm', path: paths.products },
+          ];
+          localStorage.setItem('menu', JSON.stringify(nav));
+          setMenu(nav);
+        }
+        setMenu(JSON.parse(menuLocal));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getMenu();
+  }, []);
 
   const renderContent = (
-    <Stack direction="column" pt={2} spacing={2} flexGrow={1}>
+    <Stack direction="column" pt={1} flexGrow={1}>
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -82,11 +119,13 @@ export default function Header({ headerOnDark }) {
             display: { xs: 'none', md: 'flex' },
           }}
         >
-          <MegaMenuDesktopHorizontal data={navConfig} />
+          {/* <NavDesktop data={navConfig} /> */}
+
+          <MegaMenuDesktopHorizontal data={menu} />
         </Stack>
         {mdUp && <SearchDemo flexGrow={2} />}
         <Box flexGrow={1} />
-        <Stack spacing={1.5} justifyContent="space-between" direction="row">
+        <Stack spacing={1} justifyContent="space-between" direction="row">
           {authenticated && (
             <Badge badgeContent={2} color="info">
               <IconButton
@@ -119,10 +158,10 @@ export default function Header({ headerOnDark }) {
             </IconButton>
           )}
         </Stack>
-        {!mdUp && <NavMobile data={navConfig} />}
+        {!mdUp && <NavMobile data={menu} />}
       </Stack>
 
-      {!mdUp && <SearchDemo pb={1} flexGrow={1} />}
+      {!mdUp && <SearchDemo flexGrow={1} />}
     </Stack>
   );
 
@@ -147,7 +186,7 @@ export default function Header({ headerOnDark }) {
               ...bgBlur({ color: theme.palette.background.default }),
               color: 'text.primary',
               height: {
-                md: HEADER.H_DESKTOP - 16,
+                md: HEADER.H_DESKTOP,
               },
             }),
           }}

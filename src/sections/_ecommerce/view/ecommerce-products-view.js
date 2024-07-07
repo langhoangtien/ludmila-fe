@@ -1,5 +1,6 @@
 'use client';
 
+import PropTypes from 'prop-types';
 import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -35,19 +36,19 @@ const VIEW_OPTIONS = [
 ];
 
 const SORT_OPTIONS = [
-  { value: 'latest', label: 'Mới nhất' },
-  { value: 'oldest', label: 'Cũ nhất' },
-  { value: 'popular', label: 'Bán chạy' },
+  { value: 'latest', label: 'Mới nhất', orderBy: 'createdAt', order: -1 },
+  { value: 'oldest', label: 'Cũ nhất', orderBy: 'createdAt', order: 1 },
+  { value: 'popular', label: 'Bán chạy', orderBy: 'sold', order: -1 },
 ];
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceProductsView() {
+export default function EcommerceProductsView({ search }) {
   const mobileOpen = useBoolean();
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
-  const [sort, setSort] = useState('latest');
+
   const [brands, setBrands] = useState([]);
   const [rating, setRating] = useState(null);
   const [countries, setCountries] = useState([]);
@@ -55,9 +56,18 @@ export default function EcommerceProductsView() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState('grid');
+  const [sort, setSort] = useState({
+    value: 'latest',
+    label: 'Mới nhất',
+    orderBy: 'createdAt',
+    order: -1,
+  });
+
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
+
+      const sortValue = encodeData({ orderBy: sort.orderBy, order: sort.order });
       const limit = 10;
       const skip = (page - 1) * limit;
       const categoryFilter = categories.map((item) => item._id);
@@ -67,11 +77,12 @@ export default function EcommerceProductsView() {
         country: countries,
         price: prices,
         category: categoryFilter,
+        search,
         rating,
       };
-      const url = `${endpoints.product.list}?limit=${limit}&skip=${skip}&filterRaw=${encodeData(
-        filterRaw
-      )}`;
+      const url = `${
+        endpoints.product.list
+      }?limit=${limit}&skip=${skip}&sort=${sortValue}&filterRaw=${encodeData(filterRaw)}`;
       const res = await fetchData(url);
       const productsMapped = res.items.map((product) => ({
         ...product,
@@ -83,7 +94,7 @@ export default function EcommerceProductsView() {
       setLoading(false);
     };
     getData();
-  }, [page, brands, countries, prices, categories, rating]);
+  }, [page, brands, countries, prices, categories, rating, search, sort]);
 
   const handleChangeViewMode = useCallback((event, newAlignment) => {
     if (newAlignment !== null) {
@@ -91,8 +102,17 @@ export default function EcommerceProductsView() {
     }
   }, []);
 
+  const handleClearAll = useCallback(() => {
+    setBrands([]);
+    setCountries([]);
+    setPrices([]);
+    setCategories([]);
+    setRating(null);
+  }, []);
+
   const handleChangeSort = useCallback((event) => {
-    setSort(event.target.value);
+    const sortValue = SORT_OPTIONS.find((option) => option.value === event.target.value);
+    setSort(sortValue);
   }, []);
 
   return (
@@ -105,7 +125,7 @@ export default function EcommerceProductsView() {
           py: 5,
         }}
       >
-        <Typography variant="h3">Catalog</Typography>
+        <Typography variant="h3">Bộ lọc</Typography>
 
         <Button
           color="inherit"
@@ -141,6 +161,7 @@ export default function EcommerceProductsView() {
             onClose={mobileOpen.onFalse}
             rating={rating}
             setRating={setRating}
+            clearAll={handleClearAll}
           />
           <EcommerceProductListBestSellers products={_products.slice(0, 3)} />
         </Stack>
@@ -168,7 +189,7 @@ export default function EcommerceProductsView() {
             </ToggleButtonGroup>
 
             <FormControl size="small" hiddenLabel sx={{ width: 120 }}>
-              <Select value={sort} onChange={handleChangeSort}>
+              <Select value={sort.value} onChange={handleChangeSort}>
                 {SORT_OPTIONS.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
@@ -192,4 +213,6 @@ export default function EcommerceProductsView() {
   );
 }
 
-EcommerceProductsView.propTypes = {};
+EcommerceProductsView.propTypes = {
+  search: PropTypes.string,
+};

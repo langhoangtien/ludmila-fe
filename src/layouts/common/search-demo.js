@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useCallback } from 'react';
@@ -9,8 +10,10 @@ import {
   Stack,
   alpha,
   Avatar,
+  Divider,
   TextField,
   Typography,
+  IconButton,
   ListItemButton,
   InputAdornment,
   ClickAwayListener,
@@ -77,9 +80,13 @@ export default function SearchDemo({ sx, ...other }) {
 
   const handleKeyUp = (event) => {
     if (event.key === 'Enter') {
-      router.push(`${paths.root}?search=${value}`);
+      router.push(`${paths.root}/products/?search=${value}`);
       setValue('');
     }
+  };
+  const handleClickSearch = () => {
+    router.push(`${paths.root}/products/?search=${value}`);
+    setValue('');
   };
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
@@ -100,9 +107,11 @@ export default function SearchDemo({ sx, ...other }) {
           placeholder="Tìm kiếm sản phẩm"
           hiddenLabel
           InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Iconify icon="carbon:search" sx={{ color: 'text.disabled' }} />
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleClickSearch}>
+                  <Iconify icon="carbon:search" sx={{ color: 'primary.main' }} />
+                </IconButton>
               </InputAdornment>
             ),
           }}
@@ -125,48 +134,53 @@ export default function SearchDemo({ sx, ...other }) {
           >
             <List sx={{ width: '100%' }}>
               {options.map((option) => (
-                <ListItemButton component="nav" onClick={() => handleClick(option.path)}>
-                  <Avatar
-                    alt=""
-                    src={option.image}
-                    variant="rounded"
-                    sx={{
-                      width: 48,
-                      height: 48,
-                      flexShrink: 0,
-                      mr: 1.5,
-                      borderRadius: 1,
-                    }}
-                  />
+                <>
+                  <ListItemButton component="nav" onClick={() => handleClick(option.path)}>
+                    <Avatar
+                      alt=""
+                      src={option.image}
+                      variant="rounded"
+                      sx={{
+                        width: 48,
+                        height: 48,
+                        flexShrink: 0,
+                        mr: 1.5,
+                        borderRadius: 1,
+                      }}
+                    />
 
-                  <Typography
-                    component="span"
-                    color="textPrimary"
-                    sx={{
-                      px: 1,
-                      typography: 'body2',
-                      fontWeight: 'fontWeightMedium',
-                    }}
-                  >
-                    {option.name}
-                  </Typography>
-                  <Typography
-                    component="span"
-                    color="primary.main"
-                    sx={{
-                      typography: 'body2',
-                      fontWeight: 'fontWeightMedium',
-                    }}
-                  >
-                    {fCurrency(option.price)}
-                  </Typography>
-                </ListItemButton>
+                    <Typography
+                      component="span"
+                      color="textPrimary"
+                      sx={{
+                        px: 1,
+                        typography: 'body2',
+                        fontWeight: 'fontWeightMedium',
+                      }}
+                    >
+                      {option.name}
+                    </Typography>
+                    <Typography
+                      component="span"
+                      color="primary.main"
+                      sx={{
+                        typography: 'body2',
+                        fontWeight: 'fontWeightMedium',
+                      }}
+                    >
+                      {fCurrency(option.price)}
+                    </Typography>
+                  </ListItemButton>
+                  <Divider />
+                </>
               ))}
               {options.length > 0 ? (
                 <ListItemButton component="nav">
-                  <Typography textAlign="center" variant="body2" color="primary.main">
-                    Xem tất cả sản phẩm
-                  </Typography>
+                  <Link style={{ textDecoration: 'none' }} href={`/products?search=${value}`}>
+                    <Typography textAlign="center" variant="body2" color="primary.main">
+                      Xem tất cả sản phẩm
+                    </Typography>
+                  </Link>
                 </ListItemButton>
               ) : (
                 <ListItemButton>

@@ -11,6 +11,7 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   TwitterAuthProvider,
+  FacebookAuthProvider,
   sendEmailVerification,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
@@ -163,7 +164,11 @@ export function AuthProvider({ children }) {
 
     await signInWithPopup(AUTH, provider);
   }, []);
+  const loginWithFacebook = useCallback(async () => {
+    const provider = new FacebookAuthProvider();
 
+    await signInWithPopup(AUTH, provider);
+  }, []);
   const loginWithGithub = useCallback(async () => {
     const provider = new GithubAuthProvider();
 
@@ -228,6 +233,7 @@ export function AuthProvider({ children }) {
       register,
       forgotPassword,
       loginWithGoogle,
+      loginWithFacebook,
       loginWithGithub,
       loginWithTwitter,
     }),
@@ -241,6 +247,7 @@ export function AuthProvider({ children }) {
       forgotPassword,
       loginWithGithub,
       loginWithGoogle,
+      loginWithFacebook,
       loginWithTwitter,
     ]
   );

@@ -81,4 +81,7 @@ ReviewProgressItem.propTypes = {
     value: PropTypes.string,
   }),
   totals: PropTypes.number,
+  name: PropTypes.string,
+  star: PropTypes.number,
+  setStar: PropTypes.func,
 };

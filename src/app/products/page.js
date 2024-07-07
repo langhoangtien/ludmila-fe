@@ -7,6 +7,7 @@ export const metadata = {
 };
 
 export const revalidate = 30;
-export default async function EcommerceProductsPage() {
-  return <EcommerceProductsView />;
+export default async function EcommerceProductsPage(props) {
+  const searchParams = props?.searchParams?.search;
+  return <EcommerceProductsView search={searchParams} />;
 }

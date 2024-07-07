@@ -58,6 +58,7 @@ export default function EcommerceFilters({
   setCategories,
   rating,
   setRating,
+  clearAll,
 }) {
   const fetchProductSelectInfo = async () => {
     const response = await fetchData(endpoints.home.selectInfo);
@@ -96,10 +97,6 @@ export default function EcommerceFilters({
     },
     [filters]
   );
-
-  const handleClearAll = useCallback(() => {
-    setFilters(defaultValues);
-  }, []);
 
   const renderContent = (
     <Stack
@@ -169,7 +166,7 @@ export default function EcommerceFilters({
         size="large"
         variant="contained"
         startIcon={<Iconify icon="carbon:trash-can" />}
-        onClick={handleClearAll}
+        onClick={clearAll}
       >
         Xóa
       </Button>
@@ -213,6 +210,7 @@ EcommerceFilters.propTypes = {
   setCategories: PropTypes.func,
   rating: PropTypes.number,
   setRating: PropTypes.func,
+  clearAll: PropTypes.func,
 };
 
 // ----------------------------------------------------------------------

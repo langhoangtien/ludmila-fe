@@ -17,7 +17,7 @@ import Iconify from 'src/components/iconify';
 export default function Search() {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState('');
-  const [value, setValue] = useState('');
+
   const debounceText = useDebounce(inputValue, 500);
   const [open, setOpen] = useState(false);
   const router = useRouter();

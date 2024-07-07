@@ -82,6 +82,7 @@ EcommerceCartItem.propTypes = {
     discount: PropTypes.number,
     _id: PropTypes.string,
     image: PropTypes.string,
+    attributes: PropTypes.array || null,
   }),
   wishlist: PropTypes.bool,
 };

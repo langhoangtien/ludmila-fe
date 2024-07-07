@@ -75,7 +75,7 @@ const StyledNavItem = styled(ListItemButton, {
 
   return {
     ...theme.typography.body2,
-    padding: 0,
+    padding: 10,
     minHeight: '100%',
     fontWeight: theme.typography.fontWeightMedium,
     transition: theme.transitions.create(['all'], {

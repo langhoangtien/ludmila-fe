@@ -23,7 +23,7 @@ export default function EcommerceProductDetailsDescription({ description, specif
       }}
     >
       <Stack spacing={2}>
-        <Typography variant="h6"> Specifications </Typography>
+        <Typography variant="h6"> Thuộc tính </Typography>
 
         {specifications.map((row) => (
           <Stack
@@ -68,7 +68,7 @@ export default function EcommerceProductDetailsDescription({ description, specif
             }}
           />
         )} */}
-        <Typography variant="h6"> Description </Typography>
+        <Typography variant="h6"> Mô tả sản phẩm </Typography>
         <Markdown content={description} />
         {/* 
         <Stack

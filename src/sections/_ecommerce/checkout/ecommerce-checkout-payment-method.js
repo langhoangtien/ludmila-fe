@@ -44,6 +44,7 @@ export default function EcommerceCheckoutPaymentMethod({ options, name }) {
 
 EcommerceCheckoutPaymentMethod.propTypes = {
   options: PropTypes.array,
+  name: PropTypes.string,
 };
 
 // ----------------------------------------------------------------------

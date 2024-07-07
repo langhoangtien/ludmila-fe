@@ -67,6 +67,7 @@ export default function EcommerceProductDetailsCarousel({ images }) {
   const { slideIndex } = useProductContext();
   useEffect(() => {
     if (typeof slideIndex === 'number') carouselThumb.onTogo(slideIndex);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slideIndex]);
 
   const slides = images.map((slide) => ({

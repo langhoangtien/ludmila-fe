@@ -20,8 +20,8 @@ import { RouterLink } from 'src/routes/components';
 import { useBoolean } from 'src/hooks/use-boolean';
 
 import { useAuthContext } from 'src/auth/hooks';
-import GoogleLogin from 'src/auth/google-login';
-import FacebookLogin from 'src/auth/facebook-login';
+import FacebookLogin from 'src/auth/facebook-login/facebook';
+import { useFirebaseContext } from 'src/auth/hooks/use-auth-context';
 
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
@@ -31,6 +31,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 export default function LoginBackgroundView({ onChangePage, dialog }) {
   const passwordShow = useBoolean();
   const auth = useAuthContext();
+  const firebaseAuth = useFirebaseContext();
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('That is not an email'),
     password: Yup.string()
@@ -65,12 +66,12 @@ export default function LoginBackgroundView({ onChangePage, dialog }) {
     }
   });
 
-  const handleFacebookLogin = async (response) => {
-    auth.login({ accessToken: response }, 'facebook');
+  const handleFacebookLogin = async (data) => {
+    auth.login(data, 'facebook');
     dialog.onFalse();
   };
   const handleGoogleLogin = async (response) => {
-    auth.login({ idToken: response }, 'google');
+    firebaseAuth.loginWithGoogle();
     dialog.onFalse();
   };
   const renderHead = (
@@ -87,11 +88,17 @@ export default function LoginBackgroundView({ onChangePage, dialog }) {
       </Typography>
     </div>
   );
-
   const renderSocials = (
-    <Stack alignItems="center" direction="column" spacing={2}>
-      <FacebookLogin fields="name,email" callback={handleFacebookLogin} />
-      <GoogleLogin submitLogin={handleGoogleLogin} />
+    <Stack direction="row" spacing={2}>
+      <Button onClick={handleGoogleLogin} fullWidth size="large" color="inherit" variant="outlined">
+        <Iconify icon="logos:google-icon" width={24} />
+      </Button>
+
+      <FacebookLogin callback={handleFacebookLogin} />
+
+      <Button color="inherit" fullWidth variant="outlined" size="large">
+        <Iconify icon="carbon:logo-github" width={24} sx={{ color: 'text.primary' }} />
+      </Button>
     </Stack>
   );
 

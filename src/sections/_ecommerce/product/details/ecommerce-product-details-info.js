@@ -34,8 +34,6 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
   const { product, attributesSelect, setAttribute, currentVariant } = useProductContext();
   const {
     name,
-    price,
-    salePrice,
     introduction,
     ratingAverage,
     totalReviews,

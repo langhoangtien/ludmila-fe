@@ -48,4 +48,8 @@ export default function ReviewList({ loading, reviews, count, handleChange, page
 
 ReviewList.propTypes = {
   reviews: PropTypes.array,
+  loading: PropTypes.bool,
+  count: PropTypes.number,
+  page: PropTypes.number,
+  handleChange: PropTypes.func,
 };

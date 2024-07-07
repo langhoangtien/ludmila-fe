@@ -86,7 +86,7 @@ function Logo({ single = false, sx }) {
       xmlns="http://www.w3.org/2000/svg"
       width="100%"
       height="100%"
-      viewBox="0 0 554 203"
+      viewBox="0 0 550 232"
       preserveAspectRatio="xMidYMid meet"
     >
       <g

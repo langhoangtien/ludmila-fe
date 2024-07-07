@@ -3,16 +3,11 @@
 import PropTypes from 'prop-types';
 
 import MainLayout from 'src/layouts/main';
-import EcommerceLayout from 'src/layouts/ecommerce';
 
 // ----------------------------------------------------------------------
 
 export default function Layout({ children }) {
-  return (
-    <MainLayout>
-      <EcommerceLayout> {children}</EcommerceLayout>
-    </MainLayout>
-  );
+  return <MainLayout>{children}</MainLayout>;
 }
 
 Layout.propTypes = {
