@@ -61,14 +61,7 @@ export default function Header({ headerOnDark }) {
   const [loginPage, setLoginPage] = useState(true);
   const mdUp = useResponsive('up', 'md');
   const { totalProduct, shake } = useCartContext();
-  const [menu, setMenu] = useState([
-    { title: 'Trang chủ', path: '/' },
-    {
-      title: 'Danh mục',
-      path: paths.pages,
-    },
-    { title: 'Sản phẩm', path: paths.products },
-  ]);
+  const [menu, setMenu] = useState([]);
 
   useEffect(() => {
     const getMenu = async () => {
@@ -84,9 +77,15 @@ export default function Header({ headerOnDark }) {
               path: `${paths.category}/${child.code}-${child._id}`,
             })),
           }));
-          const nav = menu.map((menuItem) =>
-            menuItem.title === 'Danh mục' ? { ...menuItem, children: dataMapped } : menuItem
-          );
+          const nav = [
+            { title: 'Trang chủ', path: '/' },
+            {
+              title: 'Danh mục',
+              path: paths.pages,
+              children: dataMapped,
+            },
+            { title: 'Sản phẩm', path: paths.products },
+          ];
           localStorage.setItem('menu', JSON.stringify(nav));
           setMenu(nav);
         } else {
