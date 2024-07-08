@@ -79,7 +79,7 @@ export default function EcommerceProductViewGridItem({ product, sx, ...other }) 
         </Label>
       )}
 
-      <Box sx={{ position: 'relative', mb: 2 }}>
+      <Box    sx={{ position: 'relative', mb: 2 }}>
         <Tooltip title={product.variants?.length === 1 ? 'Thêm vào giỏ hàng' : 'Xem mẫu mã'} arrow>
           <Fab
             disabled={shake}
@@ -113,6 +113,8 @@ export default function EcommerceProductViewGridItem({ product, sx, ...other }) 
           </Fab>
         </Tooltip>
         <Image
+          component={RouterLink}
+          href={`${paths.product}/${product.slug}-${product.id}`}
           src={product.image}
           ratio="1/1"
           sx={{
