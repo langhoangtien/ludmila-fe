@@ -15,7 +15,7 @@ import NavItem from './nav-item';
 export default function NavList({ data }) {
   const active = useActiveLink(data.path, !!data.children);
 
-  const menuOpen = useBoolean();
+  const menuOpen = useBoolean(true);
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function NavList({ data }) {
             data={data.children}
             slotProps={{
               rootItem: {
-                pl: 1,
+                pl: 2,
                 minHeight: 30,
               },
               subheader: {

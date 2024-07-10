@@ -14,6 +14,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import { AuthGuard } from 'src/auth/guard';
 import { countries } from 'src/assets/data';
 
 import Iconify from 'src/components/iconify';
@@ -78,125 +79,127 @@ export default function EcommerceAccountPersonalView() {
   });
 
   return (
-    <FormProvider methods={methods} onSubmit={onSubmit}>
-      <Typography variant="h5" sx={{ mb: 3 }}>
-        Personal
-      </Typography>
+    <AuthGuard>
+      <FormProvider methods={methods} onSubmit={onSubmit}>
+        <Typography variant="h5" sx={{ mb: 3 }}>
+          Personal
+        </Typography>
 
-      <Box
-        rowGap={2.5}
-        columnGap={2}
-        display="grid"
-        gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
-      >
-        <RHFTextField name="firstName" label="First Name" />
+        <Box
+          rowGap={2.5}
+          columnGap={2}
+          display="grid"
+          gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
+        >
+          <RHFTextField name="firstName" label="First Name" />
 
-        <RHFTextField name="lastName" label="Last Name" />
+          <RHFTextField name="lastName" label="Last Name" />
 
-        <RHFTextField name="emailAddress" label="Email Address" />
+          <RHFTextField name="emailAddress" label="Email Address" />
 
-        <RHFTextField name="phoneNumber" label="Phone Number" />
+          <RHFTextField name="phoneNumber" label="Phone Number" />
 
-        <Controller
-          name="birthday"
-          render={({ field, fieldState: { error } }) => (
-            <DatePicker
-              label="Birthday"
-              slotProps={{
-                textField: {
-                  helperText: error?.message,
-                  error: !!error?.message,
-                },
+          <Controller
+            name="birthday"
+            render={({ field, fieldState: { error } }) => (
+              <DatePicker
+                label="Birthday"
+                slotProps={{
+                  textField: {
+                    helperText: error?.message,
+                    error: !!error?.message,
+                  },
+                }}
+                {...field}
+                value={field.value}
+              />
+            )}
+          />
+
+          <RHFSelect native name="gender" label="Gender">
+            {GENDER_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </RHFSelect>
+
+          <RHFTextField name="streetAddress" label="Street Address" />
+
+          <RHFTextField name="zipCode" label="Zip Code" />
+
+          <RHFTextField name="city" label="City" />
+
+          <RHFAutocomplete
+            name="country"
+            type="country"
+            label="Country"
+            placeholder="Choose a country"
+            fullWidth
+            options={countries.map((option) => option.label)}
+            getOptionLabel={(option) => option}
+          />
+        </Box>
+        <Stack spacing={3} sx={{ my: 5 }}>
+          <Typography variant="h5"> Change Password </Typography>
+
+          <Stack spacing={2.5}>
+            <RHFTextField
+              name="oldPassword"
+              label="Old Password"
+              type={passwordShow.value ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={passwordShow.onToggle} edge="end">
+                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
-              {...field}
-              value={field.value}
             />
-          )}
-        />
 
-        <RHFSelect native name="gender" label="Gender">
-          {GENDER_OPTIONS.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </RHFSelect>
+            <RHFTextField
+              name="newPassword"
+              label="New Password"
+              type={passwordShow.value ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={passwordShow.onToggle} edge="end">
+                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-        <RHFTextField name="streetAddress" label="Street Address" />
-
-        <RHFTextField name="zipCode" label="Zip Code" />
-
-        <RHFTextField name="city" label="City" />
-
-        <RHFAutocomplete
-          name="country"
-          type="country"
-          label="Country"
-          placeholder="Choose a country"
-          fullWidth
-          options={countries.map((option) => option.label)}
-          getOptionLabel={(option) => option}
-        />
-      </Box>
-      <Stack spacing={3} sx={{ my: 5 }}>
-        <Typography variant="h5"> Change Password </Typography>
-
-        <Stack spacing={2.5}>
-          <RHFTextField
-            name="oldPassword"
-            label="Old Password"
-            type={passwordShow.value ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={passwordShow.onToggle} edge="end">
-                    <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-
-          <RHFTextField
-            name="newPassword"
-            label="New Password"
-            type={passwordShow.value ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={passwordShow.onToggle} edge="end">
-                    <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-
-          <RHFTextField
-            name="confirmNewPassword"
-            label="Confirm New Password"
-            type={passwordShow.value ? 'text' : 'password'}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={passwordShow.onToggle} edge="end">
-                    <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+            <RHFTextField
+              name="confirmNewPassword"
+              label="Confirm New Password"
+              type={passwordShow.value ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={passwordShow.onToggle} edge="end">
+                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Stack>
         </Stack>
-      </Stack>
-      <LoadingButton
-        color="inherit"
-        size="large"
-        type="submit"
-        variant="contained"
-        loading={isSubmitting}
-      >
-        Save Changes
-      </LoadingButton>
-    </FormProvider>
+        <LoadingButton
+          color="inherit"
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+        >
+          Save Changes
+        </LoadingButton>
+      </FormProvider>
+    </AuthGuard>
   );
 }

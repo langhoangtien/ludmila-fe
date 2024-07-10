@@ -8,7 +8,7 @@ import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import { Alert, Dialog, DialogContent } from '@mui/material';
+import { Link, Alert, Dialog, DialogContent } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -30,8 +30,22 @@ import ProductOptionPicker from '../../common/product-option-picker';
 
 // ----------------------------------------------------------------------
 
+const InfoDetail = ({ title, link, name }) => (
+  <Stack direction="row">
+    <Typography sx={{ fontStyle: 'italic' }} variant="body2">
+      {title}:&nbsp;
+    </Typography>
+    <Link href={`/${link}`}>
+      <Typography color="primary.main" variant="body2">
+        {name}
+      </Typography>
+    </Link>
+  </Stack>
+);
+InfoDetail.propTypes = { title: PropTypes.string, link: PropTypes.string, name: PropTypes.string };
 export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }) {
   const { product, attributesSelect, setAttribute, currentVariant } = useProductContext();
+
   const {
     name,
     introduction,
@@ -42,6 +56,8 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
     minSalePrice,
     maxSalePrice,
     attributes,
+    brand,
+    country,
   } = product;
   const cart = useCartContext();
   const mdUp = useResponsive('up', 'md');
@@ -85,6 +101,17 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
             ({totalReviews} Đánh giá)
           </Typography>
         </Stack>
+
+        <InfoDetail
+          name={brand.name}
+          link={`brand/${brand.code}-${brand._id}`}
+          title="Thương hiệu"
+        />
+        <InfoDetail
+          name={country.name}
+          link={`country/${country.code}-${country._id}`}
+          title="Xuất xứ"
+        />
       </Stack>
 
       <Stack p={1} spacing={2}>
@@ -193,19 +220,6 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
 
       <Divider sx={{ borderStyle: 'dashed', my: 3 }} />
 
-      <Stack spacing={3} direction="row" justifyContent={{ xs: 'center', md: 'unset' }}>
-        <Stack direction="row" alignItems="center" sx={{ typography: 'subtitle2' }}>
-          <Iconify icon="carbon:add-alt" sx={{ mr: 1 }} /> Compare
-        </Stack>
-
-        <Stack direction="row" alignItems="center" sx={{ typography: 'subtitle2' }}>
-          <Iconify icon="carbon:favorite" sx={{ mr: 1 }} /> Compare
-        </Stack>
-
-        <Stack direction="row" alignItems="center" sx={{ typography: 'subtitle2' }}>
-          <Iconify icon="carbon:share" sx={{ mr: 1 }} /> Compare
-        </Stack>
-      </Stack>
       <Dialog onClose={dialog.onFalse} open={dialog.value}>
         <DialogContent>
           <Stack spacing={3} px={2} py={4}>

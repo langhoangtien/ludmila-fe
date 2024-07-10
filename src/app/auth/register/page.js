@@ -1,9 +1,9 @@
-import RegisterBackgroundView from 'src/sections/auth/register-background-view';
+import RegisterBackgroundView from 'src/sections/auth/register-view';
 
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Register: Background',
+  title: 'Đăng ký',
 };
 
 export default function RegisterBackgroundPage() {

@@ -29,8 +29,8 @@ import Iconify from 'src/components/iconify';
 import { MegaMenuDesktopHorizontal } from 'src/components/mega-menu';
 import { useCartContext } from 'src/components/cart/use-cart-context';
 
-import LoginBackgroundView from 'src/sections/auth/login-background-view';
-import RegisterBackgroundView from 'src/sections/auth/register-background-view';
+import LoginBackgroundView from 'src/sections/auth/login-view';
+import RegisterBackgroundView from 'src/sections/auth/register-view';
 
 import NavMobile from './nav/mobile';
 import { HEADER } from '../config-layout';
@@ -108,6 +108,7 @@ export default function Header({ headerOnDark }) {
         spacing={1}
         flexGrow={1}
       >
+        {!mdUp && <NavMobile data={menu} />}
         <Box sx={{ lineHeight: 0, position: 'relative' }}>
           <Logo />
         </Box>
@@ -159,7 +160,6 @@ export default function Header({ headerOnDark }) {
             </IconButton>
           )}
         </Stack>
-        {!mdUp && <NavMobile data={menu} />}
       </Stack>
 
       {!mdUp && <SearchDemo flexGrow={1} />}

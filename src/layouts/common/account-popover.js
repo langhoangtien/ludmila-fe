@@ -17,15 +17,11 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 const OPTIONS = [
   {
-    label: 'Home',
-    linkTo: '/',
-  },
-  {
-    label: 'Profile',
+    label: 'Tài khoản',
     linkTo: paths.account.root,
   },
   {
-    label: 'Order',
+    label: 'Đơn hàng',
     linkTo: paths.account.orders,
   },
 ];
@@ -64,7 +60,7 @@ export default function AccountPopover() {
       <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 200, p: 0 }}>
         <Box sx={{ p: 2, pb: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
+            {user?.fullName || user?.username || 'Guest'}
           </Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
@@ -88,7 +84,7 @@ export default function AccountPopover() {
           onClick={handleLogout}
           sx={{ m: 1, fontWeight: 'fontWeightBold', color: 'error.main' }}
         >
-          Logout
+          Đăng xuất
         </MenuItem>
       </CustomPopover>
     </>

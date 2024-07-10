@@ -90,7 +90,7 @@ export default function SearchDemo({ sx, ...other }) {
   };
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
-      <Stack {...other} sx={{ ...sx, position: 'relative', zIndex: 1000 }}>
+      <Stack {...other} sx={{ ...sx, position: 'relative', zIndex: 1000, marginBottom: 2 }}>
         <TextField
           sx={{
             borderRadius: theme.shape.borderRadius,

@@ -72,7 +72,15 @@ const FacebookLogin = ({ callback }) => {
           resolve(accessToken);
         }
       });
-    });
+    })
+      .then((accessToken) => {
+        // Gọi đến callback với accessToken
+        callback({ accessToken });
+      })
+      .catch((error) => {
+        console.error('Error logging in with Facebook:', error);
+        // Xử lý lỗi nếu cần
+      });
   };
 
   return (

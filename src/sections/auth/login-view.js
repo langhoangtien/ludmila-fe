@@ -20,8 +20,8 @@ import { RouterLink } from 'src/routes/components';
 import { useBoolean } from 'src/hooks/use-boolean';
 
 import { useAuthContext } from 'src/auth/hooks';
+import GoogleLoginButton from 'src/auth/google-login';
 import FacebookLogin from 'src/auth/facebook-login/facebook';
-import { useFirebaseContext } from 'src/auth/hooks/use-auth-context';
 
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
@@ -31,7 +31,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 export default function LoginBackgroundView({ onChangePage, dialog }) {
   const passwordShow = useBoolean();
   const auth = useAuthContext();
-  const firebaseAuth = useFirebaseContext();
+
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('That is not an email'),
     password: Yup.string()
@@ -40,8 +40,8 @@ export default function LoginBackgroundView({ onChangePage, dialog }) {
   });
 
   const defaultValues = {
-    email: 'test01@example.com',
-    password: 'string',
+    email: '',
+    password: '',
   };
 
   const methods = useForm({
@@ -67,11 +67,12 @@ export default function LoginBackgroundView({ onChangePage, dialog }) {
   });
 
   const handleFacebookLogin = async (data) => {
+    console.log('DATA', data);
     auth.login(data, 'facebook');
     dialog.onFalse();
   };
-  const handleGoogleLogin = async (response) => {
-    firebaseAuth.loginWithGoogle();
+  const handleGoogleLogin = async (data) => {
+    auth.login(data, 'google');
     dialog.onFalse();
   };
   const renderHead = (
@@ -90,9 +91,7 @@ export default function LoginBackgroundView({ onChangePage, dialog }) {
   );
   const renderSocials = (
     <Stack direction="row" spacing={2}>
-      <Button onClick={handleGoogleLogin} fullWidth size="large" color="inherit" variant="outlined">
-        <Iconify icon="logos:google-icon" width={24} />
-      </Button>
+      <GoogleLoginButton />
 
       <FacebookLogin callback={handleFacebookLogin} />
 

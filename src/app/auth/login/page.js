@@ -1,9 +1,9 @@
-import LoginBackgroundView from 'src/sections/auth/login-background-view';
+import LoginBackgroundView from 'src/sections/auth/login-view';
 
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'Login: Background',
+  title: 'Đăng nhập',
 };
 
 export default function LoginBackgroundPage() {

@@ -14,11 +14,13 @@ import {
   FacebookAuthProvider,
   sendEmailVerification,
   sendPasswordResetEmail,
-  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
 
+import { endpoints } from 'src/utils/fetch';
+
 import { firebaseApp } from './lib';
+import { setSession } from '../jwt/utils';
 import { AuthContext } from './auth-context';
 
 // ----------------------------------------------------------------------
@@ -42,6 +44,12 @@ const reducer = (state, action) => {
   if (action.type === 'INITIAL') {
     return {
       loading: false,
+      user: action.payload.user,
+    };
+  }
+  if (action.type === 'LOGIN') {
+    return {
+      ...state,
       user: action.payload.user,
     };
   }
@@ -155,14 +163,45 @@ export function AuthProvider({ children }) {
   }, [initialize]);
 
   // LOGIN
-  const login = useCallback(async (email, password) => {
-    await signInWithEmailAndPassword(AUTH, email, password);
+  const login = useCallback(async ({ email, password, providerLogin = 'email' }) => {
+    let data = {};
+    if (providerLogin === 'google') {
+      const provider = new GoogleAuthProvider();
+      const dataResponse = await signInWithPopup(AUTH, provider);
+      const idToken = await dataResponse.user.getIdToken();
+
+      data = { idToken };
+    }
+    console.log('data', data);
+    const response = await fetch(endpoints.auth[providerLogin], {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    const { token, user } = response;
+    if (!token) return;
+    setSession(token);
+    dispatch({
+      type: 'LOGIN',
+      payload: {
+        user: {
+          ...user,
+          token,
+        },
+      },
+    });
   }, []);
 
   const loginWithGoogle = useCallback(async () => {
     const provider = new GoogleAuthProvider();
 
-    await signInWithPopup(AUTH, provider);
+    const user = await signInWithPopup(AUTH, provider);
+    const idToken = await user.user.getIdToken();
+    console.log('idToken', idToken);
   }, []);
   const loginWithFacebook = useCallback(async () => {
     const provider = new FacebookAuthProvider();

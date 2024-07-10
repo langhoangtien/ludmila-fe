@@ -22,7 +22,7 @@ export default function EcommerceProductDetailsDescription({ description, specif
         py: { xs: 5, md: 10 },
       }}
     >
-      <Stack spacing={2}>
+      {/* <Stack spacing={2}>
         <Typography variant="h6"> Thuộc tính </Typography>
 
         {specifications.map((row) => (
@@ -39,7 +39,7 @@ export default function EcommerceProductDetailsDescription({ description, specif
             <Box component="span">{row.value}</Box>
           </Stack>
         ))}
-      </Stack>
+      </Stack> */}
 
       <Stack
         component="div"
@@ -51,41 +51,8 @@ export default function EcommerceProductDetailsDescription({ description, specif
         }}
         spacing={2}
       >
-        {/* {readMore && (
-          <Box
-            id="ddj"
-            sx={{
-              position: 'absolute',
-              zIndex: 8,
-
-              paddingTop: '100%',
-              width: '100%',
-              display: 'flex',
-              alignItems: 'flex-end',
-              justifyContent: 'center',
-              backgroundImage:
-                ' linear-gradient(to bottom, rgba(255, 255, 255, 0),rgba(255, 255, 255, 0.8),rgba(255, 255, 255, 1),rgba(255, 255, 255, 1), rgba(255, 255, 255, 1))',
-            }}
-          />
-        )} */}
         <Typography variant="h6"> Mô tả sản phẩm </Typography>
         <Markdown content={description} />
-        {/* 
-        <Stack
-          justifyContent="center"
-          gap={2}
-          flexDirection="row"
-          width={1.0}
-          flexWrap="wrap"
-          sx={{
-            position: 'absolute',
-            bottom: -60,
-            display: 'flex',
-            zIndex: 9,
-          }}
-        >
-        
-        </Stack> */}
       </Stack>
       <Box
         sx={{

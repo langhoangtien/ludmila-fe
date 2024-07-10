@@ -92,17 +92,31 @@ export default function Footer() {
               </Stack>
 
               <Stack spacing={1} alignItems="flex-start">
-                <Typography variant="h6">Community</Typography>
-                <Link variant="body2" sx={{ color: 'text.primary' }}>
-                  Documentation
+                <Typography variant="h6">Liên hệ</Typography>
+                <Link
+                  variant="body2"
+                  sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
+                >
+                  <Iconify icon="carbon:location" />
+                  <Typography variant="body2">
+                    &nbsp; T10 Tòa Benka, Lệ chi - Gia Lâm - Hà Nội
+                  </Typography>
                 </Link>
 
-                <Link variant="body2" sx={{ color: 'text.primary' }}>
-                  Changelog
+                <Link
+                  variant="body2"
+                  sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
+                >
+                  <Iconify icon="carbon:mobile" />{' '}
+                  <Typography variant="body2">&nbsp; 0832.66.77.11</Typography>
                 </Link>
 
-                <Link variant="body2" sx={{ color: 'text.primary' }}>
-                  Contributing
+                <Link
+                  variant="body2"
+                  sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
+                >
+                  <Iconify icon="carbon:email" />
+                  <Typography variant="body2"> &nbsp; ludmilatechnology@gmail.com</Typography>
                 </Link>
               </Stack>
 

@@ -44,22 +44,11 @@ export default async function DetailProductPage(props) {
 
   const totalRating = result.ratings?.reduce((acc, cur) => acc + cur, 0) ?? 0;
   const product = {
-    price: result.price,
-    salePrice: result.salePrice,
-    introduction: result.introduction,
-    name: result.name,
-    code: result.code,
-    slug: result.slug,
-    _id: result._id,
-    attributes: result.attributes,
-    quantity: result.quantity,
+    ...result,
     image: convertImagePathToUrl(result.image),
     images: images.concat(variantsImages),
-    ratingAverage: result.ratingAverage,
-    ratings: result.ratings,
     totalReviews: totalRating,
     variants,
-    description: result.description,
     minPrice,
     maxPrice,
     minSalePrice,

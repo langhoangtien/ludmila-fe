@@ -1,5 +1,3 @@
-
-
 import { Stack } from '@mui/system';
 import { Box, Container, Typography } from '@mui/material';
 
@@ -8,46 +6,36 @@ import { encodeData, convertImagePathToUrl } from 'src/utils/common';
 
 import EcommerceProductList from 'src/sections/_ecommerce/product/list/ecommerce-product-list';
 
-
-
-
 export default async function DetailCategoryPage(props) {
-
-
   const slug = props?.params?.slug ?? null;
   const page = props?.searchParams?.page ?? 1;
   const id = slug.split('-').pop();
-    const limit = 20;
-    const skip = (page - 1) * limit;
-    const categoryFilter = [id];
-  
-    const filterRaw = {
-      category: categoryFilter,
-    };
-    const url = `${
-      endpoints.product.list
-    }?limit=${limit}&skip=${skip}&filterRaw=${encodeData(filterRaw)}`;
-    const categoryUrl = `${endpoints.category.list}/${id}` 
+  const limit = 20;
+  const skip = (page - 1) * limit;
+  const categoryFilter = [id];
 
-    console.log(categoryUrl,url);
-    const category =await  fetch(categoryUrl,{method:"GET",next:{revalidate: 3600 }})
-    const products = await fetch(url, {
-      method: "GET",
-      next:{revalidate: 30 }
-  }
-);
+  const filterRaw = {
+    category: categoryFilter,
+  };
+  const url = `${endpoints.product.list}?limit=${limit}&skip=${skip}&filterRaw=${encodeData(
+    filterRaw
+  )}`;
+  const categoryUrl = `${endpoints.category.list}/${id}`;
 
+  const category = await fetch(categoryUrl, { method: 'GET', next: { revalidate: 3600 } });
+  const products = await fetch(url, {
+    method: 'GET',
+    next: { revalidate: 30 },
+  });
 
-
-
-const categoryJson =await category.json()
-const productsJson = await products.json()
-// console.log("SSS",categoryJson,productsJson);
-const productsMapped =productsJson.items.map((product) => ({
-      ...product,
-      image: convertImagePathToUrl(product.image),
-    }));
-    const count = (Math.ceil(productsJson.count / limit));
+  const categoryJson = await category.json();
+  const productsJson = await products.json();
+  // console.log("SSS",categoryJson,productsJson);
+  const productsMapped = productsJson.items.map((product) => ({
+    ...product,
+    image: convertImagePathToUrl(product.image),
+  }));
+  const count = Math.ceil(productsJson.count / limit);
   return (
     <Container
       sx={{
@@ -68,7 +56,11 @@ const productsMapped =productsJson.items.map((product) => ({
             textAlign: { xs: 'center', md: 'unset' },
           }}
         >
-         Danh mục:&quot;<Box sx={{color:"primary.main"}} component="span">{categoryJson.name}</Box>&quot;
+          Danh mục:&quot;
+          <Box sx={{ color: 'primary.main' }} component="span">
+            {categoryJson.name}
+          </Box>
+          &quot;
         </Typography>
       </Stack>
 

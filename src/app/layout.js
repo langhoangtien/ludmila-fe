@@ -13,11 +13,13 @@ import ProgressBar from 'src/components/progress-bar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 import { AuthProvider } from 'src/auth/context/jwt';
-import { AuthProvider as FirebaseAuthProvider } from 'src/auth/context/firebase';
 import { CartProvider } from 'src/components/cart';
 import { SnackbarProvider } from 'src/components/snackbar';
 
 // ----------------------------------------------------------------------
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+import { GOOGLE_CLIENT_ID } from 'src/config-global';
 
 export const viewport = {
   themeColor: '#000000',
@@ -48,8 +50,9 @@ export default function RootLayout({ children }) {
       <Script src="https://accounts.google.com/gsi/client" async />
 
       <body>
-        <FirebaseAuthProvider>
-          <AuthProvider>
+        <AuthProvider>
+          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            ;
             <LocalizationProvider>
               <SettingsProvider
                 defaultSettings={{
@@ -69,8 +72,8 @@ export default function RootLayout({ children }) {
                 </ThemeProvider>
               </SettingsProvider>
             </LocalizationProvider>
-          </AuthProvider>
-        </FirebaseAuthProvider>
+          </GoogleOAuthProvider>
+        </AuthProvider>
       </body>
     </html>
   );
