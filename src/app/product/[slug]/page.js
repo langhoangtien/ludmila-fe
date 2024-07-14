@@ -41,12 +41,12 @@ export default async function DetailProductPage(props) {
     minSalePrice = Math.min(minSalePrice, item.salePrice);
     maxSalePrice = Math.max(maxSalePrice, item.salePrice);
   });
-
+  const image = convertImagePathToUrl(result.image);
   const totalRating = result.ratings?.reduce((acc, cur) => acc + cur, 0) ?? 0;
   const product = {
     ...result,
-    image: convertImagePathToUrl(result.image),
-    images: images.concat(variantsImages),
+    image,
+    images: images.concat(variantsImages,image),
     totalReviews: totalRating,
     variants,
     minPrice,
