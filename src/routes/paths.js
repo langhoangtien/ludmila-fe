@@ -28,10 +28,12 @@ export const paths = {
 
   // Auth
   loginCover: '/auth/login-cover',
-  loginBackground: '/auth/login-background',
+
+  login: '/auth/login',
   loginIllustration: '/auth/login-illustration',
   registerCover: '/auth/register-cover',
-  registerBackground: '/auth/register-background',
+
+  register: '/auth/register',
   registerIllustration: '/auth/register-illustration',
   forgotPassword: '/auth/forgot-password',
   verify: '/auth/verify',

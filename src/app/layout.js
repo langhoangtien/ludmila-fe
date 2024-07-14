@@ -1,6 +1,6 @@
 /* eslint-disable perfectionist/sort-imports */
 import 'src/global.css';
-import Script from 'next/script';
+
 // ----------------------------------------------------------------------
 
 import PropTypes from 'prop-types';
@@ -17,7 +17,6 @@ import { CartProvider } from 'src/components/cart';
 import { SnackbarProvider } from 'src/components/snackbar';
 
 // ----------------------------------------------------------------------
-import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import { GOOGLE_CLIENT_ID } from 'src/config-global';
 
@@ -47,32 +46,29 @@ export default function RootLayout({ children }) {
     <html lang="en" className={primaryFont.className}>
       <meta name="referrer" content="no-referrer-when-downgrade" />
       <meta name="Cross-Origin-Opener-Policy" content="same-origin-allow-popups" />
-      <Script src="https://accounts.google.com/gsi/client" async />
+      <meta name="google-signin-client_id" content={GOOGLE_CLIENT_ID} />
 
       <body>
         <AuthProvider>
-          <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-            ;
-            <LocalizationProvider>
-              <SettingsProvider
-                defaultSettings={{
-                  themeMode: 'light', // 'light' | 'dark'
-                  themeDirection: 'ltr', //  'rtl' | 'ltr'
-                  themeColorPresets: 'default', // 'default' | 'preset01' | 'preset02' | 'preset03' | 'preset04' | 'preset05'
-                }}
-              >
-                <ThemeProvider>
-                  <MotionLazy>
-                    <SnackbarProvider>
-                      <ProgressBar />
-                      <SettingsDrawer />
-                      <CartProvider>{children}</CartProvider>
-                    </SnackbarProvider>
-                  </MotionLazy>
-                </ThemeProvider>
-              </SettingsProvider>
-            </LocalizationProvider>
-          </GoogleOAuthProvider>
+          <LocalizationProvider>
+            <SettingsProvider
+              defaultSettings={{
+                themeMode: 'light', // 'light' | 'dark'
+                themeDirection: 'ltr', //  'rtl' | 'ltr'
+                themeColorPresets: 'default', // 'default' | 'preset01' | 'preset02' | 'preset03' | 'preset04' | 'preset05'
+              }}
+            >
+              <ThemeProvider>
+                <MotionLazy>
+                  <SnackbarProvider>
+                    <ProgressBar />
+                    <SettingsDrawer />
+                    <CartProvider>{children}</CartProvider>
+                  </SnackbarProvider>
+                </MotionLazy>
+              </ThemeProvider>
+            </SettingsProvider>
+          </LocalizationProvider>
         </AuthProvider>
       </body>
     </html>

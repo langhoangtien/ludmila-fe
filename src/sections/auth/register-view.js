@@ -21,7 +21,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
-export default function RegisterBackgroundView({ onChangePage }) {
+export default function RegisterView({ onChangePage }) {
   const passwordShow = useBoolean();
 
   const RegisterSchema = Yup.object().shape({
@@ -176,6 +176,6 @@ export default function RegisterBackgroundView({ onChangePage }) {
   );
 }
 
-RegisterBackgroundView.propTypes = {
+RegisterView.propTypes = {
   onChangePage: PropTypes.func,
 };

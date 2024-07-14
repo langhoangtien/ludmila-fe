@@ -7,14 +7,12 @@ import { endpoints, fetchData, fetchDataWithToken } from 'src/utils/fetch';
 
 import { AuthContext } from './auth-context';
 import { setSession, isValidToken } from './utils';
-
 // ----------------------------------------------------------------------
 /**
  * NOTE:
  * We only build demo at basic level.
  * Customer will need to do some extra handling yourself if you want to extend the logic and other features...
  */
-// ----------------------------------------------------------------------
 
 const initialState = {
   user: null,
@@ -102,7 +100,6 @@ export function AuthProvider({ children }) {
   // LOGIN
   const login = useCallback(async (data, provider = 'email') => {
     const response = await fetchData(endpoints.auth[provider], data);
-
     const { token, user } = response;
     if (!token) return;
     setSession(token);

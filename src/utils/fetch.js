@@ -88,16 +88,20 @@ export async function fetchData(url = '', data, method) {
 
 export async function fetchDataWithToken(url = '', data, method) {
   if (data) {
-    const response = await fetch(url, {
-      method: method?.toUpperCase() ?? 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(data),
-    });
-    return response.json();
+    try {
+      const response = await fetch(url, {
+        method: method?.toUpperCase() ?? 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(data),
+      });
+      return response.json();
+    } catch (error) {
+      throw new Error(error);
+    }
   }
   const response = await fetch(url, {
     method: 'GET',

@@ -16,7 +16,9 @@ import { RouterLink } from 'src/routes/components';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
-import { _mock } from 'src/_mock';
+import { convertImagePathToUrl } from 'src/utils/common';
+
+import { useAuthContext } from 'src/auth/hooks';
 
 import Iconify from 'src/components/iconify';
 import TextMaxLine from 'src/components/text-max-line';
@@ -25,27 +27,27 @@ import TextMaxLine from 'src/components/text-max-line';
 
 const navigations = [
   {
-    title: 'Personal Info',
+    title: 'Thông tin tài khoản',
     path: paths.account.personal,
     icon: <Iconify icon="carbon:user" />,
   },
   {
-    title: 'Wishlist',
+    title: 'Yêu thích',
     path: paths.account.wishlist,
     icon: <Iconify icon="carbon:favorite" />,
   },
   {
-    title: 'Vouchers',
+    title: 'Mã giảm giá',
     path: paths.account.vouchers,
     icon: <Iconify icon="carbon:cut-out" />,
   },
   {
-    title: 'Orders',
+    title: 'Đơn hàng',
     path: paths.account.orders,
     icon: <Iconify icon="carbon:document" />,
   },
   {
-    title: 'Payment',
+    title: 'Thanh toán',
     path: paths.account.payment,
     icon: <Iconify icon="carbon:purchase" />,
   },
@@ -55,6 +57,7 @@ const navigations = [
 
 export default function Nav({ open, onClose }) {
   const mdUp = useResponsive('up', 'md');
+  const auth = useAuthContext();
 
   const renderContent = (
     <Stack
@@ -69,28 +72,19 @@ export default function Nav({ open, onClose }) {
       }}
     >
       <Stack spacing={2} sx={{ p: 3, pb: 2 }}>
-        <Stack spacing={2} direction="row" alignItems="center">
-          <Avatar src={_mock.image.avatar(0)} sx={{ width: 64, height: 64 }} />
-          <Stack
-            direction="row"
-            alignItems="center"
-            sx={{
-              typography: 'caption',
-              cursor: 'pointer',
-              '&:hover': { opacity: 0.72 },
-            }}
-          >
-            <Iconify icon="carbon:edit" sx={{ mr: 1 }} />
-            Change photo
-          </Stack>
+        <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
+          <Avatar
+            src={convertImagePathToUrl(auth?.user?.photo, 250)}
+            sx={{ width: 64, height: 64 }}
+          />
         </Stack>
 
         <Stack spacing={0.5}>
           <TextMaxLine variant="subtitle1" line={1}>
-            Jayvion Simon
+            {auth?.user?.fullName}
           </TextMaxLine>
           <TextMaxLine variant="body2" line={1} sx={{ color: 'text.secondary' }}>
-            nannie_abernathy70@yahoo.com
+            {auth?.user?.email}
           </TextMaxLine>
         </Stack>
       </Stack>

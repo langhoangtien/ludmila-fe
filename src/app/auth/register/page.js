@@ -1,4 +1,4 @@
-import RegisterBackgroundView from 'src/sections/auth/register-view';
+import RegisterView from 'src/sections/auth/register-view';
 
 // ----------------------------------------------------------------------
 
@@ -6,6 +6,6 @@ export const metadata = {
   title: 'Đăng ký',
 };
 
-export default function RegisterBackgroundPage() {
-  return <RegisterBackgroundView />;
+export default function RegisterPage() {
+  return <RegisterView />;
 }

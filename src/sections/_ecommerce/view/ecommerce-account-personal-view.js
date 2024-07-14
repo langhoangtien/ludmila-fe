@@ -1,6 +1,8 @@
 'use client';
 
 import * as Yup from 'yup';
+import { useEffect } from 'react';
+import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -11,50 +13,58 @@ import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Grid, Dialog, Button, TextField, DialogTitle, DialogContent } from '@mui/material';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import { uploadFile } from 'src/utils/upload';
+import { endpoints, fetchDataWithToken } from 'src/utils/fetch';
+import { convertImagePathToUrl, convertImageUrlToPath } from 'src/utils/common';
+
 import { AuthGuard } from 'src/auth/guard';
-import { countries } from 'src/assets/data';
+import { provinces } from 'src/assets/data';
 
 import Iconify from 'src/components/iconify';
+import RHFUploadAvatar from 'src/components/hook-form/rhf-upload-avatar';
 import FormProvider, { RHFSelect, RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
 // ----------------------------------------------------------------------
 
-const GENDER_OPTIONS = ['Male', 'Female', 'Other'];
+const GENDER_OPTIONS = [
+  { title: 'Nam', value: 'male' },
+  { title: 'Nữ', value: 'female' },
+  { title: 'Khác', value: 'other' },
+];
 
 // ----------------------------------------------------------------------
 
 export default function EcommerceAccountPersonalView() {
+  const dialog = useBoolean();
   const passwordShow = useBoolean();
-
+  const { enqueueSnackbar } = useSnackbar();
   const EcommerceAccountPersonalSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
     lastName: Yup.string().required('Last name is required'),
-    emailAddress: Yup.string().required('Email address is required'),
-    phoneNumber: Yup.string().required('Phone number is required'),
-    birthday: Yup.mixed().nullable().required('Birthday is required'),
-    gender: Yup.string().required('Gender is required'),
-    streetAddress: Yup.string().required('Street address is required'),
-    city: Yup.string().required('City is required'),
-    zipCode: Yup.string().required('Zip code is required'),
+    email: Yup.string().required('Email address is required'),
+    phoneNumber: Yup.string()
+      .matches(/((\+84|84|0)(3|5|7|8|9|1[2689]))([0-9]{8})\b/, 'Số điện thoại không hợp lệ')
+      .optional(),
+    birthday: Yup.mixed().nullable(),
+    gender: Yup.string(),
+    address: Yup.string(),
+    province: Yup.string(),
   });
 
   const defaultValues = {
-    firstName: 'Jayvion',
-    lastName: 'Simon',
-    emailAddress: 'nannie_abernathy70@yahoo.com',
-    phoneNumber: '365-374-4961',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
     birthday: null,
-    gender: 'Male',
-    streetAddress: '',
-    zipCode: '',
-    city: '',
-    country: 'United States',
-    oldPassword: '',
-    newPassword: '',
-    confirmNewPassword: '',
+    gender: '',
+    address: '',
+    province: '',
+    country: 'VN',
   };
 
   const methods = useForm({
@@ -65,45 +75,114 @@ export default function EcommerceAccountPersonalView() {
   const {
     reset,
     handleSubmit,
+    setValue,
     formState: { isSubmitting },
   } = methods;
+  const getUserProfile = async () => {
+    try {
+      const data = await fetchDataWithToken(endpoints.auth.me, null, 'GET');
 
+      const cloneData = {
+        ...data,
+        photo: convertImagePathToUrl(data.photo, 250),
+        birthday: new Date(data.birthday),
+      };
+
+      reset(cloneData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      reset();
-      console.log('DATA', data);
+      const cloneData = {
+        ...data,
+        photo: convertImageUrlToPath(data.photo),
+      };
+      await fetchDataWithToken(endpoints.auth.me, cloneData, 'PATCH');
+      await getUserProfile();
+      enqueueSnackbar('Cập nhật thông tin thành công', { variant: 'success' });
     } catch (error) {
       console.error(error);
     }
   });
 
+  const handleDropImage = async (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    console.log(file);
+    try {
+      const dataResponse = await uploadFile(file);
+      const url = convertImagePathToUrl(dataResponse.path, 250);
+
+      setValue('photo', url, { shouldValidate: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <AuthGuard>
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <Typography variant="h5" sx={{ mb: 3 }}>
-          Personal
+          Thông tin cá nhân
         </Typography>
+        <Grid container spacing={3}>
+          <Grid xs={12} md={4}>
+            <RHFUploadAvatar
+              name="photo"
+              maxSize={3145728}
+              onDrop={handleDropImage}
+              helperText={
+                <Typography
+                  variant="caption"
+                  sx={{
+                    mt: 3,
+                    mx: 'auto',
+                    display: 'block',
+                    textAlign: 'center',
+                    color: 'text.disabled',
+                  }}
+                >
+                  Allowed *.jpeg, *.jpg, *.png, *.gif
+                  <br /> max size of 3MB
+                </Typography>
+              }
+            />
+          </Grid>
+          <Grid xs={12} md={8}>
+            <Stack spacing={3} sx={{ p: 3 }}>
+              <Box
+                rowGap={2.5}
+                columnGap={2}
+                display="grid"
+                gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
+              >
+                <RHFTextField size="small" name="firstName" label="Họ" />
 
+                <RHFTextField size="small" name="lastName" label="Tên" />
+
+                <RHFTextField size="small" name="email" label="Email" />
+                <RHFTextField size="small" name="phoneNumber" label="Số điện thoại" />
+              </Box>
+            </Stack>
+          </Grid>
+        </Grid>
         <Box
           rowGap={2.5}
           columnGap={2}
           display="grid"
           gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
         >
-          <RHFTextField name="firstName" label="First Name" />
-
-          <RHFTextField name="lastName" label="Last Name" />
-
-          <RHFTextField name="emailAddress" label="Email Address" />
-
-          <RHFTextField name="phoneNumber" label="Phone Number" />
-
           <Controller
             name="birthday"
             render={({ field, fieldState: { error } }) => (
               <DatePicker
-                label="Birthday"
+                size="small"
+                label="Ngày sinh"
                 slotProps={{
                   textField: {
                     helperText: error?.message,
@@ -116,79 +195,42 @@ export default function EcommerceAccountPersonalView() {
             )}
           />
 
-          <RHFSelect native name="gender" label="Gender">
+          <RHFSelect
+            InputLabelProps={{ shrink: true }}
+            PaperPropsSx={{ textTransform: 'capitalize' }}
+            size="small"
+            native
+            name="gender"
+            label="Giới tính"
+          >
             {GENDER_OPTIONS.map((option) => (
-              <option key={option} value={option}>
-                {option}
+              <option key={option.value} value={option.value}>
+                {option.title}
               </option>
             ))}
           </RHFSelect>
 
-          <RHFTextField name="streetAddress" label="Street Address" />
-
-          <RHFTextField name="zipCode" label="Zip Code" />
-
-          <RHFTextField name="city" label="City" />
+          <RHFTextField size="small" name="address" label="Địa chỉ" />
 
           <RHFAutocomplete
-            name="country"
-            type="country"
-            label="Country"
-            placeholder="Choose a country"
+            name="province"
+            type="province"
+            size="small"
+            label="Tỉnh thành"
+            placeholder="Chọn tỉnh thành"
             fullWidth
-            options={countries.map((option) => option.label)}
+            options={provinces.map((option) => option)}
             getOptionLabel={(option) => option}
           />
         </Box>
         <Stack spacing={3} sx={{ my: 5 }}>
-          <Typography variant="h5"> Change Password </Typography>
-
-          <Stack spacing={2.5}>
-            <RHFTextField
-              name="oldPassword"
-              label="Old Password"
-              type={passwordShow.value ? 'text' : 'password'}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={passwordShow.onToggle} edge="end">
-                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            <RHFTextField
-              name="newPassword"
-              label="New Password"
-              type={passwordShow.value ? 'text' : 'password'}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={passwordShow.onToggle} edge="end">
-                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            <RHFTextField
-              name="confirmNewPassword"
-              label="Confirm New Password"
-              type={passwordShow.value ? 'text' : 'password'}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={passwordShow.onToggle} edge="end">
-                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Stack>
+          <Typography variant="h5">
+            {' '}
+            Mật khẩu{' '}
+            <IconButton onClick={dialog.onTrue}>
+              <Iconify width={24} icon="carbon:edit" />
+            </IconButton>{' '}
+          </Typography>
         </Stack>
         <LoadingButton
           color="inherit"
@@ -197,9 +239,81 @@ export default function EcommerceAccountPersonalView() {
           variant="contained"
           loading={isSubmitting}
         >
-          Save Changes
+          Lưu lại
         </LoadingButton>
       </FormProvider>
+      <Dialog maxWidth="xs" fullWidth onClose={dialog.onFalse} open={dialog.value}>
+        <DialogTitle sx={{ m: 0, p: 2 }}>Thay đổi mật khẩu</DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={dialog.onFalse}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <Iconify icon="carbon:close" />
+        </IconButton>
+        <DialogContent>
+          <Stack sx={{ p: 2 }} spacing={2.5}>
+            <TextField
+              size="small"
+              name="oldPassword"
+              label="Mật khẩu cũ"
+              type={passwordShow.value ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={passwordShow.onToggle} edge="end">
+                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <TextField
+              size="small"
+              name="newPassword"
+              label="Mật khẩu mới"
+              type={passwordShow.value ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={passwordShow.onToggle} edge="end">
+                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <TextField
+              size="small"
+              name="confirmNewPassword"
+              label="Xác nhận mật khẩu mới"
+              type={passwordShow.value ? 'text' : 'password'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={passwordShow.onToggle} edge="end">
+                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Stack direction="row" spacing={1} display="flex" justifyContent="flex-end">
+              <Button variant="contained">Lưu lại</Button>
+              <Button onClick={dialog.onFalse} color="inherit" variant="outlined">
+                Hủy
+              </Button>
+            </Stack>
+          </Stack>
+        </DialogContent>
+      </Dialog>
     </AuthGuard>
   );
 }

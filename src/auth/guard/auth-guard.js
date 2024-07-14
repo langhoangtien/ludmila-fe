@@ -11,7 +11,7 @@ import { useAuthContext } from '../hooks';
 // ----------------------------------------------------------------------
 
 const loginPaths = {
-  jwt: paths.loginBackground,
+  jwt: paths.login,
 };
 
 // ----------------------------------------------------------------------

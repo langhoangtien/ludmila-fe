@@ -24,7 +24,7 @@ export default function AccountLayout({ children }) {
     <>
       {mdUp ? (
         <Container sx={{ my: 5 }}>
-          <Typography variant="h3">Account</Typography>
+          <Typography variant="h3">Tài khoản</Typography>
         </Container>
       ) : (
         <Box
@@ -41,7 +41,7 @@ export default function AccountLayout({ children }) {
               startIcon={<Iconify icon="carbon:menu" />}
               onClick={menuOpen.onTrue}
             >
-              Account
+              Tài khoản
             </Button>
           </Container>
         </Box>

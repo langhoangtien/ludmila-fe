@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from '@mui/material';
-
 import { FACEBOOK_APP_ID } from 'src/config-global';
 
-import Iconify from 'src/components/iconify';
+import ButtonLogin from 'src/components/button-login';
 
 const FacebookLogin = ({ callback }) => {
   useEffect(() => {
@@ -84,9 +82,9 @@ const FacebookLogin = ({ callback }) => {
   };
 
   return (
-    <Button onClick={submitLogin} fullWidth size="large" color="inherit" variant="outlined">
-      <Iconify icon="carbon:logo-facebook" width={24} sx={{ color: '#1877F2' }} />
-    </Button>
+    <ButtonLogin icon="logos:facebook" onClick={submitLogin}>
+      Đăng nhập bằng Facebook
+    </ButtonLogin>
   );
 };
 

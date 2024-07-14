@@ -29,8 +29,8 @@ import Iconify from 'src/components/iconify';
 import { MegaMenuDesktopHorizontal } from 'src/components/mega-menu';
 import { useCartContext } from 'src/components/cart/use-cart-context';
 
-import LoginBackgroundView from 'src/sections/auth/login-view';
-import RegisterBackgroundView from 'src/sections/auth/register-view';
+import LoginView from 'src/sections/auth/login-view';
+import RegisterView from 'src/sections/auth/register-view';
 
 import NavMobile from './nav/mobile';
 import { HEADER } from '../config-layout';
@@ -221,9 +221,9 @@ export default function Header({ headerOnDark }) {
             }}
           >
             {loginPage ? (
-              <LoginBackgroundView dialog={dialog} onChangePage={() => setLoginPage(false)} />
+              <LoginView dialog={dialog} onChangePage={() => setLoginPage(false)} />
             ) : (
-              <RegisterBackgroundView dialog={dialog} onChangePage={() => setLoginPage(true)} />
+              <RegisterView dialog={dialog} onChangePage={() => setLoginPage(true)} />
             )}
           </Stack>
         </DialogContent>

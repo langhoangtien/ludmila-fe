@@ -19,7 +19,7 @@ export const pageLinks = [
     items: [
       { title: 'Hướng dẫn thanh toán', path: paths.loginCover },
       { title: 'Hướng dẫn mua hàng Online', path: paths.loginIllustration },
-      { title: 'Góp ý, Khiếu Nại', path: paths.loginBackground },
+      { title: 'Góp ý, Khiếu Nại', path: paths.login },
       { title: 'Liên hệ', path: paths.registerCover },
     ],
   },
@@ -28,7 +28,7 @@ export const pageLinks = [
     items: [
       { title: 'Hướng dẫn thanh toán', path: paths.loginCover },
       { title: 'Hướng dẫn mua hàng Online', path: paths.loginIllustration },
-      { title: 'Góp ý, Khiếu Nại', path: paths.loginBackground },
+      { title: 'Góp ý, Khiếu Nại', path: paths.login },
       { title: 'Liên hệ', path: paths.registerCover },
     ],
   },
@@ -49,7 +49,7 @@ export const pageLinksFooter = [
     items: [
       { title: 'Hướng dẫn thanh toán', path: paths.loginCover },
       { title: 'Hướng dẫn mua hàng Online', path: paths.loginIllustration },
-      { title: 'Góp ý, Khiếu Nại', path: paths.loginBackground },
+      { title: 'Góp ý, Khiếu Nại', path: paths.login },
       { title: 'Liên hệ', path: paths.registerCover },
     ],
   },
@@ -58,7 +58,7 @@ export const pageLinksFooter = [
     items: [
       { title: 'Hướng dẫn thanh toán', path: paths.loginCover },
       { title: 'Hướng dẫn mua hàng Online', path: paths.loginIllustration },
-      { title: 'Góp ý, Khiếu Nại', path: paths.loginBackground },
+      { title: 'Góp ý, Khiếu Nại', path: paths.login },
       { title: 'Liên hệ', path: paths.registerCover },
     ],
   },
