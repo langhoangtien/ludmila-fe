@@ -32,6 +32,11 @@ const navigations = [
     icon: <Iconify icon="carbon:user" />,
   },
   {
+    title: 'Đơn hàng',
+    path: paths.account.orders,
+    icon: <Iconify icon="carbon:document" />,
+  },
+  {
     title: 'Yêu thích',
     path: paths.account.wishlist,
     icon: <Iconify icon="carbon:favorite" />,
@@ -41,11 +46,7 @@ const navigations = [
     path: paths.account.vouchers,
     icon: <Iconify icon="carbon:cut-out" />,
   },
-  {
-    title: 'Đơn hàng',
-    path: paths.account.orders,
-    icon: <Iconify icon="carbon:document" />,
-  },
+ 
   {
     title: 'Thanh toán',
     path: paths.account.payment,
@@ -111,7 +112,7 @@ export default function Nav({ open, onClose }) {
             <Iconify icon="carbon:logout" />
           </ListItemIcon>
           <ListItemText
-            primary="Logout"
+            primary="Đăng xuất"
             primaryTypographyProps={{
               typography: 'body2',
             }}

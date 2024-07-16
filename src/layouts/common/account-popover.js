@@ -18,7 +18,7 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 const OPTIONS = [
   {
     label: 'Tài khoản',
-    linkTo: paths.account.root,
+    linkTo: paths.account.personal,
   },
   {
     label: 'Đơn hàng',

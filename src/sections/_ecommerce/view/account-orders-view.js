@@ -1,57 +1,54 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import Switch from '@mui/material/Switch';
 import TableRow from '@mui/material/TableRow';
 import TableBody from '@mui/material/TableBody';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import InputAdornment from '@mui/material/InputAdornment';
 import TableContainer from '@mui/material/TableContainer';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TablePagination from '@mui/material/TablePagination';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
+import { endpoints } from 'src/utils/fetch';
+
 import { _productsTable } from 'src/_mock';
 
-import Iconify from 'src/components/iconify';
+import Label from 'src/components/label';
 import Scrollbar from 'src/components/scrollbar';
 
-import { stableSort, getComparator } from '../account/utils';
 import EcommerceAccountOrdersTableRow from '../account/ecommerce-account-orders-table-row';
 import EcommerceAccountOrdersTableHead from '../account/ecommerce-account-orders-table-head';
-import EcommerceAccountOrdersTableToolbar from '../account/ecommerce-account-orders-table-toolbar';
 
 // ----------------------------------------------------------------------
 
-const TABS = ['All Orders', 'Completed', 'To Process', 'Cancelled', 'Return & Refund'];
+const TABS = [{ value: 'all', label: 'Tất cả' },{value:'completed',label: 'Hoàn thành'},
+   {value:'shipping',label:'Đang vận chuyển'}, {value:'cancelled',label:'Đã hủy'}];
 
 export const TABLE_HEAD = [
-  { id: 'orderId', label: 'Order ID' },
-  { id: 'item', label: 'Item' },
-  { id: 'deliveryDate', label: 'Delivery date', width: 160 },
-  { id: 'price', label: 'Price', width: 100 },
-  { id: 'status', label: 'Status', width: 100 },
+
+  { id: 'products', label: 'Sản phẩm' },
+  { id: 'totalPrice', label: 'Giá trị', width: 100 },
+  { id: 'createdAt', label: 'Ngày đặt hàng', width: 160 },
+  { id: 'deliveryAt', label: 'Ngày nhận hàng', width: 160 },
+  { id: 'status', label: 'Trạng thái', width: 100 },
   { id: '' },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function EcommerceAccountOrdersPage() {
-  const [tab, setTab] = useState('All Orders');
+  const [tabStatus, setTabStatus] = useState({ value: 'all', label: 'Tất cả' });
 
   const [order, setOrder] = useState('asc');
+  const [orders, setOrders] = useState([]);
 
-  const [orderBy, setOrderBy] = useState('orderId');
-
-  const [selected, setSelected] = useState([]);
+  const [orderBy, setOrderBy] = useState('createdAt');
 
   const [page, setPage] = useState(0);
 
@@ -59,8 +56,9 @@ export default function EcommerceAccountOrdersPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangeTab = useCallback((event, newValue) => {
-    setTab(newValue);
+  const handleChangeTab = useCallback((event, value) => {
+    const newValue = TABS.find((tab) => tab.value === value);
+    setTabStatus(newValue);
   }, []);
 
   const handleSort = useCallback(
@@ -74,37 +72,6 @@ export default function EcommerceAccountOrdersPage() {
     [order, orderBy]
   );
 
-  const handleSelectAllRows = useCallback((event) => {
-    if (event.target.checked) {
-      const newSelected = _productsTable.map((n) => n.id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  }, []);
-
-  const handleSelectRow = useCallback(
-    (id) => {
-      const selectedIndex = selected.indexOf(id);
-      let newSelected = [];
-
-      if (selectedIndex === -1) {
-        newSelected = newSelected.concat(selected, id);
-      } else if (selectedIndex === 0) {
-        newSelected = newSelected.concat(selected.slice(1));
-      } else if (selectedIndex === selected.length - 1) {
-        newSelected = newSelected.concat(selected.slice(0, -1));
-      } else if (selectedIndex > 0) {
-        newSelected = newSelected.concat(
-          selected.slice(0, selectedIndex),
-          selected.slice(selectedIndex + 1)
-        );
-      }
-
-      setSelected(newSelected);
-    },
-    [selected]
-  );
 
   const handleChangePage = useCallback((event, newPage) => {
     setPage(newPage);
@@ -121,42 +88,60 @@ export default function EcommerceAccountOrdersPage() {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - _productsTable.length) : 0;
 
+  const getOrders =async () => {
+   try {
+     const response = await fetch(endpoints.order.me,{
+      headers:{
+        'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+        method: 'GET'
+      }
+     });
+     const data = await response.json();
+     setOrders(data.items);
+   }catch(error){
+     console.log(error);
+   }
+  }
+
+  useEffect(() => {
+    getOrders()
+  }, []);
   return (
     <>
       <Typography variant="h5" sx={{ mb: 3 }}>
-        Orders
+        Đơn hàng
       </Typography>
 
       <Tabs
-        value={tab}
+        value={tabStatus.value}
         scrollButtons="auto"
         variant="scrollable"
         allowScrollButtonsMobile
         onChange={handleChangeTab}
       >
-        {TABS.map((category) => (
-          <Tab key={category} value={category} label={category} />
+        {TABS.map((tab) => (
+          <Tab    key={tab.value}
+          iconPosition="end"
+          value={tab.value}
+          label={tab.label}    icon={
+            <Label
+              variant={
+                ((tab.value === 'all' || tab.value === tabStatus.value) && 'filled') || 'soft'
+              }
+              color={
+                (tab.value === 'completed' && 'success') ||
+                (tab.value === 'shipping' && 'warning') ||
+                (tab.value === 'cancelled' && 'error') ||
+                'default'
+              }
+            >
+             30
+            </Label>
+          }   />
         ))}
       </Tabs>
 
-      <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ mt: 5, mb: 3 }}>
-        <TextField
-          fullWidth
-          hiddenLabel
-          placeholder="Search..."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Iconify icon="carbon:search" width={24} sx={{ color: 'text.disabled' }} />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} alignItems="center">
-          <DatePicker label="Start Date" sx={{ width: 1, minWidth: 180 }} />
-          <DatePicker label="End Date" sx={{ width: 1, minWidth: 180 }} />
-        </Stack>
-      </Stack>
+ 
 
       <TableContainer
         sx={{
@@ -170,11 +155,7 @@ export default function EcommerceAccountOrdersPage() {
           },
         }}
       >
-        <EcommerceAccountOrdersTableToolbar
-          rowCount={_productsTable.length}
-          numSelected={selected.length}
-          onSelectAllRows={handleSelectAllRows}
-        />
+     
 
         <Scrollbar>
           <Table
@@ -188,20 +169,18 @@ export default function EcommerceAccountOrdersPage() {
               orderBy={orderBy}
               onSort={handleSort}
               headCells={TABLE_HEAD}
-              rowCount={_productsTable.length}
-              numSelected={selected.length}
-              onSelectAllRows={handleSelectAllRows}
+      
+              
+            
             />
 
             <TableBody>
-              {stableSort(_productsTable, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => (
+              {orders.map((row) => (
                   <EcommerceAccountOrdersTableRow
                     key={row.id}
                     row={row}
-                    selected={selected.includes(row.id)}
-                    onSelectRow={() => handleSelectRow(row.id)}
+                  
+                 
                   />
                 ))}
 

@@ -87,7 +87,7 @@ export default function EcommerceProductsView({ search }) {
       const productsMapped = res.items.map((product) => ({
         ...product,
 
-        image: convertImagePathToUrl(product.image),
+        image: convertImagePathToUrl(product.image,250),
       }));
       setProducts(productsMapped);
       setCount(Math.ceil(res.count / limit));

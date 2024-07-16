@@ -56,6 +56,7 @@ export const endpoints = {
   },
   order: {
     list: `${HOST_API}/orders`,
+    me: `${HOST_API}/orders/me`,
     removeMany: `${HOST_API}/orders/remove-many`,
   },
   customer: {

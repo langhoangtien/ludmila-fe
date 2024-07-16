@@ -15,8 +15,9 @@ import Typography from '@mui/material/Typography';
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
-import { endpoints, fetchData } from 'src/utils/fetch';
+import { endpoints, fetchData, fetchDataWithToken } from 'src/utils/fetch';
 
+import { useAuthContext } from 'src/auth/hooks';
 import { CART_MESSAGES } from 'src/constants/notifications';
 
 import FormProvider from 'src/components/hook-form';
@@ -62,7 +63,7 @@ const DELIVERY_OPTIONS = [
 
 export default function EcommerceCheckoutView() {
   const router = useRouter();
-
+const {authenticated} = useAuthContext();
   const cart = useCartContext();
   const { enqueueSnackbar } = useSnackbar();
   const EcommerceCheckoutSchema = Yup.object().shape({
@@ -112,7 +113,10 @@ export default function EcommerceCheckoutView() {
         paymentMethod,
         products: productMapped,
       };
-      await fetchData(url, order, 'POST');
+      console.log("authenticated",authenticated);
+      if(authenticated)  await fetchDataWithToken(url, order, 'POST');
+      if(!authenticated) await fetchData(url, order, 'POST');
+    
       router.push(paths.orderCompleted);
       reset();
       enqueueSnackbar(CART_MESSAGES.ORDER_COMPLETED, { variant: 'success' });

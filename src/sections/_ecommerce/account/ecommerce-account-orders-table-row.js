@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useState, useCallback } from 'react';
 
@@ -5,14 +6,15 @@ import Divider from '@mui/material/Divider';
 import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
+import {  Stack, Avatar, Tooltip, Typography } from '@mui/material';
 import InputBase, { inputBaseClasses } from '@mui/material/InputBase';
 
 //  utils
 import { fDate } from 'src/utils/format-time';
 import { fCurrency } from 'src/utils/format-number';
+import { convertImagePathToUrl } from 'src/utils/common';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
@@ -39,31 +41,38 @@ export default function EcommerceAccountOrdersTableRow({ row, onSelectRow, selec
 
   return (
     <>
-      <TableRow hover selected={selected}>
-        <TableCell padding="checkbox">
-          <Checkbox color="primary" checked={selected} onClick={onSelectRow} />
-        </TableCell>
+      <TableRow>
+        
+      
 
         <TableCell sx={{ px: 1 }}>
-          <InputBase value={row.orderId} sx={inputStyles} />
+          {row.products.map((product) => (<Link style={{textDecoration:'none'}} href={`/product/${product.productId}`}>
+          <Stack alignItems="center" alignContent="center" spacing={1} direction="row">
+          <Avatar alt={product.name} src={convertImagePathToUrl(product.image,250)} />
+          <Stack>
+          <Tooltip title="Xem sản phẩm">
+            <Typography sx={{textDecoration:'none'}} color="primary.main" key={product._id}>{product.name}</Typography>
+          </Tooltip>
+          <Typography variant="body2" color="text.secondary">Số lượng: {product.quantity}</Typography>
+          </Stack>
+          </Stack>
+          </Link>))}
         </TableCell>
-
         <TableCell sx={{ px: 1 }}>
-          <InputBase value={row.item} sx={inputStyles} />
+          <InputBase value={fCurrency(row.totalPrice)} sx={inputStyles} />
         </TableCell>
+        <TableCell>{fDate(row.createdAt)}</TableCell>
+        <TableCell>{fDate(row.deliveredAt)}</TableCell>
 
-        <TableCell>{fDate(row.deliveryDate)}</TableCell>
-
-        <TableCell sx={{ px: 1 }}>
-          <InputBase value={fCurrency(row.price)} sx={inputStyles} />
-        </TableCell>
+       
 
         <TableCell>
           <Label
             color={
-              (row.status === 'Completed' && 'success') ||
-              (row.status === 'To Process' && 'warning') ||
-              (row.status === 'Cancelled' && 'error') ||
+              (row.status === 'completed' && 'success') ||
+              (row.status === 'shipping' && 'warning') ||
+              (row.status === 'cancelled' && 'error') ||
+              (row.status === 'confirmed' && 'info') ||
               'default'
             }
           >
@@ -91,17 +100,15 @@ export default function EcommerceAccountOrdersTableRow({ row, onSelectRow, selec
         }}
       >
         <MenuItem onClick={handleClose}>
-          <Iconify icon="carbon:view" sx={{ mr: 1 }} /> View
+          <Iconify icon="carbon:view" sx={{ mr: 1 }} /> Xem
         </MenuItem>
 
-        <MenuItem onClick={handleClose}>
-          <Iconify icon="carbon:edit" sx={{ mr: 1 }} /> Edit
-        </MenuItem>
+        
 
         <Divider sx={{ borderStyle: 'dashed', mt: 0.5 }} />
 
         <MenuItem onClick={handleClose} sx={{ color: 'error.main' }}>
-          <Iconify icon="carbon:trash-can" sx={{ mr: 1 }} /> Delete
+          <Iconify icon="carbon:trash-can" sx={{ mr: 1 }} /> Hủy
         </MenuItem>
       </Popover>
     </>

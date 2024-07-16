@@ -16,13 +16,13 @@ export default async function EcommerceLandingPage() {
 
   const topNewestProducts = respon.topNewestProducts.map((product) => ({
     ...product,
-    image: convertImagePathToUrl(product.image),
+    image: convertImagePathToUrl(product.image,250),
   }));
   const topDiscountProducts = respon.topDiscountProducts.map((product) => {
     const images = product.images.map((image) => convertImagePathToUrl(image));
     return {
       ...product,
-      image: convertImagePathToUrl(product.image),
+      image: convertImagePathToUrl(product.image,450),
       images,
     };
   });

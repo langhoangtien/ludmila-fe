@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 import Stack from '@mui/material/Stack';
-import RadioGroup from '@mui/material/RadioGroup';
 
 import ReviewProgressItem from './review-progress-item';
 
@@ -17,15 +16,9 @@ export default function ReviewProgress({ star, setStar, ratings, ...other }) {
     .reverse();
 
   return (
-    <RadioGroup>
-      <Stack spacing={2} {...other}>
-        <ReviewProgressItem
-          rating={{ number: totals, value: 0 }}
-          star={star}
-          setStar={setStar}
-          index={0}
-          name="Tất cả"
-        />
+
+      <Stack spacing={1} {...other}>
+     
         {ratingsCaculated.map((rating, index) => (
           <ReviewProgressItem
             star={star}
@@ -37,7 +30,7 @@ export default function ReviewProgress({ star, setStar, ratings, ...other }) {
           />
         ))}
       </Stack>
-    </RadioGroup>
+   
   );
 }
 

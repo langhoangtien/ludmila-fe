@@ -28,7 +28,7 @@ export default function ReviewSummary({ star, onOpenForm, setStar }) {
       }}
     >
       <Container>
-        <Grid container spacing={{ xs: 5, md: 8 }}>
+        <Grid container spacing={{ xs: 3, md: 5 }}>
           <Grid xs={12} md={4}>
             <Typography variant="h3">Đánh giá</Typography>
 

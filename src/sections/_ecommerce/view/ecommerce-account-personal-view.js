@@ -28,6 +28,7 @@ import Iconify from 'src/components/iconify';
 import RHFUploadAvatar from 'src/components/hook-form/rhf-upload-avatar';
 import FormProvider, { RHFSelect, RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
+
 // ----------------------------------------------------------------------
 
 const GENDER_OPTIONS = [
@@ -42,17 +43,28 @@ export default function EcommerceAccountPersonalView() {
   const dialog = useBoolean();
   const passwordShow = useBoolean();
   const { enqueueSnackbar } = useSnackbar();
+  const phoneRegExp = /((\+84|84|0)(3|5|7|8|9|1[2689]))([0-9]{8})\b/;
+
+const phoneNumberSchema = Yup.string().test({
+  name: 'phone',
+  message: 'Số điện thoại không hợp lệ',
+  test: value => {
+    if (!value) return true; // Cho phép giá trị rỗng, do lựa chọn excludeEmptyString trong Yup
+
+    return phoneRegExp.test(value);
+  },
+});
   const EcommerceAccountPersonalSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
     lastName: Yup.string().required('Last name is required'),
     email: Yup.string().required('Email address is required'),
-    phoneNumber: Yup.string()
-      .matches(/((\+84|84|0)(3|5|7|8|9|1[2689]))([0-9]{8})\b/, 'Số điện thoại không hợp lệ')
-      .optional(),
+    phoneNumber: phoneNumberSchema,
+      
     birthday: Yup.mixed().nullable(),
     gender: Yup.string(),
     address: Yup.string(),
     province: Yup.string(),
+   
   });
 
   const defaultValues = {
@@ -61,7 +73,7 @@ export default function EcommerceAccountPersonalView() {
     email: '',
     phoneNumber: '',
     birthday: null,
-    gender: '',
+    gender: 'other',
     address: '',
     province: '',
     country: 'VN',
@@ -86,6 +98,7 @@ export default function EcommerceAccountPersonalView() {
         ...data,
         photo: convertImagePathToUrl(data.photo, 250),
         birthday: new Date(data.birthday),
+      
       };
 
       reset(cloneData);
@@ -98,6 +111,9 @@ export default function EcommerceAccountPersonalView() {
       const cloneData = {
         ...data,
         photo: convertImageUrlToPath(data.photo),
+        province:data.province || undefined,
+        phoneNumber: data.phoneNumber || undefined,
+        birthday: data.birthday || undefined,
       };
       await fetchDataWithToken(endpoints.auth.me, cloneData, 'PATCH');
       await getUserProfile();

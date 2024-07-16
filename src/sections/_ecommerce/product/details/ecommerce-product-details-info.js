@@ -81,7 +81,8 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
     if (!currentVariant) {
       return;
     }
-    const variantSelected = { ...currentVariant, name };
+    const image = currentVariant.image || product.image;
+    const variantSelected = { ...currentVariant, name, image };
     cart.addToCart(variantSelected, quantity);
     router.push(paths.cart);
   };

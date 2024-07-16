@@ -20,7 +20,7 @@ export default function EcommerceAccountWishlistView() {
   return (
     <>
       <Typography variant="h5" sx={{ mb: 3 }}>
-        Wishlist
+        Yêu thích
       </Typography>
 
       <EcommerceCartList wishlist products={_products.slice(0, 4)} />
