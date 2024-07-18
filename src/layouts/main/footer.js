@@ -2,6 +2,7 @@
 
 import PropTypes from 'prop-types';
 
+import { Box } from '@mui/material';
 import Link from '@mui/material/Link';
 import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack';
@@ -92,8 +93,11 @@ export default function Footer() {
               </Stack>
 
               <Stack spacing={1} alignItems="flex-start">
-                <Typography variant="h6">Liên hệ</Typography>
-                <Link
+                <Typography variant="h6">Liên hệ</Typography>{' '}
+                <Box>
+                  <Typography variant="h5">HÀNG NGA CHÍNH HÃNG - LUDMILA</Typography>
+                </Box>
+                <Box
                   variant="body2"
                   sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
                 >
@@ -101,23 +105,21 @@ export default function Footer() {
                   <Typography variant="body2">
                     &nbsp; T10 Tòa Benka, Lệ chi - Gia Lâm - Hà Nội
                   </Typography>
-                </Link>
-
-                <Link
+                </Box>
+                <Box
                   variant="body2"
                   sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
                 >
                   <Iconify icon="carbon:mobile" />{' '}
                   <Typography variant="body2">&nbsp; 0832.66.77.11</Typography>
-                </Link>
-
-                <Link
+                </Box>
+                <Box
                   variant="body2"
                   sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
                 >
                   <Iconify icon="carbon:email" />
-                  <Typography variant="body2"> &nbsp; ludmilatechnology@gmail.com</Typography>
-                </Link>
+                  <Typography variant="body2"> &nbsp; support@ludmila.vn</Typography>
+                </Box>
               </Stack>
 
               <Stack spacing={2}>

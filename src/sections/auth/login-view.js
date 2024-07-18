@@ -25,7 +25,6 @@ import { useAuthContext } from 'src/auth/hooks';
 import FacebookLogin from 'src/auth/facebook-login/facebook';
 
 import Iconify from 'src/components/iconify';
-import ButtonLogin from 'src/components/button-login';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
@@ -33,9 +32,8 @@ export default function LoginView({ onChangePage = null, dialog = null }) {
   const passwordShow = useBoolean();
   const auth = useAuthContext();
   const searchParams = useSearchParams();
-
+  console.log('FFFF');
   const returnTo = searchParams.get('returnTo');
-  console.log('returnTo', returnTo);
   const router = useRouter();
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('That is not an email'),
@@ -50,8 +48,9 @@ export default function LoginView({ onChangePage = null, dialog = null }) {
   };
 
   const handleChangePage = () => {
+    console.log(!!onChangePage);
     if (onChangePage) onChangePage();
-    router.push(paths.register);
+    else router.push(paths.register);
   };
 
   const methods = useForm({
@@ -106,8 +105,9 @@ export default function LoginView({ onChangePage = null, dialog = null }) {
   );
   const renderSocials = (
     <Stack direction="column" alignItems="center" spacing={2}>
-      <GoogleAuth callback={handleGoogleLogin} /> <FacebookLogin callback={handleFacebookLogin} />
-      <ButtonLogin icon="logos:apple">Đăng nhập bằng Apple</ButtonLogin>
+      <GoogleAuth callback={handleGoogleLogin} />
+      <FacebookLogin callback={handleFacebookLogin} />
+      {/* <ButtonLogin icon="logos:apple">Đăng nhập bằng Apple</ButtonLogin> */}
     </Stack>
   );
 

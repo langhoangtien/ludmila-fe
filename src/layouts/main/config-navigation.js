@@ -17,19 +17,19 @@ export const pageLinks = [
   {
     subheader: 'Mỹ phẩm',
     items: [
-      { title: 'Hướng dẫn thanh toán', path: paths.loginCover },
-      { title: 'Hướng dẫn mua hàng Online', path: paths.loginIllustration },
+      { title: 'Hướng dẫn thanh toán', path: paths.login },
+      { title: 'Hướng dẫn mua hàng Online', path: paths.login },
       { title: 'Góp ý, Khiếu Nại', path: paths.login },
-      { title: 'Liên hệ', path: paths.registerCover },
+      { title: 'Liên hệ', path: paths.login },
     ],
   },
   {
     subheader: 'Đồ hộp',
     items: [
-      { title: 'Hướng dẫn thanh toán', path: paths.loginCover },
-      { title: 'Hướng dẫn mua hàng Online', path: paths.loginIllustration },
+      { title: 'Hướng dẫn thanh toán', path: paths.login },
+      { title: 'Hướng dẫn mua hàng Online', path: paths.login },
       { title: 'Góp ý, Khiếu Nại', path: paths.login },
-      { title: 'Liên hệ', path: paths.registerCover },
+      { title: 'Liên hệ', path: paths.login },
     ],
   },
 ];
@@ -38,28 +38,25 @@ export const pageLinksFooter = [
     subheader: 'Tài khoản',
     items: [
       { title: 'Giỏ hàng', path: paths.cart },
+      { title: 'Đơn hàng', path: paths.account.orders },
       { title: 'Tài khoản', path: paths.account.personal },
       { title: 'Yêu thích', path: paths.account.wishlist },
       { title: 'Mã giảm giá', path: paths.account.vouchers },
-      { title: 'Đơn hàng', path: paths.account.orders },
     ],
   },
   {
     subheader: 'Hỗ trợ khách hàng',
     items: [
-      { title: 'Hướng dẫn thanh toán', path: paths.loginCover },
-      { title: 'Hướng dẫn mua hàng Online', path: paths.loginIllustration },
-      { title: 'Góp ý, Khiếu Nại', path: paths.login },
-      { title: 'Liên hệ', path: paths.registerCover },
+      { title: 'Hướng dẫn mua hàng', path: paths.login },
+      { title: 'Góp ý, Khiếu Nại', path: paths.contactUs },
     ],
   },
   {
-    subheader: 'Giới thiệu',
+    subheader: 'Giới thiệu Ludmila',
     items: [
-      { title: 'Hướng dẫn thanh toán', path: paths.loginCover },
-      { title: 'Hướng dẫn mua hàng Online', path: paths.loginIllustration },
-      { title: 'Góp ý, Khiếu Nại', path: paths.login },
-      { title: 'Liên hệ', path: paths.registerCover },
+      { title: 'Về chúng tôi', path: paths.aboutUs },
+      { title: 'Đăng ký làm CTV', path: paths.contactUs },
+      { title: 'Liên hệ', path: paths.contactUs },
     ],
   },
   {

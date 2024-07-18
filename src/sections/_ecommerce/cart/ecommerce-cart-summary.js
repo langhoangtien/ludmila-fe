@@ -5,9 +5,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import { alpha } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import InputAdornment from '@mui/material/InputAdornment';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -33,20 +31,8 @@ export default function EcommerceCartSummary({ total, subtotal, shipping, discou
 
         <Row label="Phí vận chuyển" value={fCurrency(shipping)} />
 
-        <Row label="Giảm giá" value={`-${fCurrency(discount)}`} />
+        <Row label="Giảm giá" value={`${fCurrency(discount)}`} />
       </Stack>
-
-      <TextField
-        hiddenLabel
-        placeholder="Mã giảm giá"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <Button>Áp dụng</Button>
-            </InputAdornment>
-          ),
-        }}
-      />
 
       <Divider sx={{ borderStyle: 'dashed' }} />
 

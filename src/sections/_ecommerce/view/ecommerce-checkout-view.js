@@ -63,7 +63,7 @@ const DELIVERY_OPTIONS = [
 
 export default function EcommerceCheckoutView() {
   const router = useRouter();
-const {authenticated} = useAuthContext();
+  const { authenticated } = useAuthContext();
   const cart = useCartContext();
   const { enqueueSnackbar } = useSnackbar();
   const EcommerceCheckoutSchema = Yup.object().shape({
@@ -113,10 +113,10 @@ const {authenticated} = useAuthContext();
         paymentMethod,
         products: productMapped,
       };
-      console.log("authenticated",authenticated);
-      if(authenticated)  await fetchDataWithToken(url, order, 'POST');
-      if(!authenticated) await fetchData(url, order, 'POST');
-    
+
+      if (authenticated) await fetchDataWithToken(url, order, 'POST');
+      if (!authenticated) await fetchData(url, order, 'POST');
+
       router.push(paths.orderCompleted);
       reset();
       enqueueSnackbar(CART_MESSAGES.ORDER_COMPLETED, { variant: 'success' });

@@ -90,13 +90,13 @@ export default function SearchDemo({ sx, ...other }) {
   };
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
-      <Stack {...other} sx={{ ...sx, position: 'relative', zIndex: 1000, marginBottom: 2 }}>
+      <Stack {...other} sx={{ ...sx, position: 'relative', zIndex: 1000, marginBottom: 0.5 }}>
         <TextField
           sx={{
             borderRadius: theme.shape.borderRadius,
             backgroundColor: alpha(theme.palette.common.white, 0.95),
             '&:hover': {
-              backgroundColor: alpha(theme.palette.common.white, 0.85),
+              backgroundColor: alpha(theme.palette.common.white, 0.95),
             },
           }}
           onKeyUp={handleKeyUp}
@@ -109,6 +109,7 @@ export default function SearchDemo({ sx, ...other }) {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
+                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                 <IconButton onClick={handleClickSearch}>
                   <Iconify icon="carbon:search" sx={{ color: 'primary.main' }} />
                 </IconButton>
@@ -122,7 +123,7 @@ export default function SearchDemo({ sx, ...other }) {
               ...bgBlur({
                 blur: 2,
                 opacity: 0.98,
-                color: theme.palette.background.default,
+                color: theme.palette.background.neutral,
               }),
               position: 'absolute',
               width: 1,

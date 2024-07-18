@@ -27,14 +27,8 @@ export const paths = {
   },
 
   // Auth
-  loginCover: '/auth/login-cover',
-
   login: '/auth/login',
-  loginIllustration: '/auth/login-illustration',
-  registerCover: '/auth/register-cover',
-
   register: '/auth/register',
-  registerIllustration: '/auth/register-illustration',
   forgotPassword: '/auth/forgot-password',
   verify: '/auth/verify',
   // Common
@@ -49,6 +43,7 @@ export const paths = {
   privacyPolicy: '/privacy-policy',
   returnPolicy: '/return-policy',
   deliveryPolicy: '/delivery-policy',
+
   // Components
   components: {
     root: '/components',
@@ -74,6 +69,7 @@ export const paths = {
   license: 'https://material-ui.com/store/license/#i-standard-license',
   minimalStore: 'https://material-ui.com/store/items/minimal-dashboard',
   zoneStore: 'https://mui.com/store/items/zone-landing-page/',
+  contactUs: '/contact-us',
   aboutUs: '/about-us',
   figmaPreview:
     'https://www.figma.com/file/Zam9QBLhV4pZf5xtNs0Lf8/%5BPreview%5D-Zone_Web.v2.3.0?type=design&node-id=59%3A680507&mode=design&t=GCVeJci5zfUu5WCy-1',

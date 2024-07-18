@@ -29,10 +29,7 @@ const saveStateToLocalStorage = (state) => {
 const caculateTotal = (products) => {
   const totalProduct = products.length;
   const totalItems = products.reduce((acc, item) => acc + item.quantity, 0);
-  const subTotal = products.reduce(
-    (acc, item) => acc + item.price * (1 - item.discount / 100) * item.quantity,
-    0
-  );
+  const subTotal = products.reduce((acc, item) => acc + item.salePrice * item.quantity, 0);
   const shippingFee = subTotal > SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
   const totalPrice = subTotal + shippingFee;
   return { totalItems, totalPrice, totalProduct, subTotal, shippingFee };

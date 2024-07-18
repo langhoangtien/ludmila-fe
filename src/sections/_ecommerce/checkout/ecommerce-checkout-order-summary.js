@@ -56,7 +56,7 @@ export default function EcommerceCheckoutOrderSummary({
 
         <Row label="Phí vận chuyển" value={fCurrency(shipping)} />
 
-        <Row label="Giảm giá" value={`-${fCurrency(discount)}`} />
+        <Row label="Giảm giá" value={`${fCurrency(discount)}`} />
       </Stack>
 
       <TextField

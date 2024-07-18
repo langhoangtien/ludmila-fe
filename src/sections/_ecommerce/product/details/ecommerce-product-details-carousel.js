@@ -151,7 +151,7 @@ export default function EcommerceProductDetailsCarousel({ images }) {
               sx={{
                 width: THUMB_SIZE,
                 height: THUMB_SIZE,
-                opacity: 0.48,
+                opacity: 0.8,
                 cursor: 'pointer',
                 ...(carouselLarge.currentIndex === index && {
                   opacity: 1,

@@ -40,7 +40,7 @@ const ReviewNewForm = ({ onClose, submitComment, ...other }) => {
       .min(1, 'Đánh giá tối thiểu 1 sao')
       .max(5, 'Đánh giá tối đa 5 sao')
       .required('Đánh giá là bắt buộc'),
-    content: Yup.string().required('Review is required'),
+    content: Yup.string().required('Nội dung không được bỏ trống'),
     phoneNumber: Yup.string()
       .matches(/((\+84|84|0)(3|5|7|8|9|1[2689]))([0-9]{8})\b/, 'Số điện thoại không hợp lệ')
       .required('Số điện thoại không được bỏ trống'),

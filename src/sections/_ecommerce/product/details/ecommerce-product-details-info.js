@@ -3,23 +3,19 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/navigation';
 
 import { Box } from '@mui/system';
+import { Link } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import { Link, Alert, Dialog, DialogContent } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
-import { useResponsive } from 'src/hooks/use-responsive';
 
 import { fCurrency } from 'src/utils/format-number';
 
-import Label from 'src/components/label';
-import Image from 'src/components/image';
 import Iconify from 'src/components/iconify';
 import TextMaxLine from 'src/components/text-max-line';
 import { useCartContext } from 'src/components/cart/use-cart-context';
@@ -60,7 +56,6 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
     country,
   } = product;
   const cart = useCartContext();
-  const mdUp = useResponsive('up', 'md');
   const [error, setError] = useState(false);
   const dialog = useBoolean();
 
@@ -88,10 +83,6 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
   };
   return (
     <>
-      <Label color="success" sx={{ mb: 3 }}>
-        Còn hàng
-      </Label>
-
       <Stack spacing={1} sx={{ mb: 2 }}>
         <Typography variant="h4"> {name} </Typography>
 
@@ -189,106 +180,30 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
         <IncrementerButton changeQuantity={changeQuantity} quantity={quantity} />
       </Stack>
 
-      <Stack
-        spacing={2}
-        direction={{ xs: 'column', md: 'row' }}
-        justifyContent="flex-start"
-        alignItems={{ md: 'center' }}
-      >
-        <Stack direction="row" spacing={2}>
-          <Button
-            fullWidth={!mdUp}
-            size="large"
-            color="inherit"
-            onClick={handleAddToCart}
-            variant="contained"
-            startIcon={<Iconify icon="carbon:shopping-cart-plus" />}
-          >
-            Thêm vào giỏ hàng
-          </Button>
+      <Stack spacing={2}>
+        <Button
+          fullWidth
+          size="large"
+          color="inherit"
+          onClick={handleAddToCart}
+          variant="contained"
+          startIcon={<Iconify icon="carbon:shopping-cart-plus" />}
+        >
+          Thêm vào giỏ hàng
+        </Button>
 
-          <Button
-            fullWidth={!mdUp}
-            onClick={handleAddToCartAndBuyNow}
-            size="large"
-            color="primary"
-            variant="contained"
-          >
-            Mua ngay
-          </Button>
-        </Stack>
+        <Button
+          fullWidth
+          onClick={handleAddToCartAndBuyNow}
+          size="large"
+          color="primary"
+          variant="contained"
+        >
+          Mua ngay
+        </Button>
       </Stack>
 
       <Divider sx={{ borderStyle: 'dashed', my: 3 }} />
-
-      <Dialog onClose={dialog.onFalse} open={dialog.value}>
-        <DialogContent>
-          <Stack spacing={3} px={2} py={4}>
-            <Alert severity="success">Thêm vào giỏ hàng thành công</Alert>
-            <Stack direction="row" alignItems="center" flexGrow={1}>
-              <Image
-                src={currentVariant?.image}
-                sx={{
-                  width: 60,
-                  height: 60,
-                  flexShrink: 0,
-                  borderRadius: 1.5,
-                  bgcolor: 'background.neutral',
-                }}
-              />
-
-              <Stack spacing={0.5} sx={{ p: 2 }}>
-                <Typography variant="subtitle2">{name}</Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Color: Grey Space
-                </Typography>
-                <Box color="error.main" component="span">
-                  {fCurrency(currentVariant?.salePrice)}
-
-                  {currentVariant?.discount && (
-                    <Box
-                      component="span"
-                      sx={{
-                        ml: 1,
-                        color: 'text.disabled',
-
-                        textDecoration: 'line-through',
-                      }}
-                    >
-                      {fCurrency(currentVariant?.price)}
-                    </Box>
-                  )}
-                </Box>
-              </Stack>
-            </Stack>
-            <Stack
-              sx={{ variant: 'h5', color: 'error.main' }}
-              justifyContent="space-between"
-              spacing={2}
-              direction="row"
-            >
-              <Box>Tổng</Box>
-              <Box>{fCurrency(cart.totalPrice)}</Box>
-            </Stack>
-            <Stack spacing={1}>
-              {' '}
-              <Button
-                onClick={dialog.onFalse}
-                component={RouterLink}
-                href={paths.cart}
-                fullWidth
-                color="primary"
-                variant="contained"
-              >
-                Xem giỏ hàng
-              </Button>
-              <Button onClick={dialog.onFalse} fullWidth variant="contained">
-                Tiếp tục mua sắm
-              </Button>
-            </Stack>
-          </Stack>
-        </DialogContent>
-      </Dialog>
     </>
   );
 }

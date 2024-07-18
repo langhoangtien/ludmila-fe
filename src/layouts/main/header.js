@@ -54,6 +54,7 @@ const shakeAnimation = keyframes`
   }
 `;
 export default function Header({ headerOnDark }) {
+  console.log('FFF');
   const theme = useTheme();
   const dialog = useBoolean();
   const { authenticated } = useAuthContext();

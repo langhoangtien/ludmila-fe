@@ -115,29 +115,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   // REGISTER
-  const register = useCallback(async (email, password, firstName, lastName) => {
-    const data = {
-      email,
-      password,
-      firstName,
-      lastName,
-    };
-
-    const response = await fetchData(endpoints.auth.register, data);
-
-    const { token, user } = response;
-
-    sessionStorage.setItem(STORAGE_KEY, token);
-
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        user: {
-          ...user,
-          token,
-        },
-      },
-    });
+  const register = useCallback(async (data) => {
+    await fetchData(endpoints.auth.register, data);
   }, []);
 
   // LOGOUT
