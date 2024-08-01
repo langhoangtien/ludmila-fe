@@ -22,7 +22,6 @@ import { useResponsive } from 'src/hooks/use-responsive';
 import { endpoints } from 'src/utils/fetch';
 
 import { bgBlur } from 'src/theme/css';
-import { useAuthContext } from 'src/auth/hooks';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
@@ -36,7 +35,6 @@ import NavMobile from './nav/mobile';
 import { HEADER } from '../config-layout';
 import SearchDemo from '../common/search-demo';
 import HeaderShadow from '../common/header-shadow';
-import AccountPopover from '../common/account-popover';
 
 // ----------------------------------------------------------------------
 const shakeAnimation = keyframes`
@@ -57,7 +55,6 @@ export default function Header({ headerOnDark }) {
   console.log('FFF');
   const theme = useTheme();
   const dialog = useBoolean();
-  const { authenticated } = useAuthContext();
   const offset = useOffSetTop();
   const [loginPage, setLoginPage] = useState(true);
   const mdUp = useResponsive('up', 'md');
@@ -129,19 +126,6 @@ export default function Header({ headerOnDark }) {
         {mdUp && <SearchDemo flexGrow={2} />}
         <Box flexGrow={1} />
         <Stack spacing={1} justifyContent="space-between" direction="row">
-          {authenticated && (
-            <Badge badgeContent={2} color="info">
-              <IconButton
-                component={RouterLink}
-                href={paths.wishlist}
-                size="small"
-                color="inherit"
-                sx={{ p: 0 }}
-              >
-                <Iconify icon="carbon:favorite" width={24} />
-              </IconButton>
-            </Badge>
-          )}
           <Badge badgeContent={totalProduct} color="error">
             <IconButton
               component={RouterLink}
@@ -153,13 +137,6 @@ export default function Header({ headerOnDark }) {
               <Iconify icon="carbon:shopping-cart" width={24} />
             </IconButton>
           </Badge>
-          {authenticated ? (
-            <AccountPopover />
-          ) : (
-            <IconButton onClick={dialog.onTrue} size="small" color="inherit" sx={{ p: 0 }}>
-              <Iconify icon="carbon:user" width={24} />
-            </IconButton>
-          )}
         </Stack>
       </Stack>
 
