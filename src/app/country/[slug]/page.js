@@ -29,6 +29,7 @@ export default async function DetailCountryPage(props) {
   });
 
   const countryJson = await country.json();
+  console.log('countryJson', countryJson);
   const productsJson = await products.json();
   // console.log("SSS",countryJson,productsJson);
   const productsMapped = productsJson.items.map((product) => ({
@@ -56,7 +57,7 @@ export default async function DetailCountryPage(props) {
             textAlign: { xs: 'center', md: 'unset' },
           }}
         >
-          Danh mục:&quot;
+          Xuất xứ:&quot;
           <Box sx={{ color: 'primary.main' }} component="span">
             {countryJson.name}
           </Box>
