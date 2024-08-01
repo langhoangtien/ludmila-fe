@@ -57,7 +57,7 @@ export default function EcommerceCartItem({ product, wishlist }) {
 
       <Stack sx={{ width: 120, typography: 'subtitle2' }}>
         {' '}
-        {fCurrency(product.price * product.quantity * (1 - product.discount / 100))}{' '}
+        {fCurrency(product.salePrice * product.quantity)}{' '}
       </Stack>
 
       <IconButton onClick={() => removeFromCart(product._id)}>
@@ -78,6 +78,7 @@ EcommerceCartItem.propTypes = {
     coverUrl: PropTypes.string,
     name: PropTypes.string,
     price: PropTypes.number,
+    salePrice: PropTypes.number,
     quantity: PropTypes.number,
     discount: PropTypes.number,
     _id: PropTypes.string,

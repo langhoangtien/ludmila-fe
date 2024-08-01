@@ -47,7 +47,7 @@ export const pageLinksFooter = [
   {
     subheader: 'Hỗ trợ khách hàng',
     items: [
-      { title: 'Hướng dẫn mua hàng', path: paths.login },
+      { title: 'Hướng dẫn mua hàng', path: paths.orderGuide },
       { title: 'Góp ý, Khiếu Nại', path: paths.contactUs },
     ],
   },

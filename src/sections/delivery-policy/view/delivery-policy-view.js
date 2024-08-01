@@ -29,18 +29,18 @@ export default function DeliveryPolicyView() {
         <ul>
           <li>
             <Typography variant="body1">
-              Đơn hàng trước 3h chiều thì sẽ giao trong buổi chiều cùng ngày
+              Đơn hàng trước 5h chiều thì sẽ giao trong buổi chiều cùng ngày
             </Typography>
           </li>
           <li>
             <Typography variant="body1">
-              Đơn hàng sau 3h chiều sẽ giao trong buổi tối và sáng hôm sau.
+              Đơn hàng sau 5h chiều sẽ giao trong buổi tối và sáng hôm sau.
             </Typography>
           </li>
         </ul>
         <Typography variant="subtitle1">1.2 Đơn hàng ở các tỉnh thành khác:</Typography>
         <Typography variant="body1">
-          Thời gian là 2-3 ngày đối với khu vực trung tâm tỉnh thành phố, 3-5 ngày đối với khu vực
+          Thời gian là 2-3 ngày đối với khu vực trung tâm tỉnh thành phố, 2-4 ngày đối với khu vực
           ngoại thành, huyện, xã, thị trấn…
         </Typography>
         <Typography variant="body1">(Không tính thứ bảy, chủ nhật hay các ngày lễ tết)</Typography>
