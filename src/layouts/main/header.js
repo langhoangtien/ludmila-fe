@@ -52,7 +52,6 @@ const shakeAnimation = keyframes`
   }
 `;
 export default function Header({ headerOnDark }) {
-  console.log('FFF');
   const theme = useTheme();
   const dialog = useBoolean();
   const offset = useOffSetTop();
@@ -64,7 +63,7 @@ export default function Header({ headerOnDark }) {
   useEffect(() => {
     const getMenu = async () => {
       try {
-        const menuLocal = localStorage.getItem('menu');
+        const menuLocal = sessionStorage.getItem('menu');
         if (!menuLocal) {
           const response = await fetch(endpoints.home.menu);
           const data = await response.json();
@@ -76,7 +75,6 @@ export default function Header({ headerOnDark }) {
             })),
           }));
           const nav = [
-            { title: 'Trang chủ', path: '/' },
             {
               title: 'Danh mục',
               path: paths.pages,
@@ -84,7 +82,7 @@ export default function Header({ headerOnDark }) {
             },
             { title: 'Sản phẩm', path: paths.products },
           ];
-          localStorage.setItem('menu', JSON.stringify(nav));
+          sessionStorage.setItem('menu', JSON.stringify(nav));
           setMenu(nav);
         } else {
           setMenu(JSON.parse(menuLocal));
@@ -99,48 +97,71 @@ export default function Header({ headerOnDark }) {
 
   const renderContent = (
     <Stack direction="column" pt={1} flexGrow={1}>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        spacing={1}
-        flexGrow={1}
-      >
-        {!mdUp && <NavMobile data={menu} />}
-        <Box sx={{ lineHeight: 0, position: 'relative' }}>
-          <Logo />
-        </Box>
+      {mdUp && (
+        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+          <Box sx={{ lineHeight: 0, position: 'relative' }}>
+            <Logo />
+          </Box>
 
-        <Stack
-          flexGrow={1}
-          alignItems="center"
-          sx={{
-            height: 1,
-            display: { xs: 'none', md: 'flex' },
-          }}
-        >
-          {/* <NavDesktop data={navConfig} /> */}
+          <Stack
+            alignItems="center"
+            sx={{
+              height: 1,
+              display: { xs: 'none', md: 'flex' },
+            }}
+          >
+            <MegaMenuDesktopHorizontal data={menu} />
+          </Stack>
+          <SearchDemo flexGrow={1} />
 
-          <MegaMenuDesktopHorizontal data={menu} />
+          <Stack spacing={1} justifyContent="space-between" direction="row">
+            <Badge badgeContent={totalProduct} color="error">
+              <IconButton
+                component={RouterLink}
+                href={paths.cart}
+                size="small"
+                color="inherit"
+                sx={{ p: 0, animation: shake && `${shakeAnimation} .4s ease-in-out infinite` }}
+              >
+                <Iconify icon="fluent:cart-20-regular" height={28} width={28} />
+              </IconButton>
+            </Badge>
+          </Stack>
         </Stack>
-        {mdUp && <SearchDemo flexGrow={2} />}
-        <Box flexGrow={1} />
-        <Stack spacing={1} justifyContent="space-between" direction="row">
-          <Badge badgeContent={totalProduct} color="error">
-            <IconButton
-              component={RouterLink}
-              href={paths.cart}
-              size="small"
-              color="inherit"
-              sx={{ p: 0, animation: shake && `${shakeAnimation} .4s ease-in-out infinite` }}
-            >
-              <Iconify icon="carbon:shopping-cart" width={24} />
-            </IconButton>
-          </Badge>
-        </Stack>
-      </Stack>
+      )}
 
-      {!mdUp && <SearchDemo flexGrow={1} />}
+      {!mdUp && (
+        <>
+          {' '}
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={0.5}
+            flexGrow={1}
+            position={{ xs: 'relative', md: 'static' }}
+          >
+            <NavMobile data={menu} />
+            {/* <Box sx={{ lineHeight: 0, position: 'relative' }}>
+              <Logo />
+            </Box> */}
+            <SearchDemo flexGrow={1} />
+            <Stack spacing={1} justifyContent="space-between" direction="row">
+              <Badge badgeContent={totalProduct} color="error">
+                <IconButton
+                  component={RouterLink}
+                  href={paths.cart}
+                  size="small"
+                  color="inherit"
+                  sx={{ p: 0, animation: shake && `${shakeAnimation} .4s ease-in-out infinite` }}
+                >
+                  <Iconify icon="fluent:cart-20-regular" height={28} width={28} />
+                </IconButton>
+              </Badge>
+            </Stack>
+          </Stack>
+        </>
+      )}
     </Stack>
   );
 

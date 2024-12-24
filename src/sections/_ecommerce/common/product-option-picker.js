@@ -1,59 +1,64 @@
 import PropTypes from 'prop-types';
 
-import Radio from '@mui/material/Radio';
-import Stack from '@mui/material/Stack';
-import { alpha } from '@mui/material/styles';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import { Stack } from '@mui/system';
+import { Box, Button } from '@mui/material';
+
+import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export default function ProductOptionPicker({ value, options, onChange, sx }) {
+export default function ProductOptionPicker({ value, options, onChangeAtt, sx }) {
+  console.log('ProductOptionPicker', options);
+
   return (
-    <RadioGroup row value={value} onChange={onChange}>
+    <Stack spacing={1} direction="row">
       {options.map((option) => (
-        <Stack
+        <Button
+          onClick={() => onChangeAtt(option)}
           key={option}
-          alignItems="center"
-          justifyContent="center"
+          variant="outlined"
+          color={value === option ? 'primary' : 'inherit'}
           sx={{
-            m: 1,
-            px: 1.5,
-            height: 44,
-            borderRadius: 1,
             position: 'relative',
-            typography: 'subtitle2',
-            border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.24)}`,
-            ...(value === option && {
-              boxShadow: (theme) => `0 0 0 2px ${theme.palette.text.primary}`,
-            }),
             ...sx,
           }}
         >
           {option}
 
-          <FormControlLabel
-            value={option}
-            control={<Radio sx={{ display: 'none' }} />}
-            label=""
-            sx={{
-              m: 0,
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-              position: 'absolute',
-            }}
-          />
-        </Stack>
+          {value === option && (
+            <Box
+              sx={{
+                width: 0,
+                height: 0,
+                position: 'absolute',
+                right: 12,
+                top: 6,
+                borderLeftWidth: 24,
+                borderLeftStyle: 'solid',
+                borderLeftColor: 'transparent',
+                borderTopWidth: 24,
+                borderTopStyle: 'solid',
+                borderTopColor: (theme) => theme.palette.primary.main,
+                marginRight: '-12px',
+                marginTop: '-6px',
+              }}
+            >
+              <Iconify
+                style={{ top: '-22px', right: '1px', position: 'absolute', color: 'white' }}
+                width={12}
+                icon="fluent:checkmark-20-regular"
+              />
+            </Box>
+          )}
+        </Button>
       ))}
-    </RadioGroup>
+    </Stack>
   );
 }
 
 ProductOptionPicker.propTypes = {
   sx: PropTypes.object,
   value: PropTypes.string,
-  onChange: PropTypes.func,
+  onChangeAtt: PropTypes.func,
   options: PropTypes.array,
 };

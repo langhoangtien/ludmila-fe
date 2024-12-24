@@ -28,6 +28,7 @@ export function button(theme) {
     const largeSize = ownerState.size === 'large';
 
     const defaultStyle = {
+      // fontWeight: 400,
       ...(inheritColor && {
         // CONTAINED
         ...(containedVariant && {

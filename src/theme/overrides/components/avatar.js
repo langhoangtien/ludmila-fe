@@ -5,18 +5,6 @@ import { avatarGroupClasses } from '@mui/material/AvatarGroup';
 
 const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'];
 
-const colorByName = (name) => {
-  const charAt = name.charAt(0).toLowerCase();
-
-  if (['a', 'c', 'f'].includes(charAt)) return 'primary';
-  if (['e', 'd', 'h'].includes(charAt)) return 'secondary';
-  if (['i', 'k', 'l'].includes(charAt)) return 'info';
-  if (['m', 'n', 'p'].includes(charAt)) return 'success';
-  if (['q', 's', 't'].includes(charAt)) return 'warning';
-  if (['v', 'x', 'y'].includes(charAt)) return 'error';
-  return 'default';
-};
-
 // ----------------------------------------------------------------------
 
 export function avatar(theme) {
@@ -45,7 +33,7 @@ export function avatar(theme) {
           borderRadius: theme.shape.borderRadius * 1.5,
         },
         colorDefault: ({ ownerState }) => {
-          const color = colorByName(`${ownerState.alt}`);
+          const color = 'default';
 
           return {
             ...(!!ownerState.alt && {

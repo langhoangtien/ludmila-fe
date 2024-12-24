@@ -13,14 +13,14 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useCountdown } from 'src/hooks/use-countdown';
 
 import { _socials } from 'src/_mock';
+import ComingSoonIllustration from 'src/assets/illustrations/coming-soon-illustration';
 
-import Image from 'src/components/image';
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
 export default function ComingSoonView() {
-  const { days, hours, minutes, seconds } = useCountdown(new Date('07/07/2024 21:30'));
+  const { days, hours, minutes, seconds } = useCountdown(new Date('07/07/2025 21:30'));
 
   return (
     <>
@@ -32,15 +32,7 @@ export default function ComingSoonView() {
         We are currently working hard on this page!
       </Typography>
 
-      <Image
-        alt="comingsoon"
-        src="/assets/illustrations/illustration_comingsoon.svg"
-        sx={{
-          my: 3,
-          mx: 'auto',
-          maxWidth: 320,
-        }}
-      />
+      <ComingSoonIllustration sx={{ my: { xs: 5, sm: 10 } }} />
 
       <Stack
         direction="row"

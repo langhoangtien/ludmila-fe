@@ -65,7 +65,7 @@ export default function EcommerceWishlistView() {
             size="large"
             color="inherit"
             variant="contained"
-            startIcon={<Iconify icon="carbon:shopping-cart-plus" />}
+            startIcon={<Iconify icon="ion:bag-add-outline" />}
           >
             Add to Cart
           </Button>

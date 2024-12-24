@@ -28,7 +28,6 @@ import Iconify from 'src/components/iconify';
 import RHFUploadAvatar from 'src/components/hook-form/rhf-upload-avatar';
 import FormProvider, { RHFSelect, RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
-
 // ----------------------------------------------------------------------
 
 const GENDER_OPTIONS = [
@@ -45,26 +44,25 @@ export default function EcommerceAccountPersonalView() {
   const { enqueueSnackbar } = useSnackbar();
   const phoneRegExp = /((\+84|84|0)(3|5|7|8|9|1[2689]))([0-9]{8})\b/;
 
-const phoneNumberSchema = Yup.string().test({
-  name: 'phone',
-  message: 'Số điện thoại không hợp lệ',
-  test: value => {
-    if (!value) return true; // Cho phép giá trị rỗng, do lựa chọn excludeEmptyString trong Yup
+  const phoneNumberSchema = Yup.string().test({
+    name: 'phone',
+    message: 'Số điện thoại không hợp lệ',
+    test: (value) => {
+      if (!value) return true; // Cho phép giá trị rỗng, do lựa chọn excludeEmptyString trong Yup
 
-    return phoneRegExp.test(value);
-  },
-});
+      return phoneRegExp.test(value);
+    },
+  });
   const EcommerceAccountPersonalSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
     lastName: Yup.string().required('Last name is required'),
     email: Yup.string().required('Email address is required'),
     phoneNumber: phoneNumberSchema,
-      
+
     birthday: Yup.mixed().nullable(),
     gender: Yup.string(),
     address: Yup.string(),
     province: Yup.string(),
-   
   });
 
   const defaultValues = {
@@ -98,7 +96,6 @@ const phoneNumberSchema = Yup.string().test({
         ...data,
         photo: convertImagePathToUrl(data.photo, 250),
         birthday: new Date(data.birthday),
-      
       };
 
       reset(cloneData);
@@ -111,7 +108,7 @@ const phoneNumberSchema = Yup.string().test({
       const cloneData = {
         ...data,
         photo: convertImageUrlToPath(data.photo),
-        province:data.province || undefined,
+        province: data.province || undefined,
         phoneNumber: data.phoneNumber || undefined,
         birthday: data.birthday || undefined,
       };
@@ -244,7 +241,7 @@ const phoneNumberSchema = Yup.string().test({
             {' '}
             Mật khẩu{' '}
             <IconButton onClick={dialog.onTrue}>
-              <Iconify width={24} icon="carbon:edit" />
+              <Iconify width={24} icon="fluent:edit-20-regular" />
             </IconButton>{' '}
           </Typography>
         </Stack>
@@ -283,7 +280,11 @@ const phoneNumberSchema = Yup.string().test({
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={passwordShow.onToggle} edge="end">
-                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
+                      <Iconify
+                        icon={
+                          passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-20-regular-off'
+                        }
+                      />
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -299,7 +300,11 @@ const phoneNumberSchema = Yup.string().test({
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={passwordShow.onToggle} edge="end">
-                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
+                      <Iconify
+                        icon={
+                          passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-20-regular-off'
+                        }
+                      />
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -315,7 +320,11 @@ const phoneNumberSchema = Yup.string().test({
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={passwordShow.onToggle} edge="end">
-                      <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
+                      <Iconify
+                        icon={
+                          passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-20-regular-off'
+                        }
+                      />
                     </IconButton>
                   </InputAdornment>
                 ),

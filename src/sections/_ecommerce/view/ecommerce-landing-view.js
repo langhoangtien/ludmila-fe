@@ -12,22 +12,6 @@ export default function EcommerceLandingView({ data }) {
     <>
       <EcommerceLandingHero products={topDiscountProducts} />
       <ProductHome products={topNewestProducts} />
-
-      {/* <EcommerceLandingCategories />
-
-      <EcommerceLandingHotDealToday />
-
-      <EcommerceLandingFeaturedProducts /> */}
-
-      {/* <EcommerceLandingSpecialOffer />
-
-      <EcommerceLandingFeaturedBrands />
-
-      <EcommerceLandingPopularProducts />
-
-      <EcommerceLandingTopProducts />
-
-      <EcommerceTestimonial testimonials={_testimonials} /> */}
     </>
   );
 }

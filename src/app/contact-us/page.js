@@ -77,18 +77,20 @@ export default function ContactUs() {
         ]}
         sx={{ my: 5 }}
       />
-      <Grid container spacing={{ xs: 5, md: 8 }}>
+      <Grid container pb={4} spacing={{ xs: 5, md: 8 }}>
         <Grid spacing={2} item xs={12} md={6}>
           <Stack p={2} spacing={1}>
             {' '}
             <Box>
-              <Typography variant="h5">HÀNG NGA CHÍNH HÃNG - LUDMILA</Typography>
+              <Typography color="primary" variant="h6">
+                HÀNG NGA CHÍNH HÃNG - LUDMILA
+              </Typography>
             </Box>
             <Box
               variant="body2"
               sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
             >
-              <Iconify icon="carbon:location" />
+              <Iconify icon="fluent:location-20-regular" />
               <Typography variant="body2">
                 &nbsp; T10 Tòa Benka, Lệ chi - Gia Lâm - Hà Nội
               </Typography>
@@ -97,14 +99,14 @@ export default function ContactUs() {
               variant="body2"
               sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
             >
-              <Iconify icon="carbon:mobile" />{' '}
+              <Iconify icon="fluent:call-20-regular" />{' '}
               <Typography variant="body2">&nbsp; 0832.66.77.11</Typography>
             </Box>
             <Box
               variant="body2"
               sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
             >
-              <Iconify icon="carbon:email" />
+              <Iconify icon="fluent:mail-20-regular" />
               <Typography variant="body2"> &nbsp; support@ludmila.vn</Typography>
             </Box>
           </Stack>

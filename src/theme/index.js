@@ -36,7 +36,7 @@ export default function ThemeProvider({ children }) {
       },
       direction: settings.themeDirection,
       shadows: shadows(settings.themeMode),
-      shape: { borderRadius: 8 },
+      shape: { borderRadius: 6 },
       typography,
     }),
     [settings.themeMode, settings.themeDirection, presets.palette, presets.customShadows]

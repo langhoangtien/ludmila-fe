@@ -16,24 +16,6 @@ export default function ProductHome({ products }) {
         py: { xs: 5, md: 8 },
       }}
     >
-      {/* <Stack
-        direction={{ xs: 'column', md: 'row' }}
-        alignItems="center"
-        spacing={3}
-        sx={{
-          mb: 8,
-        }}
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            textAlign: { xs: 'center', md: 'unset' },
-          }}
-        >
-          Sản phẩm
-        </Typography>
-      </Stack> */}
-
       <Stack direction="column">
         <EcommerceProductList
           pagination={false}

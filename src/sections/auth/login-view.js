@@ -124,7 +124,11 @@ export default function LoginView({ onChangePage = null, dialog = null }) {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={passwordShow.onToggle} edge="end">
-                  <Iconify icon={passwordShow.value ? 'carbon:view' : 'carbon:view-off'} />
+                  <Iconify
+                    icon={
+                      passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-20-regular-off'
+                    }
+                  />
                 </IconButton>
               </InputAdornment>
             ),

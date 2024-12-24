@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import { Card, CardContent } from '@mui/material';
 import Pagination, { paginationClasses } from '@mui/material/Pagination';
 
 import EcommerceProductViewListItem from '../item/ecommerce-product-view-list-item';
@@ -35,39 +36,47 @@ export default function EcommerceProductList({
           gridTemplateColumns={
             homePage
               ? {
-                  xs: 'repeat(2, 1fr)',
-                  sm: 'repeat(3, 1fr)',
-                  md: 'repeat(4, 1fr)',
-                  lg: 'repeat(5, 1fr)',
+                  xs: 'repeat(1, 1fr)',
+                  sm: 'repeat(2, 1fr)',
+                  md: 'repeat(3, 1fr)',
+                  lg: 'repeat(4, 1fr)',
                 }
               : {
-                  xs: 'repeat(2, 1fr)',
-                  sm: 'repeat(3, 1fr)',
-                  md: 'repeat(4, 1fr)',
+                  xs: 'repeat(1, 1fr)',
+                  sm: 'repeat(2, 1fr)',
+                  md: 'repeat(3, 1fr)',
                 }
           }
         >
-          {(loading ? [...Array(16)] : products).map((product, index) =>
-            product ? (
-              <EcommerceProductViewGridItem key={product.id} product={product} />
-            ) : (
-              <EcommerceProductViewGridItemSkeleton key={index} />
-            )
-          )}
+          {(loading ? [...Array(16)] : products).map((product, index) => (
+            <Card>
+              <CardContent>
+                {product ? (
+                  <EcommerceProductViewGridItem key={product.id} product={product} />
+                ) : (
+                  <EcommerceProductViewGridItemSkeleton key={index} />
+                )}
+              </CardContent>
+            </Card>
+          ))}
         </Box>
       ) : (
         <Stack spacing={4}>
-          {(loading ? [...Array(16)] : products).map((product, index) =>
-            product ? (
-              <EcommerceProductViewListItem key={product.id} product={product} />
-            ) : (
-              <EcommerceProductViewListItemSkeleton key={index} />
-            )
-          )}
+          {(loading ? [...Array(16)] : products).map((product, index) => (
+            <Card>
+              <CardContent>
+                {product ? (
+                  <EcommerceProductViewListItem key={product.id} product={product} />
+                ) : (
+                  <EcommerceProductViewListItemSkeleton key={index} />
+                )}
+              </CardContent>
+            </Card>
+          ))}
         </Stack>
       )}
 
-      {pagination && (
+      {pagination && !!count && (
         <Pagination
           count={count}
           color="primary"

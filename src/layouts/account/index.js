@@ -38,7 +38,7 @@ export default function AccountLayout({ children }) {
             <Button
               size="small"
               color="inherit"
-              startIcon={<Iconify icon="carbon:menu" />}
+              startIcon={<Iconify icon="fluent:navigation-20-regular" />}
               onClick={menuOpen.onTrue}
             >
               Tài khoản

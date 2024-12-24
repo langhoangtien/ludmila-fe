@@ -1,60 +1,9 @@
-'use client';
+import Image from 'next/image';
 
-import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { alpha, styled } from '@mui/material/styles';
-
-import { fShortenNumber } from 'src/utils/format-number';
-
-import { bgGradient } from 'src/theme/css';
-
-import Image from 'src/components/image';
-import CountUp from 'src/components/count-up';
-
-// ----------------------------------------------------------------------
-
-const SUMMARY = [
-  { name: 'Sản phẩm', number: 1000 },
-  { name: 'Khách hàng', number: 110000 },
-  { name: 'Đơn hàng', number: 145000 },
-  { name: 'Đối tác', number: 60 },
-];
-
-// ----------------------------------------------------------------------
-
-const StyledSection = styled('div')(({ theme }) => ({
-  overflow: 'hidden',
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius * 2,
-  marginTop: theme.spacing(5),
-  [theme.breakpoints.up('md')]: {
-    marginTop: theme.spacing(10),
-  },
-}));
-
-const StyledOverlay = styled('div')(({ theme }) => ({
-  ...bgGradient({
-    startColor: `${alpha(theme.palette.common.black, 0)} 0%`,
-    endColor: `${theme.palette.common.black} 75%`,
-  }),
-  top: 0,
-  left: 0,
-  zIndex: 8,
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
-  [theme.breakpoints.up('md')]: {
-    right: 0,
-    width: '75%',
-    left: 'auto',
-  },
-  [theme.breakpoints.up('lg')]: {
-    width: '50%',
-  },
-}));
 
 // ----------------------------------------------------------------------
 
@@ -95,6 +44,8 @@ export default function AboutUsView() {
                 <Image
                   alt="career about"
                   src="/assets/images/company/about_us.jpg"
+                  width={1000}
+                  height={450}
                   style={{ width: '100%' }}
                 />
               </Grid>
@@ -127,82 +78,8 @@ export default function AboutUsView() {
           </Stack>
         </Grid>
       </Grid>
-
-      <Section />
     </Container>
   );
 }
 
 // ----------------------------------------------------------------------
-
-function Section() {
-  return (
-    <StyledSection>
-      <Stack
-        sx={{
-          py: 10,
-          zIndex: 9,
-          ml: 'auto',
-          position: 'relative',
-          px: { xs: 2.5, md: 10 },
-          width: { md: 0.75, lg: 0.5 },
-        }}
-      >
-        <Stack
-          sx={{
-            mb: 5,
-            color: 'common.white',
-            textAlign: { xs: 'center', md: 'left' },
-          }}
-        >
-          <Typography variant="h2" paragraph>
-            Chúng tôi đã đạt được..
-          </Typography>
-          <Typography sx={{ opacity: 0.72 }}>
-            Xin chào. Đại lý của chúng tôi đã có mặt hơn 5 năm. Chúng tôi làm những điều tốt nhất
-            cho tất cả khách hàng của mình.
-          </Typography>
-        </Stack>
-
-        <Box
-          sx={{
-            gap: 5,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            textAlign: { xs: 'center', md: 'left' },
-          }}
-        >
-          {SUMMARY.map((value) => (
-            <Stack key={value.name} spacing={1}>
-              <Typography variant="h2" sx={{ color: 'primary.main' }}>
-                <CountUp
-                  start={value.number / 5}
-                  end={value.number}
-                  formattingFn={(newValue) => fShortenNumber(newValue)}
-                />
-
-                <Typography variant="h3" component="span" sx={{ verticalAlign: 'top', ml: 0.5 }}>
-                  +
-                </Typography>
-              </Typography>
-
-              <Typography variant="body2" sx={{ color: 'grey.500' }}>
-                {value.name}
-              </Typography>
-            </Stack>
-          ))}
-        </Box>
-      </Stack>
-
-      <StyledOverlay />
-
-      <Box sx={{ position: 'absolute', width: 1, height: 1, top: 0 }}>
-        <Image
-          alt="career about"
-          src="/assets/images/career/career_about_team.jpg"
-          sx={{ width: 1, height: 1 }}
-        />
-      </Box>
-    </StyledSection>
-  );
-}

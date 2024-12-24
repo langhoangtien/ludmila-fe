@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
-import {  Stack, Avatar, Tooltip, Typography } from '@mui/material';
+import { Stack, Avatar, Tooltip, Typography } from '@mui/material';
 import InputBase, { inputBaseClasses } from '@mui/material/InputBase';
 
 //  utils
@@ -42,29 +42,34 @@ export default function EcommerceAccountOrdersTableRow({ row, onSelectRow, selec
   return (
     <>
       <TableRow>
-        
-      
-
         <TableCell sx={{ px: 1 }}>
-          {row.products.map((product) => (<Link style={{textDecoration:'none'}} href={`/product/${product.productId}`}>
-          <Stack alignItems="center" alignContent="center" spacing={1} direction="row">
-          <Avatar alt={product.name} src={convertImagePathToUrl(product.image,250)} />
-          <Stack>
-          <Tooltip title="Xem sản phẩm">
-            <Typography sx={{textDecoration:'none'}} color="primary.main" key={product._id}>{product.name}</Typography>
-          </Tooltip>
-          <Typography variant="body2" color="text.secondary">Số lượng: {product.quantity}</Typography>
-          </Stack>
-          </Stack>
-          </Link>))}
+          {row.products.map((product) => (
+            <Link style={{ textDecoration: 'none' }} href={`/product/${product.productId}`}>
+              <Stack alignItems="center" alignContent="center" spacing={1} direction="row">
+                <Avatar alt={product.name} src={convertImagePathToUrl(product.image, 250)} />
+                <Stack>
+                  <Tooltip title="Xem sản phẩm">
+                    <Typography
+                      sx={{ textDecoration: 'none' }}
+                      color="primary.main"
+                      key={product._id}
+                    >
+                      {product.name}
+                    </Typography>
+                  </Tooltip>
+                  <Typography variant="body2" color="text.secondary">
+                    Số lượng: {product.quantity}
+                  </Typography>
+                </Stack>
+              </Stack>
+            </Link>
+          ))}
         </TableCell>
         <TableCell sx={{ px: 1 }}>
           <InputBase value={fCurrency(row.totalPrice)} sx={inputStyles} />
         </TableCell>
         <TableCell>{fDate(row.createdAt)}</TableCell>
         <TableCell>{fDate(row.deliveredAt)}</TableCell>
-
-       
 
         <TableCell>
           <Label
@@ -82,7 +87,7 @@ export default function EcommerceAccountOrdersTableRow({ row, onSelectRow, selec
 
         <TableCell align="right" padding="none">
           <IconButton onClick={handleOpen}>
-            <Iconify icon="carbon:overflow-menu-vertical" />
+            <Iconify icon="fluent:more-vertical-20-regular" />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -100,15 +105,13 @@ export default function EcommerceAccountOrdersTableRow({ row, onSelectRow, selec
         }}
       >
         <MenuItem onClick={handleClose}>
-          <Iconify icon="carbon:view" sx={{ mr: 1 }} /> Xem
+          <Iconify icon="fluent:eye-20-regular" sx={{ mr: 1 }} /> Xem
         </MenuItem>
-
-        
 
         <Divider sx={{ borderStyle: 'dashed', mt: 0.5 }} />
 
         <MenuItem onClick={handleClose} sx={{ color: 'error.main' }}>
-          <Iconify icon="carbon:trash-can" sx={{ mr: 1 }} /> Hủy
+          <Iconify icon="fluent:delete-20-regular" sx={{ mr: 1 }} /> Hủy
         </MenuItem>
       </Popover>
     </>

@@ -11,7 +11,7 @@ import ReviewItemSkeleton from './review-item-skeleton';
 export default function ReviewList({ loading, reviews, count, handleChange, page }) {
   return (
     <Box sx={{ pt: 5 }}>
-      {(loading ? [...Array(5)] : reviews).map((review) =>
+      {(loading ? [...Array(5)] : reviews).map((review, index) =>
         review ? (
           <ReviewItem
             key={review._id}
@@ -22,26 +22,27 @@ export default function ReviewList({ loading, reviews, count, handleChange, page
             createdAt={review.createdAt}
             content={review.content}
             rating={review.rating}
-            helpful={review.helpful}
           />
         ) : (
-          <ReviewItemSkeleton />
+          <ReviewItemSkeleton key={index} />
         )
       )}
 
-      <Pagination
-        count={count}
-        page={page}
-        onChange={handleChange}
-        color="primary"
-        sx={{
-          mt: 5,
-          mb: 10,
-          [`& .${paginationClasses.ul}`]: {
-            justifyContent: 'center',
-          },
-        }}
-      />
+      {!!count && (
+        <Pagination
+          count={count}
+          page={page}
+          onChange={handleChange}
+          color="primary"
+          sx={{
+            mt: 5,
+            mb: 10,
+            [`& .${paginationClasses.ul}`]: {
+              justifyContent: 'center',
+            },
+          }}
+        />
+      )}
     </Box>
   );
 }

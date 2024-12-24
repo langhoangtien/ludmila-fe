@@ -29,7 +29,7 @@ export default function SupportHero() {
       <Typography variant="h2" sx={{ textAlign: 'center', color: 'common.white', mb: 5 }}>
         Welcome to <br />
         <Box component="span" sx={{ color: 'primary.main' }}>
-          {`ZONE `}
+          {`LUDMILA `}
         </Box>
         Support
       </Typography>
@@ -41,7 +41,7 @@ export default function SupportHero() {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Iconify icon="carbon:search" width={24} sx={{ color: 'text.disabled' }} />
+              <Iconify icon="fluent:search-20-regular" width={24} sx={{ color: 'text.disabled' }} />
             </InputAdornment>
           ),
           sx: { color: 'common.white' },

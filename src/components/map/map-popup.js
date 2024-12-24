@@ -74,7 +74,7 @@ export default function MapPopup({ office, onClose, lat, lng }) {
 
         {office.email && (
           <Stack direction="row" alignItems="flex-start" sx={{ typography: 'caption' }}>
-            <Iconify icon="carbon:email" width={18} sx={{ mr: 0.5 }} />
+            <Iconify icon="fluent:mail-20-regular" width={18} sx={{ mr: 0.5 }} />
             {office.email}
           </Stack>
         )}

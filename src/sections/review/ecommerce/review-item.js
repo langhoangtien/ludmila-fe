@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types';
 
 import Stack from '@mui/material/Stack';
+import { Tooltip } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 
-import { fDateTime } from 'src/utils/format-time';
+import { timeFormat } from 'src/utils/common';
 
 // ----------------------------------------------------------------------
 
 export default function ReviewItem({ fullName, rating, content, createdAt, avatarUrl }) {
+  const { raw, time } = timeFormat(createdAt);
   return (
     <Stack
       direction="row"
@@ -25,38 +27,18 @@ export default function ReviewItem({ fullName, rating, content, createdAt, avata
 
         <Typography variant="subtitle1">{fullName}</Typography>
 
-        {createdAt && (
-          <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-            {fDateTime(createdAt)}
-          </Typography>
-        )}
-
         <Typography variant="body2">{content}</Typography>
-
-        {/* <Stack spacing={1} direction={{ xs: 'column', sm: 'row' }} alignItems={{ sm: 'center' }}>
-          <Typography variant="subtitle2">Đánh giá này có hữu ích không?</Typography>
-
-          <Stack direction="row" alignItems="center" spacing={1}>
-            <Button size="small" color="inherit" startIcon={<Iconify icon="carbon:thumbs-up" />}>
-              Có
-            </Button>
-
-            <Button
-              size="small"
-              color="inherit"
-              startIcon={
-                <Iconify
-                  icon="carbon:thumbs-up"
-                  sx={{
-                    transform: 'scale(-1, -1)',
-                  }}
-                />
-              }
-            >
-              Không
-            </Button>
-          </Stack>
-        </Stack> */}
+        <Stack direction="row" spacing={1}>
+          {' '}
+          <Tooltip placement="top-start" title={raw}>
+            <Typography variant="caption" sx={{ color: 'text.disabled' }}>
+              {time}{' '}
+            </Typography>
+          </Tooltip>
+          <Typography variant="caption" sx={{ color: 'primary.main', cursor: 'pointer' }}>
+            Trả lời
+          </Typography>
+        </Stack>
       </Stack>
     </Stack>
   );

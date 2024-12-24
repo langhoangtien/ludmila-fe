@@ -8,7 +8,7 @@ export const data = [
   {
     path: '#',
     title: 'Categories',
-    icon: <Iconify icon="carbon:menu" sx={{ width: 1, height: 1 }} />,
+    icon: <Iconify icon="fluent:navigation-20-regular" sx={{ width: 1, height: 1 }} />,
     products: [...Array(10)].map((_, index) => ({
       name: _mock.productName(index),
       coverUrl: _mock.image.product(index),

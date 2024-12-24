@@ -7,20 +7,19 @@ import { useRouter } from 'next/navigation';
 import Fab from '@mui/material/Fab';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import { Tooltip } from '@mui/material';
+import { Chip, Tooltip } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
 import Image from 'src/components/image';
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
 import TextMaxLine from 'src/components/text-max-line';
 import { useCartContext } from 'src/components/cart/use-cart-context';
+import ShippingFreeIcon from 'src/components/icons/free-shipping-icon';
 
 import ProductPrice from '../../common/product-price';
-import ProductRating from '../../common/product-rating';
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +45,9 @@ export default function EcommerceProductViewListItem({ product, ...other }) {
     addToCart(variant, 1);
     enqueueSnackbar('Thêm vào giỏ hàng thành công', { variant: 'success' });
   };
+  const handleRedirectToProduct = () => {
+    router.push(`${paths.product}/${product.slug}-${product.id}`);
+  };
   return (
     <Stack
       direction="row"
@@ -57,18 +59,6 @@ export default function EcommerceProductViewListItem({ product, ...other }) {
       }}
       {...other}
     >
-      {product.label === 'new' && (
-        <Label color="info" sx={{ position: 'absolute', m: 1, top: 0, left: 0, zIndex: 9 }}>
-          NEW
-        </Label>
-      )}
-
-      {product.label === 'sale' && (
-        <Label color="error" sx={{ position: 'absolute', m: 1, top: 0, left: 0, zIndex: 9 }}>
-          SALE
-        </Label>
-      )}
-
       <Tooltip title={product.variants?.length === 1 ? 'Thêm vào giỏ hàng' : 'Xem mẫu mã'} arrow>
         <Fab
           className="add-to-cart"
@@ -91,15 +81,14 @@ export default function EcommerceProductViewListItem({ product, ...other }) {
           <Iconify
             onClick={handleAddToCart}
             icon={
-              product.variants?.length === 1
-                ? 'carbon:shopping-cart-plus'
-                : 'carbon:shopping-catalog'
+              product.variants?.length === 1 ? 'ion:bag-add-outline' : 'carbon:shopping-catalog'
             }
           />
         </Fab>
       </Tooltip>
       <Image
         src={product.image}
+        onClick={handleRedirectToProduct}
         ratio="1/1"
         sx={{
           mr: 2,
@@ -107,27 +96,22 @@ export default function EcommerceProductViewListItem({ product, ...other }) {
           flexShrink: 0,
           borderRadius: 1.5,
           bgcolor: 'background.neutral',
+          cursor: 'pointer',
         }}
       />
-
       <Stack spacing={1}>
         <Stack spacing={0.5}>
-          <TextMaxLine variant="caption" line={1} sx={{ color: 'text.disabled' }}>
-            {product.category}
-          </TextMaxLine>
-
           <Link
             component={RouterLink}
             href={`${paths.product}/${product.slug}-${product._id}`}
             color="inherit"
+            underline="none"
           >
             <TextMaxLine variant="h6" line={1}>
               {product.name}
             </TextMaxLine>
           </Link>
         </Stack>
-
-        <ProductRating ratingAverage={product.ratingAverage} label={`${product.sold} sold`} />
 
         <TextMaxLine variant="body2" line={1} sx={{ color: 'text.secondary' }}>
           {product.introduction}
@@ -138,6 +122,27 @@ export default function EcommerceProductViewListItem({ product, ...other }) {
           salePrice={product.salePrice}
           sx={{ typography: 'h6' }}
         />
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          {!!(product.salePrice > 500000) && (
+            <ShippingFreeIcon
+              style={{ width: 28, height: 28, color: '#2dd4bf' }}
+              className=" text-teal-400 "
+            />
+          )}
+          {!!product.discount && (
+            <Chip label={`Giảm ${product.discount} %`} size="small" color="primary" />
+          )}
+          <Chip label="COD" size="small" variant="outlined" color="primary" />
+        </Stack>
+        <Stack direction="row" alignItems="center" fontSize={14} spacing={0.25}>
+          {product.ratingAverage}{' '}
+          <Iconify
+            width={16}
+            heigth={16}
+            icon="fluent:star-20-filled"
+            style={{ color: 'orange' }}
+          />
+        </Stack>
       </Stack>
     </Stack>
   );
@@ -154,6 +159,7 @@ EcommerceProductViewListItem.propTypes = {
     salePrice: PropTypes.number,
     sold: PropTypes.number,
     ratingAverage: PropTypes.number,
+    discount: PropTypes.number,
     _id: PropTypes.string,
     slug: PropTypes.string,
     id,

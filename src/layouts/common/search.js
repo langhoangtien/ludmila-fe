@@ -107,7 +107,11 @@ export default function Search() {
             autoComplete: 'search',
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify width={20} icon="carbon:search" sx={{ color: 'text.disabled', mr: 1 }} />
+                <Iconify
+                  width={20}
+                  icon="fluent:search-20-regular"
+                  sx={{ color: 'text.disabled', mr: 1 }}
+                />
               </InputAdornment>
             ),
             sx: { pb: 1 },

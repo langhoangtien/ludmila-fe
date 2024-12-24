@@ -41,7 +41,7 @@ export default function NavMobile({ data }) {
   return (
     <>
       <IconButton onClick={mobileOpen.onTrue} sx={{ color: 'inherit' }}>
-        <Iconify sx={{ width: 25, height: 25 }} icon="carbon:menu" />
+        <Iconify sx={{ width: 24, height: 24 }} icon="fluent:navigation-20-regular" />
       </IconButton>
 
       <Drawer

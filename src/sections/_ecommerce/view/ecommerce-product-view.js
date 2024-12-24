@@ -59,16 +59,7 @@ export default function EcommerceProductView() {
 
         <Grid container columnSpacing={{ md: 8 }}>
           <Grid lg={12}>
-            <EcommerceProductDetailsDescription
-              description={product.description}
-              specifications={[
-                { label: 'Category', value: 'Mobile' },
-                { label: 'Manufacturer', value: 'Apple' },
-                { label: 'Warranty', value: '12 Months' },
-                { label: 'Serial number', value: '358607726380311' },
-                { label: 'Ships From', value: 'United States' },
-              ]}
-            />
+            <EcommerceProductDetailsDescription description={product.description} />
           </Grid>
         </Grid>
       </Container>

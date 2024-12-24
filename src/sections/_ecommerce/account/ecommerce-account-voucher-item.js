@@ -58,7 +58,7 @@ export default function EcommerceAccountVoucherItem({ voucher }) {
             }),
           }}
         >
-          <Iconify icon="carbon:time" width={16} sx={{ mr: 1 }} />
+          <Iconify icon="fluent:clock-20-regular" width={16} sx={{ mr: 1 }} />
 
           {dayLeft <= 1 ? `${dayLeft} day left` : `Valid Till: ${fDate(voucher.dueOn)}`}
         </Stack>
@@ -84,13 +84,13 @@ function getIcon(type) {
 
   switch (type) {
     case 'shipping':
-      icon = <Iconify icon="carbon:delivery" width={32} />;
+      icon = <Iconify icon="fluent:vehicle-truck-profile-20-regular" width={32} />;
       break;
     case 'category':
-      icon = <Iconify icon="carbon:cut-out" width={32} />;
+      icon = <Iconify icon="fluent:tag-multiple-20-regular" width={32} />;
       break;
     default:
-      icon = <Iconify icon="carbon:star" width={32} />;
+      icon = <Iconify icon="fluent:vehicle-truck-profile-20-regular" width={32} />;
   }
   return icon;
 }

@@ -1,24 +1,45 @@
+'use client';
+
 import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import EcommerceProductItemBestSellers from '../item/ecommerce-product-item-best-sellers';
+import { HOST_API } from 'src/config-global';
+
+import EcommerceProductItemNewstReviews from '../item/ecommerce-product-item-newst-review';
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceProductListBestSellers({ products }) {
+export default function EcommerceProductListBestSellers() {
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const dataJson = await fetch(`${HOST_API}/comments?limit=5&skip=0`);
+        if (!dataJson.ok) return;
+
+        const data = await dataJson.json();
+        setReviews(data.items);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <Stack spacing={3}>
-      <Typography variant="h6">Bán chạy</Typography>
+      <Typography variant="h6">Bình luận mới nhất</Typography>
 
-      {products.slice(0, 8).map((product) => (
-        <EcommerceProductItemBestSellers key={product.id} product={product} />
+      {reviews.map((review) => (
+        <EcommerceProductItemNewstReviews key={review.id} review={review} />
       ))}
     </Stack>
   );
 }
 
-EcommerceProductListBestSellers.propTypes = {
-  products: PropTypes.array,
+EcommerceProductItemNewstReviews.propTypes = {
+  reviews: PropTypes.array,
 };

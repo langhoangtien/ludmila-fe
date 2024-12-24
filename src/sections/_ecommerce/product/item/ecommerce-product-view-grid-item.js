@@ -1,38 +1,27 @@
 'use client';
 
 import PropTypes from 'prop-types';
-import { keyframes } from '@emotion/react';
 import { useRouter } from 'next/navigation';
 
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import { Tooltip } from '@mui/material';
+import { Chip, Tooltip } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
-import Label from 'src/components/label';
 import Image from 'src/components/image';
 import Iconify from 'src/components/iconify';
 import { useCartContext } from 'src/components/cart';
 import { useSnackbar } from 'src/components/snackbar';
 import TextMaxLine from 'src/components/text-max-line';
+import ShippingFreeIcon from 'src/components/icons/free-shipping-icon';
 
 import ProductPrice from '../../common/product-price';
-import ProductRating from '../../common/product-rating';
 
 // ----------------------------------------------------------------------
-
-const xKeyframes = keyframes` 
-  100% {
-    transform: translateX(calc(100vw - 150px));
-  }
-`;
-const yKeyframes = keyframes` 100% {
-    transform: translateY(-104px);
-  }`;
 
 export default function EcommerceProductViewGridItem({ product, sx, ...other }) {
   const { addToCart, shake } = useCartContext();
@@ -56,30 +45,19 @@ export default function EcommerceProductViewGridItem({ product, sx, ...other }) 
     addToCart(variant, 1);
     enqueueSnackbar('Thêm vào giỏ hàng thành công', { variant: 'success' });
   };
+  const handleRedirectToProduct = () => {
+    router.push(`${paths.product}/${product.slug}-${product.id}`);
+  };
   return (
     <Stack
       sx={{
         position: 'relative',
-        '&:hover .add-to-cart': {
-          opacity: 1,
-        },
+
         ...sx,
       }}
       {...other}
     >
-      {product.label === 'new' && (
-        <Label color="info" sx={{ position: 'absolute', m: 1, top: 0, right: 0, zIndex: 9 }}>
-          NEW
-        </Label>
-      )}
-
-      {product.label === 'sale' && (
-        <Label color="error" sx={{ position: 'absolute', m: 1, top: 0, right: 0, zIndex: 9 }}>
-          SALE
-        </Label>
-      )}
-
-      <Box    sx={{ position: 'relative', mb: 2 }}>
+      <Box sx={{ position: 'relative', mb: 2 }}>
         <Tooltip title={product.variants?.length === 1 ? 'Thêm vào giỏ hàng' : 'Xem mẫu mã'} arrow>
           <Fab
             disabled={shake}
@@ -87,13 +65,10 @@ export default function EcommerceProductViewGridItem({ product, sx, ...other }) 
             color="primary"
             size="small"
             sx={{
-              animation:
-                shake &&
-                ` ${xKeyframes}  1s forwards cubic-bezier(1, 0.44, 0.84, 0.165), ${yKeyframes} 1s alternate forwards cubic-bezier(0.165, 0.84, 0.44, 1)`,
               right: 8,
               zIndex: 9,
               bottom: 8,
-              opacity: 0,
+              opacity: 1,
               position: 'absolute',
               transition: (theme) =>
                 theme.transitions.create('opacity', {
@@ -106,43 +81,59 @@ export default function EcommerceProductViewGridItem({ product, sx, ...other }) 
               onClick={handleAddToCart}
               icon={
                 product.variants?.length === 1
-                  ? 'carbon:shopping-cart-plus'
-                  : 'carbon:shopping-catalog'
+                  ? 'fluent:shopping-bag-add-20-regular'
+                  : 'fluent:shopping-bag-arrow-left-20-regular'
               }
             />
           </Fab>
         </Tooltip>
         <Image
-          component={RouterLink}
-          href={`${paths.product}/${product.slug}-${product.id}`}
+          onClick={handleRedirectToProduct}
           src={product.image}
           ratio="1/1"
           sx={{
             flexShrink: 0,
             borderRadius: 1.5,
             bgcolor: 'background.neutral',
+            cursor: 'pointer',
           }}
         />
       </Box>
 
       <Stack spacing={0.5}>
-        <TextMaxLine variant="caption" line={1} sx={{ color: 'text.disabled' }}>
-          {product.category}
-        </TextMaxLine>
-
         <Link
           component={RouterLink}
           href={`${paths.product}/${product.slug}-${product.id}`}
           color="inherit"
+          underline="none"
         >
-          <TextMaxLine variant="body2" line={1} sx={{ fontWeight: 'fontWeightMedium' }}>
+          <TextMaxLine variant="body2" line={2} sx={{ fontWeight: 'fontWeightMedium' }}>
             {product.name}
           </TextMaxLine>
         </Link>
 
         <ProductPrice price={product.price} salePrice={product.salePrice} />
-
-        <ProductRating ratingAverage={product.ratingAverage} label={`${product.sold} sold`} />
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          {!!(product.salePrice > 500000) && (
+            <ShippingFreeIcon
+              style={{ width: 28, height: 28, color: '#2dd4bf' }}
+              className=" text-teal-400 "
+            />
+          )}
+          {!!product.discount && (
+            <Chip label={`Giảm ${product.discount} %`} size="small" color="primary" />
+          )}
+          <Chip label="COD" size="small" variant="outlined" color="primary" />
+        </Stack>
+        <Stack direction="row" alignItems="center" fontSize={14} spacing={0.25}>
+          {product.ratingAverage}{' '}
+          <Iconify
+            width={16}
+            heigth={16}
+            icon="fluent:star-20-filled"
+            style={{ color: 'orange' }}
+          />
+        </Stack>
       </Stack>
     </Stack>
   );
@@ -162,6 +153,7 @@ EcommerceProductViewGridItem.propTypes = {
     slug: PropTypes.string,
     variants: PropTypes.array,
     image: PropTypes.string,
+    discount: PropTypes.number,
   }),
   sx: PropTypes.object,
 };

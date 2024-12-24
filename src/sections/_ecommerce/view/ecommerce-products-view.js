@@ -20,8 +20,6 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { endpoints, fetchData } from 'src/utils/fetch';
 import { encodeData, convertImagePathToUrl } from 'src/utils/common';
 
-import { _products } from 'src/_mock';
-
 import Iconify from 'src/components/iconify';
 
 import EcommerceFilters from '../product/filters/ecommerce-filters';
@@ -31,8 +29,8 @@ import EcommerceProductListBestSellers from '../product/list/ecommerce-product-l
 // ----------------------------------------------------------------------
 
 const VIEW_OPTIONS = [
-  { value: 'list', icon: <Iconify icon="carbon:list-boxes" /> },
-  { value: 'grid', icon: <Iconify icon="carbon:grid" /> },
+  { value: 'list', icon: <Iconify icon="fluent:apps-list-detail-20-regular" /> },
+  { value: 'grid', icon: <Iconify icon="fluent:grid-20-regular" /> },
 ];
 
 const SORT_OPTIONS = [
@@ -87,7 +85,7 @@ export default function EcommerceProductsView({ search }) {
       const productsMapped = res.items.map((product) => ({
         ...product,
 
-        image: convertImagePathToUrl(product.image,250),
+        image: convertImagePathToUrl(product.image, 250),
       }));
       setProducts(productsMapped);
       setCount(Math.ceil(res.count / limit));
@@ -130,7 +128,7 @@ export default function EcommerceProductsView({ search }) {
         <Button
           color="inherit"
           variant="contained"
-          startIcon={<Iconify icon="carbon:filter" width={18} />}
+          startIcon={<Iconify icon="fluent:filter-20-regular" width={18} />}
           onClick={mobileOpen.onTrue}
           sx={{
             display: { md: 'none' },
@@ -163,7 +161,7 @@ export default function EcommerceProductsView({ search }) {
             setRating={setRating}
             clearAll={handleClearAll}
           />
-          <EcommerceProductListBestSellers products={_products.slice(0, 3)} />
+          <EcommerceProductListBestSellers />
         </Stack>
 
         <Box
@@ -171,6 +169,7 @@ export default function EcommerceProductsView({ search }) {
             flexGrow: 1,
             pl: { md: 8 },
             width: { md: `calc(100% - ${280}px)` },
+            flexShrink: 0,
           }}
         >
           <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 5 }}>

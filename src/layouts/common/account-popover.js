@@ -54,7 +54,7 @@ export default function AccountPopover() {
   return (
     <>
       <IconButton size="small" color="inherit" onClick={popover.onOpen}>
-        <Iconify icon="carbon:user-avatar" width={24} />
+        <Iconify icon="fluent:person-20-regular-avatar" width={24} />
       </IconButton>
 
       <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 200, p: 0 }}>

@@ -27,12 +27,12 @@ export function createPresets(preset) {
 
 const preset01 = {
   primary: {
-    lighter: '#FEE7E4',
-    light: '#FBAEB5',
-    main: '#F2779A',
-    dark: '#AE3B72',
-    darker: '#741655',
-    contrastText: '#FFFFFF',
+    lighter: '#fbe88e',
+    light: '#f9df5d',
+    main: '#f5d121',
+    dark: '#b99618',
+    darker: '#8a7012',
+    contrastText: grey[800],
   },
   secondary: {
     lighter: '#CAFDEB',
@@ -46,12 +46,12 @@ const preset01 = {
 
 const preset02 = {
   primary: {
-    lighter: '#D0FCE0',
-    light: '#72F2B9',
-    main: '#1AD5A6',
-    dark: '#0D9991',
-    darker: '#045966',
-    contrastText: grey[800],
+    lighter: '#ed9393',
+    light: '#e66767',
+    main: '#db2626',
+    dark: '#9c1919',
+    darker: '#701212',
+    contrastText: '#FFFFFF',
   },
   secondary: {
     lighter: '#D6E5FD',

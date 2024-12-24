@@ -1,9 +1,9 @@
+import Link from 'next/link';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/navigation';
 
 import { Box } from '@mui/system';
-import { Link } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
@@ -16,7 +16,6 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import { fCurrency } from 'src/utils/format-number';
 
-import Iconify from 'src/components/iconify';
 import TextMaxLine from 'src/components/text-max-line';
 import { useCartContext } from 'src/components/cart/use-cart-context';
 import { useProductContext } from 'src/components/product/use-product-contex';
@@ -31,8 +30,8 @@ const InfoDetail = ({ title, link, name }) => (
     <Typography sx={{ fontStyle: 'italic' }} variant="body2">
       {title}:&nbsp;
     </Typography>
-    <Link href={`/${link}`}>
-      <Typography color="primary.main" variant="body2">
+    <Link passHref legacyBehavior href={`/${link}`}>
+      <Typography sx={{ cursor: 'pointer' }} color="primary.main" variant="body2">
         {name}
       </Typography>
     </Link>
@@ -54,6 +53,8 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
     attributes,
     brand,
     country,
+    code,
+    category,
   } = product;
   const cart = useCartContext();
   const [error, setError] = useState(false);
@@ -93,12 +94,25 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
             ({totalReviews} Đánh giá)
           </Typography>
         </Stack>
+        <Stack direction="row">
+          <Typography sx={{ fontStyle: 'italic' }} variant="body2">
+            Mã sản phẩm:&nbsp;
+          </Typography>
+
+          <Typography variant="body2">{code}</Typography>
+        </Stack>
+        <InfoDetail
+          name={category.name}
+          link={`category/${category.code}-${category._id}`}
+          title="Danh mục"
+        />
 
         <InfoDetail
           name={brand.name}
           link={`brand/${brand.code}-${brand._id}`}
           title="Thương hiệu"
         />
+
         <InfoDetail
           name={country.name}
           link={`country/${country.code}-${country._id}`}
@@ -156,13 +170,13 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
       <Stack p={1} spacing={3} sx={{ my: 5 }}>
         {attributes &&
           attributes.map((attribute, index) => (
-            <Stack spacing={2}>
+            <Stack key={attribute.name} spacing={2}>
               <Typography color={error ? 'error.main' : null} variant="subtitle2">
                 {attribute.name}
               </Typography>
               <ProductOptionPicker
                 value={attributesSelect[index].value}
-                onChange={(event) => setAttribute(index, event.target.value)}
+                onChangeAtt={(att) => setAttribute(index, att)}
                 options={attribute.values}
               />
             </Stack>
@@ -187,7 +201,6 @@ export default function EcommerceProductDetailsInfo({ quantity, changeQuantity }
           color="inherit"
           onClick={handleAddToCart}
           variant="contained"
-          startIcon={<Iconify icon="carbon:shopping-cart-plus" />}
         >
           Thêm vào giỏ hàng
         </Button>

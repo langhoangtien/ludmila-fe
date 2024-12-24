@@ -101,15 +101,35 @@ export function chip(theme) {
         }),
       },
     };
-
+    const smallSizeStyle = {
+      ...(ownerState.size === 'small' && {
+        height: 20, // Giảm chiều cao cho size nhỏ
+        fontSize: 12, // Giảm font-size
+        padding: '0 2px',
+        borderRadius: 4,
+        [`& .${chipClasses.avatar}`]: {
+          width: 16, // Kích thước avatar nhỏ hơn
+          height: 16,
+          fontSize: 10,
+        },
+        [`& .${chipClasses.icon}`]: {
+          fontSize: 16, // Kích thước icon nhỏ hơn
+        },
+        [`& .${chipClasses.deleteIcon}`]: {
+          fontSize: 16, // Kích thước icon delete nhỏ hơn
+        },
+      }),
+    };
     return [
       defaultStyle,
       ...colorStyle,
       disabledState,
+
       {
-        fontWeight: 500,
+        fontWeight: 400,
         borderRadius: theme.shape.borderRadius,
       },
+      smallSizeStyle,
     ];
   };
 

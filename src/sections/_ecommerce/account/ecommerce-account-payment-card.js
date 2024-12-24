@@ -48,7 +48,11 @@ export default function EcommerceAccountPaymentCard({ card }) {
             <Box component="span">{label}</Box>
 
             {isPrimary && (
-              <Label color="info" startIcon={<Iconify icon="carbon:star-filled" />} sx={{ ml: 1 }}>
+              <Label
+                color="info"
+                startIcon={<Iconify icon="fluent:vehicle-truck-profile-20-regular-filled" />}
+                sx={{ ml: 1 }}
+              >
                 Primary
               </Label>
             )}
@@ -64,7 +68,7 @@ export default function EcommerceAccountPaymentCard({ card }) {
           />
 
           <IconButton onClick={handleOpen}>
-            <Iconify icon="carbon:overflow-menu-vertical" />
+            <Iconify icon="fluent:more-vertical-20-regular" />
           </IconButton>
         </Stack>
 
@@ -73,7 +77,9 @@ export default function EcommerceAccountPaymentCard({ card }) {
             {numberShow.value ? cardNumber : `**** **** **** ${cardNumber.slice(-4)}`}
           </Typography>
           <IconButton onClick={numberShow.onToggle}>
-            <Iconify icon={numberShow.value ? 'carbon:view' : 'carbon:view-off'} />
+            <Iconify
+              icon={numberShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-off-20-regular'}
+            />
           </IconButton>
         </Stack>
 
@@ -101,17 +107,18 @@ export default function EcommerceAccountPaymentCard({ card }) {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <MenuItem disabled={isPrimary} onClick={handleClose}>
-          <Iconify icon="carbon:star-filled" sx={{ mr: 1 }} /> Set primary payment
+          <Iconify icon="fluent:vehicle-truck-profile-20-regular-filled" sx={{ mr: 1 }} /> Set
+          primary payment
         </MenuItem>
 
         <MenuItem onClick={handleClose}>
-          <Iconify icon="carbon:edit" sx={{ mr: 1 }} /> Edit
+          <Iconify icon="fluent:edit-20-regular" sx={{ mr: 1 }} /> Edit
         </MenuItem>
 
         <Divider sx={{ borderStyle: 'dashed', mt: 0.5 }} />
 
         <MenuItem onClick={handleClose} sx={{ color: 'error.main' }}>
-          <Iconify icon="carbon:trash-can" sx={{ mr: 1 }} /> Delete
+          <Iconify icon="fluent:delete-20-regular" sx={{ mr: 1 }} /> Delete
         </MenuItem>
       </Popover>
     </>

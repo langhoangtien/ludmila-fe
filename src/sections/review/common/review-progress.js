@@ -16,21 +16,18 @@ export default function ReviewProgress({ star, setStar, ratings, ...other }) {
     .reverse();
 
   return (
-
-      <Stack spacing={1} {...other}>
-     
-        {ratingsCaculated.map((rating, index) => (
-          <ReviewProgressItem
-            star={star}
-            setStar={setStar}
-            key={rating.value}
-            rating={rating}
-            index={5 - index}
-            totals={totals}
-          />
-        ))}
-      </Stack>
-   
+    <Stack direction="column" justifyContent="space-between" spacing={1} {...other}>
+      {ratingsCaculated.map((rating, index) => (
+        <ReviewProgressItem
+          star={star}
+          setStar={setStar}
+          key={rating.value}
+          rating={rating}
+          index={5 - index}
+          totals={totals}
+        />
+      ))}
+    </Stack>
   );
 }
 

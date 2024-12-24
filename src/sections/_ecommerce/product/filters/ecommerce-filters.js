@@ -165,7 +165,7 @@ export default function EcommerceFilters({
         color="inherit"
         size="large"
         variant="contained"
-        startIcon={<Iconify icon="carbon:trash-can" />}
+        startIcon={<Iconify icon="fluent:delete-20-regular" />}
         onClick={clearAll}
       >
         Xóa

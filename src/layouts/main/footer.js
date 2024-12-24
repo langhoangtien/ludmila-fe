@@ -86,7 +86,7 @@ export default function Footer() {
               <Stack alignItems="flex-start" spacing={3}>
                 <Logo />
 
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
                   Nhà bán lẻ chính hãng sản phẩm vitamin, thực phẩm chức năng và các sản phẩm hỗ trợ
                   sức khỏe khác đến từ các thương hiệu nổi tiếng trong và ngoài nước.
                 </Typography>
@@ -101,7 +101,7 @@ export default function Footer() {
                   variant="body2"
                   sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
                 >
-                  <Iconify icon="carbon:location" />
+                  <Iconify icon="fluent:location-20-regular" />
                   <Typography variant="body2">
                     &nbsp; T10 Tòa Benka, Lệ chi - Gia Lâm - Hà Nội
                   </Typography>
@@ -110,14 +110,14 @@ export default function Footer() {
                   variant="body2"
                   sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
                 >
-                  <Iconify icon="carbon:mobile" />{' '}
+                  <Iconify icon="fluent:call-20-regular" />{' '}
                   <Typography variant="body2">&nbsp; 0832.66.77.11</Typography>
                 </Box>
                 <Box
                   variant="body2"
                   sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
                 >
-                  <Iconify icon="carbon:email" />
+                  <Iconify icon="fluent:mail-20-regular" />
                   <Typography variant="body2"> &nbsp; support@ludmila.vn</Typography>
                 </Box>
               </Stack>
@@ -150,7 +150,7 @@ export default function Footer() {
                 <Typography variant="h6">Social</Typography>
                 <Stack direction="row" alignItems="center">
                   {_socials.map((social) => (
-                    <Link href={social.link}>
+                    <Link key={social.value} href={social.link}>
                       <IconButton key={social.value} color="primary">
                         <Iconify icon={social.icon} />
                       </IconButton>

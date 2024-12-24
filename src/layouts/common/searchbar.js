@@ -45,7 +45,7 @@ export default function Searchbar({ sx }) {
     <ClickAwayListener onClickAway={searchOpen.onFalse}>
       <div>
         <IconButton color="inherit" aria-label="search" onClick={searchOpen.onTrue} sx={sx}>
-          <Iconify icon="carbon:search" />
+          <Iconify icon="fluent:search-20-regular" />
         </IconButton>
 
         <Slide direction="down" in={searchOpen.value} mountOnEnter unmountOnExit>
@@ -57,7 +57,7 @@ export default function Searchbar({ sx }) {
               placeholder="Search…"
               startAdornment={
                 <InputAdornment position="start">
-                  <Iconify icon="carbon:search" sx={{ color: 'text.disabled' }} />
+                  <Iconify icon="fluent:search-20-regular" sx={{ color: 'text.disabled' }} />
                 </InputAdornment>
               }
               sx={{ mr: 1, fontWeight: 'fontWeightBold' }}

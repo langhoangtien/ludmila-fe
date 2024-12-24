@@ -84,7 +84,7 @@ export default function MegaMenuView() {
         color="inherit"
         variant="contained"
         onClick={mobileOpen.onTrue}
-        startIcon={<Iconify icon="carbon:menu" />}
+        startIcon={<Iconify icon="fluent:navigation-20-regular" />}
       >
         Menu Mobile
       </Button>

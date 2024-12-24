@@ -84,7 +84,7 @@ export default function SupportView() {
         }}
       >
         <IconButton onClick={mobileOpen.onTrue}>
-          <Iconify icon="carbon:menu" />
+          <Iconify icon="fluent:navigation-20-regular" />
         </IconButton>
       </Stack>
 

@@ -29,28 +29,28 @@ const navigations = [
   {
     title: 'Thông tin tài khoản',
     path: paths.account.personal,
-    icon: <Iconify icon="carbon:user" />,
+    icon: <Iconify icon="fluent:person-20-regular" />,
   },
   {
     title: 'Đơn hàng',
     path: paths.account.orders,
-    icon: <Iconify icon="carbon:document" />,
+    icon: <Iconify icon="fluent:document-text-20-regular" />,
   },
   {
     title: 'Yêu thích',
     path: paths.account.wishlist,
-    icon: <Iconify icon="carbon:favorite" />,
+    icon: <Iconify icon="fluent:heart-20-regular" />,
   },
   {
     title: 'Mã giảm giá',
     path: paths.account.vouchers,
-    icon: <Iconify icon="carbon:cut-out" />,
+    icon: <Iconify icon="fluent:tag-multiple-20-regular" />,
   },
- 
+
   {
     title: 'Thanh toán',
     path: paths.account.payment,
-    icon: <Iconify icon="carbon:purchase" />,
+    icon: <Iconify icon="fluent:payment-20-regular" />,
   },
 ];
 
@@ -109,7 +109,7 @@ export default function Nav({ open, onClose }) {
           }}
         >
           <ListItemIcon>
-            <Iconify icon="carbon:logout" />
+            <Iconify icon="fluent:sign-out-20-regular" />
           </ListItemIcon>
           <ListItemText
             primary="Đăng xuất"

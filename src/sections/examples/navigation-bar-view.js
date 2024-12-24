@@ -82,7 +82,7 @@ export default function NavigationBarView() {
           }}
         >
           <IconButton onClick={mobileOpen.onTrue}>
-            <Iconify icon="carbon:menu" />
+            <Iconify icon="fluent:navigation-20-regular" />
           </IconButton>
 
           <NavBasicDesktop

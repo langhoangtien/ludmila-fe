@@ -67,7 +67,7 @@ export default function ReviewEcommerce({ id }) {
     <>
       <ReviewSummary star={star} setStar={handleSetStar} onOpenForm={formOpen.onTrue} />
 
-      <Container>
+      <Container id="reviews">
         <ReviewList
           loading={loading}
           page={page}

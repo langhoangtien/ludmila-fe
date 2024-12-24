@@ -48,7 +48,10 @@ export default function ReviewTourGuideInfo({ tourGuide }) {
           <Typography variant="h4">{name}</Typography>
 
           <Stack spacing={0.5} direction="row" alignItems="center">
-            <Iconify icon="carbon:star-filled" sx={{ color: 'warning.main' }} />
+            <Iconify
+              icon="fluent:vehicle-truck-profile-20-regular-filled"
+              sx={{ color: 'warning.main' }}
+            />
 
             <Box sx={{ typography: 'h6' }}>
               {Number.isInteger(ratingNumber) ? `${ratingNumber}.0` : ratingNumber}

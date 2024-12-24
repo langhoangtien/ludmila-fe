@@ -50,7 +50,7 @@ const DELIVERY_OPTIONS = [
     label: 'Toàn quốc',
     value: 'fast',
     description: '2-4 ngày làm việc',
-    icon: 'carbon:delivery',
+    icon: 'fluent:vehicle-truck-profile-20-regular',
   },
   {
     label: 'Hỏa tốc',

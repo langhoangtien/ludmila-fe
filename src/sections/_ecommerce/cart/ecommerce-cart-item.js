@@ -61,12 +61,12 @@ export default function EcommerceCartItem({ product, wishlist }) {
       </Stack>
 
       <IconButton onClick={() => removeFromCart(product._id)}>
-        <Iconify icon="carbon:trash-can" />
+        <Iconify icon="fluent:delete-20-regular" />
       </IconButton>
 
       {wishlist && (
         <IconButton>
-          <Iconify icon="carbon:shopping-cart-plus" />
+          <Iconify icon="ion:bag-add-outline" />
         </IconButton>
       )}
     </Stack>

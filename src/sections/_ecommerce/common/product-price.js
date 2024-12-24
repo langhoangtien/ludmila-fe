@@ -9,7 +9,7 @@ import { fCurrency } from 'src/utils/format-number';
 
 export default function ProductPrice({ price, salePrice = 0, sx, ...other }) {
   return (
-    <Stack direction="row" sx={{ typography: 'subtitle2', ...sx }} {...other}>
+    <Stack direction="row" sx={{ typography: 'subtitle2', spacing: 1, ...sx }} {...other}>
       {fCurrency(price === salePrice ? price : salePrice)}
 
       <Box
@@ -19,6 +19,7 @@ export default function ProductPrice({ price, salePrice = 0, sx, ...other }) {
           color: 'text.disabled',
           textDecoration: 'line-through',
           fontWeight: 'fontWeightMedium',
+          fontSize: '14px',
         }}
       >
         {price !== salePrice && fCurrency(price)}

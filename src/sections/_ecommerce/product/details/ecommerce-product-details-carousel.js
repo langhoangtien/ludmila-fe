@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
-import { alpha, styled, useTheme } from '@mui/material/styles';
-
-import { bgGradient } from 'src/theme/css';
+import { styled, useTheme } from '@mui/material/styles';
 
 import Image from 'src/components/image';
 import Lightbox, { useLightbox } from 'src/components/lightbox';
@@ -37,26 +35,6 @@ const StyledThumbnailsContainer = styled('div')(({ length, theme }) => ({
 
   ...(length >= 5 && {
     maxWidth: THUMB_SIZE * 6,
-  }),
-
-  ...(length > 3 && {
-    '&:before, &:after': {
-      ...bgGradient({
-        direction: 'to left',
-        startColor: `${alpha(theme.palette.background.default, 0)} 0%`,
-        endColor: `${theme.palette.background.default} 100%`,
-      }),
-      top: 0,
-      zIndex: 9,
-      content: "''",
-      height: '100%',
-      position: 'absolute',
-      width: (THUMB_SIZE * 2) / 3,
-    },
-    '&:after': {
-      right: 0,
-      transform: 'scaleX(-1)',
-    },
   }),
 }));
 

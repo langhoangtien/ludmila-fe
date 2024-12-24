@@ -89,21 +89,21 @@ export default function SupportNav({ topic, data, onChangeTopic, open, onClose }
 
         <Stack spacing={2}>
           <StyledButton>
-            <Iconify icon="carbon:email" width={24} />
+            <Iconify icon="fluent:mail-20-regular" width={24} />
             <Typography variant="subtitle2">Email</Typography>
           </StyledButton>
 
           <StyledButton>
-            <Iconify icon="carbon:chat" width={24} />
+            <Iconify icon="fluent:chat-bubbles-question-20-regular" width={24} />
             <Typography variant="subtitle2">Chat Now</Typography>
           </StyledButton>
 
           <StyledButton>
-            <Iconify icon="carbon:mobile" width={24} />
+            <Iconify icon="fluent:call-20-regular" width={24} />
             <Typography variant="subtitle2">
               {`Call `}
               <Box component="span" sx={{ color: 'primary.main' }}>
-                552-917-1454
+                0832-667-711
               </Box>
             </Typography>
           </StyledButton>

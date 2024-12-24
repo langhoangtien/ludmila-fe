@@ -10,7 +10,7 @@ import Markdown from 'src/components/markdown';
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceProductDetailsDescription({ description, specifications }) {
+export default function EcommerceProductDetailsDescription({ description }) {
   const [readMore, setReadMore] = useState(true);
   const handleReadMore = () => {
     setReadMore(!readMore);
@@ -22,25 +22,6 @@ export default function EcommerceProductDetailsDescription({ description, specif
         py: { xs: 5, md: 10 },
       }}
     >
-      {/* <Stack spacing={2}>
-        <Typography variant="h6"> Thuộc tính </Typography>
-
-        {specifications.map((row) => (
-          <Stack
-            key={row.label}
-            spacing={0.5}
-            direction={{ xs: 'column', sm: 'row' }}
-            alignItems={{ sm: 'center' }}
-            sx={{ typography: 'body2' }}
-          >
-            <Box component="span" sx={{ width: 160, color: 'text.secondary' }}>
-              {row.label}
-            </Box>
-            <Box component="span">{row.value}</Box>
-          </Stack>
-        ))}
-      </Stack> */}
-
       <Stack
         component="div"
         id="cha"

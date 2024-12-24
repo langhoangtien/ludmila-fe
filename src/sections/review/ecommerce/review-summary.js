@@ -10,7 +10,6 @@ import Typography from '@mui/material/Typography';
 
 import { fShortenNumber } from 'src/utils/format-number';
 
-import Iconify from 'src/components/iconify';
 import { useProductContext } from 'src/components/product/use-product-contex';
 
 import ReviewProgress from '../common/review-progress';
@@ -24,46 +23,44 @@ export default function ReviewSummary({ star, onOpenForm, setStar }) {
       sx={{
         overflow: 'hidden',
         bgcolor: 'background.neutral',
-        py: { xs: 8, md: 10 },
+        py: { xs: 2, md: 3 },
       }}
     >
       <Container>
-        <Grid container spacing={{ xs: 3, md: 5 }}>
+        <Typography variant="h4">Khách hàng nói về sản phẩm</Typography>
+        <Grid container spacing={{ xs: 4, md: 3 }}>
           <Grid xs={12} md={4}>
-            <Typography variant="h3">Đánh giá</Typography>
-
-            <Stack spacing={2} direction="row" alignItems="center" sx={{ my: 3 }}>
-              <Typography variant="h2"> {product.ratingAverage}</Typography>
-
-              <Stack spacing={0.5}>
-                <Rating
-                  value={product.ratingAverage}
-                  readOnly
-                  precision={0.1}
-                  // sx={{
-                  //   '& svg': {
-                  //     color: 'text.primary',
-                  //   },
-                  // }}
-                />
-                <Typography variant="body2">
-                  {fShortenNumber(product.totalReviews)} đánh giá
+            <Stack alignItems="center" justifyContent="center">
+              {' '}
+              <Stack alignItems="center" justifyContent="center">
+                {' '}
+                <Typography sx={{ lineHeight: 0.8 }} variant="h2">
+                  {' '}
+                  {product.ratingAverage}
                 </Typography>
               </Stack>
+              <Stack spacing={1} direction="row" alignItems="center" sx={{ my: 1 }}>
+                <Stack spacing={0.5}>
+                  <Rating value={product.ratingAverage} readOnly precision={0.1} />
+                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                    {fShortenNumber(product.totalReviews)} lượt đánh giá
+                  </Typography>
+                </Stack>
+              </Stack>
+              <Button
+                fullWidth
+                size="medium"
+                color="inherit"
+                variant="contained"
+                onClick={onOpenForm}
+              >
+                Đánh giá sản phẩm
+              </Button>
             </Stack>
-
-            <Button
-              size="large"
-              color="inherit"
-              variant="contained"
-              startIcon={<Iconify icon="carbon:edit" />}
-              onClick={onOpenForm}
-            >
-              Viết đánh giá
-            </Button>
           </Grid>
 
-          <Grid xs={12} md={4}>
+          <Grid alignItems="center" alignContent="center" xs={12} md={8}>
+            {' '}
             <ReviewProgress star={star} setStar={setStar} ratings={product.ratings} />
           </Grid>
         </Grid>
