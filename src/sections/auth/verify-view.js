@@ -97,7 +97,7 @@ export default function VerifyView() {
           display: 'inline-flex',
         }}
       >
-        <Iconify icon="carbon:chevron-left" width={16} sx={{ mr: 1 }} />
+        <Iconify icon="fluent:chevron-left-20-regular" width={16} sx={{ mr: 1 }} />
         Return to sign in
       </Link>
     </Stack>

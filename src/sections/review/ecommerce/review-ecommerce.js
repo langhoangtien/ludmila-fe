@@ -16,7 +16,7 @@ import ReviewNewForm from '../common/review-new-form';
 
 // ----------------------------------------------------------------------
 
-export default function ReviewEcommerce({ id }) {
+export default function Review({ id }) {
   const { authenticated } = useAuthContext();
   const formOpen = useBoolean();
   const [page, setPage] = useState(1);
@@ -87,6 +87,6 @@ export default function ReviewEcommerce({ id }) {
   );
 }
 
-ReviewEcommerce.propTypes = {
+Review.propTypes = {
   id: PropTypes.string,
 };

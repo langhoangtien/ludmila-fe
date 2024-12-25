@@ -64,7 +64,7 @@ export default function Lightbox({
           iconZoomOut: () => <Iconify width={24} icon="carbon:zoom-out" />,
           iconSlideshowPlay: () => <Iconify width={24} icon="carbon:play" />,
           iconSlideshowPause: () => <Iconify width={24} icon="carbon:pause" />,
-          iconPrev: () => <Iconify width={32} icon="carbon:chevron-left" />,
+          iconPrev: () => <Iconify width={32} icon="fluent:chevron-left-20-regular" />,
           iconNext: () => <Iconify width={32} icon="carbon:chevron-right" />,
           iconExitFullscreen: () => <Iconify width={24} icon="carbon:center-to-fit" />,
           iconEnterFullscreen: () => <Iconify width={24} icon="carbon:fit-to-screen" />,

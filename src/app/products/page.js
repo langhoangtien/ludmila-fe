@@ -1,4 +1,4 @@
-import EcommerceProductsView from 'src/sections/_ecommerce/view/ecommerce-products-view';
+import ProductsView from 'src/sections/view/products-view';
 
 // ----------------------------------------------------------------------
 
@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export const revalidate = 30;
-export default async function EcommerceProductsPage(props) {
+export default async function ProductsPage(props) {
   const searchParams = props?.searchParams?.search;
-  return <EcommerceProductsView search={searchParams} />;
+  return <ProductsView search={searchParams} />;
 }

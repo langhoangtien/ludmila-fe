@@ -1,11 +1,11 @@
-import EcommerceCheckoutView from 'src/sections/_ecommerce/view/ecommerce-checkout-view';
+import CheckoutView from 'src/sections/view/checkout-view';
 
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'E-commerce: Checkout',
+  title: 'Thanh toán đơn hàng',
 };
 
-export default function EcommerceCheckoutPage() {
-  return <EcommerceCheckoutView />;
+export default function CheckoutPage() {
+  return <CheckoutView />;
 }

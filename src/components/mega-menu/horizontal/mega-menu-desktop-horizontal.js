@@ -12,7 +12,7 @@ export default function MegaMenuDesktopHorizontal({ data, sx, slotProps, ...othe
       component="nav"
       id="mega-menu-desktop-horizontal"
       direction="row"
-      spacing={3}
+      spacing={1}
       sx={{
         height: 1,
         ...sx,

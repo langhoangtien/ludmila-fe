@@ -73,7 +73,7 @@ export function defaultProps(theme) {
         iconMapping: {
           error: <Iconify icon="solar:danger-linear" width={24} />,
           info: <Iconify icon="carbon:information" width={24} />,
-          success: <Iconify icon="carbon:checkmark-outline" width={24} />,
+          success: <Iconify icon="fluent:checkmark-circle-20-regular" width={24} />,
           warning: <Iconify icon="carbon:warning-alt" width={24} />,
         },
       },

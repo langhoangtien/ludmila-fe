@@ -124,7 +124,7 @@ export default function Footer() {
 
               <Stack spacing={2}>
                 <Stack spacing={1}>
-                  <Typography variant="h6">Let’s stay in touch</Typography>
+                  <Typography variant="h6">Giữ liên lạc với chúng tôi</Typography>
                   <Typography variant="caption" sx={{ color: 'text.secondary' }}>
                     Đăng ký nhận email thông báo khuyến mãi hoặc để được tư vấn miễn phí
                   </Typography>
@@ -133,7 +133,7 @@ export default function Footer() {
                 <TextField
                   fullWidth
                   hiddenLabel
-                  placeholder="Email address"
+                  placeholder="Email"
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">

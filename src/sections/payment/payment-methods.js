@@ -120,7 +120,7 @@ function OptionItem({ option, onOpen, selected, isCredit }) {
         control={
           <Radio
             disableRipple
-            checkedIcon={<Iconify icon="carbon:checkmark-outline" />}
+            checkedIcon={<Iconify icon="fluent:checkmark-circle-20-regular" />}
             sx={{ mx: 1 }}
           />
         }

@@ -1,4 +1,4 @@
-import EcommerceAccountVouchersView from 'src/sections/_ecommerce/view/ecommerce-account-vouchers-view';
+import AccountVouchersView from 'src/sections/view/account-vouchers-view';
 
 // ----------------------------------------------------------------------
 
@@ -6,6 +6,6 @@ export const metadata = {
   title: 'E-commerce: Account Vouchers',
 };
 
-export default function EcommerceAccountVouchersPage() {
-  return <EcommerceAccountVouchersView />;
+export default function AccountVouchersPage() {
+  return <AccountVouchersView />;
 }

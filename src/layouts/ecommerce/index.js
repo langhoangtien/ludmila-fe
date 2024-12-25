@@ -4,7 +4,7 @@ import Header from './header';
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceLayout({ children }) {
+export default function Layout({ children }) {
   return (
     <>
       <Header />
@@ -14,6 +14,6 @@ export default function EcommerceLayout({ children }) {
   );
 }
 
-EcommerceLayout.propTypes = {
+Layout.propTypes = {
   children: PropTypes.node,
 };

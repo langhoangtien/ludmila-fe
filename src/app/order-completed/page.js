@@ -1,11 +1,11 @@
-import EcommerceOrderCompletedView from 'src/sections/_ecommerce/view/ecommerce-order-completed-view';
+import OrderCompletedView from 'src/sections/view/order-completed-view';
 
 // ----------------------------------------------------------------------
 
 export const metadata = {
-  title: 'E-commerce: Order Completed',
+  title: 'Hoàn tất đơn hàng',
 };
 
-export default function EcommerceOrderCompletedPage() {
-  return <EcommerceOrderCompletedView />;
+export default function OrderCompletedPage() {
+  return <OrderCompletedView />;
 }

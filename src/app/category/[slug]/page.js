@@ -4,7 +4,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { endpoints } from 'src/utils/fetch';
 import { encodeData, convertImagePathToUrl } from 'src/utils/common';
 
-import EcommerceProductList from 'src/sections/_ecommerce/product/list/ecommerce-product-list';
+import ProductList from 'src/sections/product/list/product-list';
 
 export default async function DetailCategoryPage(props) {
   const slug = props?.params?.slug ?? null;
@@ -65,7 +65,7 @@ export default async function DetailCategoryPage(props) {
       </Stack>
 
       <Stack direction="column">
-        <EcommerceProductList
+        <ProductList
           pagination={false}
           loading={false}
           viewMode="grid"

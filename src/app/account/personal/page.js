@@ -1,4 +1,4 @@
-import EcommerceAccountPersonalView from 'src/sections/_ecommerce/view/ecommerce-account-personal-view';
+import AccountPersonalView from 'src/sections/view/account-personal-view';
 
 // ----------------------------------------------------------------------
 
@@ -6,6 +6,6 @@ export const metadata = {
   title: 'E-commerce: Account Personal',
 };
 
-export default function EcommerceAccountPersonalPage() {
-  return <EcommerceAccountPersonalView />;
+export default function AccountPersonalPage() {
+  return <AccountPersonalView />;
 }

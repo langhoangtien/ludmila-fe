@@ -52,7 +52,7 @@ export default function SettingsDrawer() {
       onClick={() =>
         settings.onUpdate('themeMode', settings.themeMode === 'dark' ? 'light' : 'dark')
       }
-      icons={['carbon:asleep', 'carbon:asleep-filled']}
+      icons={['fluent:weather-moon-20-regular', 'fluent:weather-moon-20-filled']}
     />
   );
 
@@ -63,7 +63,7 @@ export default function SettingsDrawer() {
       onClick={() =>
         settings.onUpdate('themeDirection', settings.themeDirection === 'rtl' ? 'ltr' : 'rtl')
       }
-      icons={['carbon:align-horizontal-right', 'carbon:align-horizontal-left']}
+      icons={['fluent:align-right-20-regular', 'fluent:align-left-20-regular']}
     />
   );
 

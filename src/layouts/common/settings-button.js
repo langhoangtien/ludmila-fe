@@ -47,7 +47,7 @@ export default function SettingsButton({ sx }) {
           aria-label="settings"
           onClick={settings.onToggle}
         >
-          <Iconify icon="carbon:settings" />
+          <Iconify icon="fluent:settings-20-regular" />
         </IconButton>
       </Box>
     </Badge>

@@ -35,6 +35,7 @@ import NavMobile from './nav/mobile';
 import { HEADER } from '../config-layout';
 import SearchDemo from '../common/search-demo';
 import HeaderShadow from '../common/header-shadow';
+import SettingsButton from '../common/settings-button';
 
 // ----------------------------------------------------------------------
 const shakeAnimation = keyframes`
@@ -81,6 +82,7 @@ export default function Header({ headerOnDark }) {
               children: dataMapped,
             },
             { title: 'Sản phẩm', path: paths.products },
+            { title: 'Thương hiệu', path: paths.contactUs },
           ];
           sessionStorage.setItem('menu', JSON.stringify(nav));
           setMenu(nav);
@@ -112,7 +114,7 @@ export default function Header({ headerOnDark }) {
           >
             <MegaMenuDesktopHorizontal data={menu} />
           </Stack>
-          <SearchDemo flexGrow={1} />
+          {/* <SearchDemo flexGrow={1} /> */}
 
           <Stack spacing={1} justifyContent="space-between" direction="row">
             <Badge badgeContent={totalProduct} color="error">
@@ -126,6 +128,7 @@ export default function Header({ headerOnDark }) {
                 <Iconify icon="fluent:cart-20-regular" height={28} width={28} />
               </IconButton>
             </Badge>
+            <SettingsButton />
           </Stack>
         </Stack>
       )}
@@ -182,8 +185,9 @@ export default function Header({ headerOnDark }) {
             ...(headerOnDark && {
               color: 'common.white',
             }),
+            backgroundColor: theme.palette.background.header,
             ...(offset && {
-              ...bgBlur({ color: theme.palette.background.default }),
+              ...bgBlur({ color: theme.palette.background.header }),
               color: 'text.primary',
               height: {
                 md: HEADER.H_DESKTOP,

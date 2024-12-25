@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 
+import { Card } from '@mui/material';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Drawer from '@mui/material/Drawer';
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
-import { alpha } from '@mui/material/styles';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -61,65 +61,66 @@ export default function Nav({ open, onClose }) {
   const auth = useAuthContext();
 
   const renderContent = (
-    <Stack
-      sx={{
-        flexShrink: 0,
-        borderRadius: 2,
-        width: 1,
-        ...(mdUp && {
-          width: 280,
-          border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.24)}`,
-        }),
-      }}
-    >
-      <Stack spacing={2} sx={{ p: 3, pb: 2 }}>
-        <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
-          <Avatar
-            src={convertImagePathToUrl(auth?.user?.photo, 250)}
-            sx={{ width: 64, height: 64 }}
-          />
+    <Card>
+      <Stack
+        sx={{
+          flexShrink: 0,
+          borderRadius: 2,
+          width: 1,
+          ...(mdUp && {
+            width: 280,
+          }),
+        }}
+      >
+        <Stack spacing={2} sx={{ p: 3, pb: 2 }}>
+          <Stack spacing={2} direction="row" justifyContent="center" alignItems="center">
+            <Avatar
+              src={convertImagePathToUrl(auth?.user?.photo, 250)}
+              sx={{ width: 64, height: 64 }}
+            />
+          </Stack>
+
+          <Stack spacing={0.5}>
+            <TextMaxLine variant="subtitle1" line={1}>
+              {auth?.user?.fullName}
+            </TextMaxLine>
+            <TextMaxLine variant="body2" line={1} sx={{ color: 'text.secondary' }}>
+              {auth?.user?.email}
+            </TextMaxLine>
+          </Stack>
         </Stack>
 
-        <Stack spacing={0.5}>
-          <TextMaxLine variant="subtitle1" line={1}>
-            {auth?.user?.fullName}
-          </TextMaxLine>
-          <TextMaxLine variant="body2" line={1} sx={{ color: 'text.secondary' }}>
-            {auth?.user?.email}
-          </TextMaxLine>
+        <Divider sx={{ borderStyle: 'dashed' }} />
+
+        <Stack sx={{ my: 1, px: 2 }}>
+          {navigations.map((item) => (
+            <NavItem key={item.title} item={item} />
+          ))}
         </Stack>
-      </Stack>
 
-      <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: 'dashed' }} />
 
-      <Stack sx={{ my: 1, px: 2 }}>
-        {navigations.map((item) => (
-          <NavItem key={item.title} item={item} />
-        ))}
-      </Stack>
-
-      <Divider sx={{ borderStyle: 'dashed' }} />
-
-      <Stack sx={{ my: 1, px: 2 }}>
-        <ListItemButton
-          sx={{
-            px: 1,
-            height: 44,
-            borderRadius: 1,
-          }}
-        >
-          <ListItemIcon>
-            <Iconify icon="fluent:sign-out-20-regular" />
-          </ListItemIcon>
-          <ListItemText
-            primary="Đăng xuất"
-            primaryTypographyProps={{
-              typography: 'body2',
+        <Stack sx={{ my: 1, px: 2 }}>
+          <ListItemButton
+            sx={{
+              px: 1,
+              height: 44,
+              borderRadius: 1,
             }}
-          />
-        </ListItemButton>
+          >
+            <ListItemIcon>
+              <Iconify icon="fluent:sign-out-20-regular" />
+            </ListItemIcon>
+            <ListItemText
+              primary="Đăng xuất"
+              primaryTypographyProps={{
+                typography: 'body2',
+              }}
+            />
+          </ListItemButton>
+        </Stack>
       </Stack>
-    </Stack>
+    </Card>
   );
 
   return (
