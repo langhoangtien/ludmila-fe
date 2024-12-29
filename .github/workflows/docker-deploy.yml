@@ -35,12 +35,12 @@ jobs:
       # Bước 4: Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t langhoangtien/nextjs-app:$GITHUB_SHA .
+          docker build -t langhoangtien/nextjs-app:${{ github.sha }} .
 
       # Bước 5: Push Docker image lên Docker Hub (hoặc registry khác)
       - name: Push Docker image
         run: |
-          docker push langhoangtien/nextjs-app:$GITHUB_SHA
+          docker push langhoangtien/nextjs-app:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,7 +61,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            docker pull langhoangtien/nextjs-app:$GITHUB_SHA
+            docker pull langhoangtien/nextjs-app:${{ github.sha }}
             if [ $(docker ps -a -q -f name=nextjs-container) ]; then
             # Nếu container tồn tại, dừng và xóa nó
               docker stop nextjs-container
@@ -71,4 +71,4 @@ jobs:
               echo "GITHUB_SHA is not set"
               exit 1
             fi
-            docker run -d -p 3000:3000 --name nextjs-container langhoangtien/nextjs-app:$GITHUB_SHA
+            docker run -d -p 3000:3000 --name nextjs-container langhoangtien/nextjs-app:${{ github.sha }}
