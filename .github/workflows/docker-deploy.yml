@@ -59,6 +59,9 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             docker pull langhoangtien/nextjs-app:$GITHUB_SHA
-            docker stop nextjs-container || true
-            docker rm nextjs-container || true
+            if [ $(docker ps -a -q -f name=nextjs-container) ]; then
+            # Nếu container tồn tại, dừng và xóa nó
+              docker stop nextjs-container
+              docker rm nextjs-container
+            fi
             docker run -d -p 3000:3000 --name nextjs-container langhoangtien/nextjs-app:$GITHUB_SHA
