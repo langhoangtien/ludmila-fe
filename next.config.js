@@ -21,4 +21,5 @@ module.exports = {
   images: {
     domains: ['api.ludmila.vn', 'localhost'],
   },
+  output: 'standalone',
 };
