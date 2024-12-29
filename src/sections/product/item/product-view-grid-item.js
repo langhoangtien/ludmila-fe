@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import { Chip, Tooltip } from '@mui/material';
+import { Chip, Tooltip, useTheme } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -24,7 +24,8 @@ import ProductPrice from '../../common/product-price';
 // ----------------------------------------------------------------------
 
 export default function ProductViewGridItem({ product, sx, ...other }) {
-  const { addToCart, shake } = useCartContext();
+  const { addToCart } = useCartContext();
+  const themeMui = useTheme();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const handleAddToCart = () => {
@@ -52,7 +53,11 @@ export default function ProductViewGridItem({ product, sx, ...other }) {
     <Stack
       sx={{
         position: 'relative',
-
+        [themeMui.breakpoints.up('md')]: {
+          '&:hover .add-to-cart': {
+            opacity: 1,
+          },
+        },
         ...sx,
       }}
       {...other}
@@ -60,7 +65,6 @@ export default function ProductViewGridItem({ product, sx, ...other }) {
       <Box sx={{ position: 'relative', mb: 2 }}>
         <Tooltip title={product.variants?.length === 1 ? 'Thêm vào giỏ hàng' : 'Xem mẫu mã'} arrow>
           <Fab
-            disabled={shake}
             className="add-to-cart"
             color="primary"
             size="small"
@@ -68,7 +72,7 @@ export default function ProductViewGridItem({ product, sx, ...other }) {
               right: 8,
               zIndex: 9,
               bottom: 8,
-              opacity: 1,
+              opacity: { md: 0, xs: 1 },
               position: 'absolute',
               transition: (theme) =>
                 theme.transitions.create('opacity', {
@@ -79,11 +83,7 @@ export default function ProductViewGridItem({ product, sx, ...other }) {
           >
             <Iconify
               onClick={handleAddToCart}
-              icon={
-                product.variants?.length === 1
-                  ? 'fluent:shopping-bag-add-20-regular'
-                  : 'fluent:shopping-bag-arrow-left-20-regular'
-              }
+              icon={product.variants?.length === 1 ? 'ion:bag-add-outline' : 'ion:bag-outline'}
             />
           </Fab>
         </Tooltip>

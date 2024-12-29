@@ -59,15 +59,15 @@ export default function Lightbox({
           ],
         }}
         render={{
-          iconClose: () => <Iconify width={24} icon="carbon:close" />,
-          iconZoomIn: () => <Iconify width={24} icon="carbon:zoom-in" />,
-          iconZoomOut: () => <Iconify width={24} icon="carbon:zoom-out" />,
-          iconSlideshowPlay: () => <Iconify width={24} icon="carbon:play" />,
-          iconSlideshowPause: () => <Iconify width={24} icon="carbon:pause" />,
+          iconClose: () => <Iconify width={24} icon="fluent:dismiss-20-regular" />,
+          iconZoomIn: () => <Iconify width={24} icon="fluent:zoom-in-20-regular" />,
+          iconZoomOut: () => <Iconify width={24} icon="fluent:zoom-out-20-regular" />,
+          iconSlideshowPlay: () => <Iconify width={24} icon="fluent:play-20-regular" />,
+          iconSlideshowPause: () => <Iconify width={24} icon="fluent:pause-20-regular" />,
           iconPrev: () => <Iconify width={32} icon="fluent:chevron-left-20-regular" />,
-          iconNext: () => <Iconify width={32} icon="carbon:chevron-right" />,
-          iconExitFullscreen: () => <Iconify width={24} icon="carbon:center-to-fit" />,
-          iconEnterFullscreen: () => <Iconify width={24} icon="carbon:fit-to-screen" />,
+          iconNext: () => <Iconify width={32} icon="fluent:chevron-right-20-regular" />,
+          iconExitFullscreen: () => <Iconify width={24} icon="fluent:square-multiple-20-regular" />,
+          iconEnterFullscreen: () => <Iconify width={24} icon="fluent:square-20-regular" />,
         }}
         {...other}
       />

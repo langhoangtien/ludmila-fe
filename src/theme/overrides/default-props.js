@@ -71,10 +71,10 @@ export function defaultProps(theme) {
     MuiAlert: {
       defaultProps: {
         iconMapping: {
-          error: <Iconify icon="solar:danger-linear" width={24} />,
-          info: <Iconify icon="carbon:information" width={24} />,
+          error: <Iconify icon="fluent:error-circle-20-regular" width={24} />,
+          info: <Iconify icon="fluent:info-20-regular" width={24} />,
           success: <Iconify icon="fluent:checkmark-circle-20-regular" width={24} />,
-          warning: <Iconify icon="carbon:warning-alt" width={24} />,
+          warning: <Iconify icon="fluent:warning-20-regular" width={24} />,
         },
       },
     },

@@ -1,10 +1,10 @@
 'use client';
 
-import { Stack } from '@mui/material';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import { Card, Stack, CardContent } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -34,21 +34,23 @@ export default function CartView() {
       <Grid container spacing={{ xs: 5, md: 8 }}>
         {cart.totalProduct === 0 ? (
           <Grid xs={12}>
-            <Stack spacing={2} direction="column" justifyContent="center" alignItems="center">
-              {' '}
-              <CartEmpty />
-              <Typography variant="h6" sx={{ mt: 5 }}>
-                Không có sản phẩm nào trong giỏ hàng
-              </Typography>
-              <Button
-                component={RouterLink}
-                href={paths.products}
-                variant="contained"
-                color="primary"
-              >
-                Mua hàng
-              </Button>
-            </Stack>
+            <Card>
+              <CardContent>
+                <Stack spacing={2} direction="column" justifyContent="center" alignItems="center">
+                  {' '}
+                  <CartEmpty />
+                  <Typography variant="h5" sx={{ mt: 2 }}>
+                    Chưa có sản phẩm nào trong giỏ
+                  </Typography>
+                  <Typography text="text.secondary" variant="caption">
+                    Cùng khám phá hàng ngàn sản phẩm tại Ludmila nhé!
+                  </Typography>
+                  <Button component={RouterLink} href={paths.products} variant="contained">
+                    Mua hàng
+                  </Button>
+                </Stack>
+              </CardContent>
+            </Card>
           </Grid>
         ) : (
           <>
@@ -82,4 +84,4 @@ export default function CartView() {
   );
 }
 
-const CartEmpty = () => <Iconify icon="carbon:shopping-cart" width={240} />;
+const CartEmpty = () => <Iconify icon="fluent:cart-20-filled" width={200} />;

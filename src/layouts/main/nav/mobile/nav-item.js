@@ -23,7 +23,7 @@ const NavItem = forwardRef(
         {hasChild && (
           <Iconify
             width={16}
-            icon={open ? 'carbon:chevron-down' : 'carbon:chevron-right'}
+            icon={open ? 'fluent:chevron-down-20-regular' : 'fluent:chevron-right-20-regular'}
             sx={{ ml: 0.75 }}
           />
         )}

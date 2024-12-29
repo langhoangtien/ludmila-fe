@@ -122,7 +122,6 @@ export default function AccountPersonalView() {
 
   const handleDropImage = async (acceptedFiles) => {
     const file = acceptedFiles[0];
-    console.log(file);
     try {
       const dataResponse = await uploadFile(file);
       const url = convertImagePathToUrl(dataResponse.path, 250);
@@ -153,11 +152,12 @@ export default function AccountPersonalView() {
                 <Typography
                   variant="caption"
                   sx={{
-                    mt: 3,
+                    mt: 1,
                     mx: 'auto',
                     display: 'block',
                     textAlign: 'center',
                     color: 'text.disabled',
+                    py: 1,
                   }}
                 >
                   Allowed *.jpeg, *.jpg, *.png, *.gif
@@ -267,7 +267,7 @@ export default function AccountPersonalView() {
             color: (theme) => theme.palette.grey[500],
           }}
         >
-          <Iconify icon="carbon:close" />
+          <Iconify icon="fluent:dismiss-20-regular" />
         </IconButton>
         <DialogContent>
           <Stack sx={{ p: 2 }} spacing={2.5}>

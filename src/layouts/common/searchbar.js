@@ -45,7 +45,7 @@ export default function Searchbar({ sx }) {
     <ClickAwayListener onClickAway={searchOpen.onFalse}>
       <div>
         <IconButton color="inherit" aria-label="search" onClick={searchOpen.onTrue} sx={sx}>
-          <Iconify icon="fluent:search-20-regular" />
+          <Iconify width={24} icon="fluent:search-20-regular" />
         </IconButton>
 
         <Slide direction="down" in={searchOpen.value} mountOnEnter unmountOnExit>
@@ -54,7 +54,7 @@ export default function Searchbar({ sx }) {
               autoFocus
               fullWidth
               disableUnderline
-              placeholder="Search…"
+              placeholder="Tìm kiếm…"
               startAdornment={
                 <InputAdornment position="start">
                   <Iconify icon="fluent:search-20-regular" sx={{ color: 'text.disabled' }} />
@@ -63,7 +63,7 @@ export default function Searchbar({ sx }) {
               sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
             />
             <Button variant="contained" onClick={searchOpen.onFalse}>
-              Search
+              Tìm
             </Button>
           </StyledSearchbar>
         </Slide>

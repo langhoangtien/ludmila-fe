@@ -37,20 +37,10 @@ export default function CheckoutOrderSummary({
           }}
         >
           <Typography variant="h6"> Thông tin đơn hàng </Typography>
-          <Typography color="info.main" variant="body2">
+          <Typography color="text.secondary" variant="subtitle2">
             {' '}
             Miễn phí vận chuyển cho đơn hàng tù {fCurrency(SHIPPING_THRESHOLD)} trở lên
           </Typography>
-
-          {!!products?.length && (
-            <>
-              {products.map((product) => (
-                <ProductItem key={product.id} product={product} />
-              ))}
-
-              <Divider sx={{ borderStyle: 'dashed' }} />
-            </>
-          )}
 
           <Stack spacing={2}>
             <Row label="Tạm tính" value={fCurrency(subtotal)} />

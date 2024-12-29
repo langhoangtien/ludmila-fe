@@ -2,12 +2,12 @@
 
 import PropTypes from 'prop-types';
 
-import AuthBackgroundLayout from 'src/layouts/auth/background';
+import MainLayout from 'src/layouts/main';
 
 // ----------------------------------------------------------------------
 
 export default function Layout({ children }) {
-  return <AuthBackgroundLayout>{children}</AuthBackgroundLayout>;
+  return <MainLayout>{children}</MainLayout>;
 }
 
 Layout.propTypes = {

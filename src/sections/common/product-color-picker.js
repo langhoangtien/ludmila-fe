@@ -28,7 +28,7 @@ export default function ProductColorPicker({ value, options, onChange, sx }) {
             ...sx,
           }}
         >
-          {value === option.value && <Iconify icon="carbon:checkmark" />}
+          {value === option.value && <Iconify icon="fluent:checkmark-20-regular" />}
 
           <FormControlLabel
             value={option.value}

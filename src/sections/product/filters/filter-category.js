@@ -28,7 +28,7 @@ export default function FilterCategory({
             }),
           }}
         >
-          <Iconify icon="carbon:chevron-right" width={12} sx={{ mr: 1 }} />
+          <Iconify icon="fluent:chevron-right-20-regular" width={12} sx={{ mr: 1 }} />
           {option}
         </Stack>
       ))}

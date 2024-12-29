@@ -33,7 +33,6 @@ export default function ReviewList({ loading, reviews, count, handleChange, page
           count={count}
           page={page}
           onChange={handleChange}
-          color="primary"
           sx={{
             mt: 5,
             mb: 10,

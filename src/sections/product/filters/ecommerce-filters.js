@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Drawer from '@mui/material/Drawer';
@@ -14,29 +14,15 @@ import { endpoints, fetchData } from 'src/utils/fetch';
 
 import Iconify from 'src/components/iconify';
 
-import FilterTag from './filter-tag';
-import FilterStock from './filter-stock';
 import FilterRating from './filter-rating';
 import FilterChecked from './filter-checked';
 import FilterAutocompleteChecked from './filter-autocomplete-checked';
 
 // ----------------------------------------------------------------------
 
-const TAG_OPTIONS = ['Nhung hươu', 'Cá trích', 'Omega 3', 'Vitamin e đỏ', 'Tai biến'];
+// const TAG_OPTIONS = ['Nhung hươu', 'Cá trích', 'Omega 3', 'Vitamin e đỏ', 'Tai biến'];
 
 // ----------------------------------------------------------------------
-
-const defaultValues = {
-  filterCategories: '',
-  filterRating: null,
-  filterStock: false,
-  filterShipping: [],
-  filterTag: [],
-  filterPrice: {
-    start: 0,
-    end: 0,
-  },
-};
 
 const PRICE_FILTERS = [
   { name: 'Giá dưới 100.000₫', _id: '0-100000' },
@@ -48,55 +34,21 @@ const PRICE_FILTERS = [
 export default function Filters({
   open,
   onClose,
-  brands,
-  setBrands,
-  prices,
-  setPrices,
-  countries,
-  setCountries,
-  categories,
-  setCategories,
-  rating,
-  setRating,
+  filters,
+  changeRating,
+  changeFilterArrayItem,
   clearAll,
 }) {
-  const fetchProductSelectInfo = async () => {
-    const response = await fetchData(endpoints.home.selectInfo);
-    setDataFilter(response);
-    // return data;
-  };
   useEffect(() => {
+    const fetchProductSelectInfo = async () => {
+      const response = await fetchData(endpoints.home.selectInfo);
+      setDataFilter(response);
+      // return data;
+    };
     fetchProductSelectInfo();
   }, []);
   const [dataFilter, setDataFilter] = useState({ categories: [], brands: [], countries: [] });
   const mdUp = useResponsive('up', 'md');
-
-  const [filters, setFilters] = useState(defaultValues);
-
-  const getSelected = (selectedItems, item) =>
-    selectedItems.includes(item)
-      ? selectedItems.filter((value) => value !== item)
-      : [...selectedItems, item];
-
-  const handleChangeTag = useCallback(
-    (name) => {
-      setFilters({
-        ...filters,
-        filterTag: getSelected(filters.filterTag, name),
-      });
-    },
-    [filters]
-  );
-
-  const handleChangeStock = useCallback(
-    (event) => {
-      setFilters({
-        ...filters,
-        filterStock: event.target.checked,
-      });
-    },
-    [filters]
-  );
 
   const renderContent = (
     <Stack
@@ -109,8 +61,8 @@ export default function Filters({
     >
       <Block title="Giá">
         <FilterChecked
-          setChecked={setPrices}
-          checked={prices}
+          setChecked={(value) => changeFilterArrayItem('filterPrices', value)}
+          checked={filters.filterPrices}
           sx={{ mt: 2 }}
           _id="value"
           name="price"
@@ -121,8 +73,8 @@ export default function Filters({
         <FilterChecked
           sx={{ mt: 2 }}
           name="brand"
-          setChecked={setBrands}
-          checked={brands}
+          setChecked={(value) => changeFilterArrayItem('filterBrands', value)}
+          checked={filters.filterBrands}
           options={dataFilter.brands}
         />
       </Block>
@@ -130,35 +82,35 @@ export default function Filters({
         <FilterChecked
           sx={{ mt: 2 }}
           name="country"
-          setChecked={setCountries}
-          checked={countries}
+          setChecked={(value) => changeFilterArrayItem('filterCountries', value)}
+          checked={filters.filterCountries}
           options={dataFilter.countries}
         />
       </Block>
 
       <BlockFull title="Danh mục">
         <FilterAutocompleteChecked
-          setChecked={setCategories}
-          checked={categories}
+          setChecked={(value) => changeFilterArrayItem('filterCategories', value)}
+          checked={filters.filterCategories}
           name="category"
           options={dataFilter.categories}
         />
       </BlockFull>
 
       <Block title="Ratings">
-        <FilterRating rating={rating} setRating={setRating} sx={{ mt: 2 }} />
+        <FilterRating rating={filters.filterRating} setRating={changeRating} sx={{ mt: 2 }} />
       </Block>
 
-      <FilterStock filterStock={filters.filterStock} onChangeStock={handleChangeStock} />
+      {/* <FilterStock filterStock={filters.filterStock} onChangeStock={handleChangeStock} /> */}
 
-      <Block title="Tags">
+      {/* <Block title="Tags">
         <FilterTag
           filterTag={filters.filterTag}
           onChangeTag={handleChangeTag}
           options={TAG_OPTIONS}
           sx={{ mt: 2 }}
         />
-      </Block>
+      </Block> */}
 
       <Button
         fullWidth
@@ -200,17 +152,17 @@ export default function Filters({
 Filters.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool,
-  brands: PropTypes.array,
-  setBrands: PropTypes.func,
-  prices: PropTypes.array,
-  setPrices: PropTypes.func,
-  countries: PropTypes.array,
-  setCountries: PropTypes.func,
-  categories: PropTypes.array,
-  setCategories: PropTypes.func,
-  rating: PropTypes.number,
-  setRating: PropTypes.func,
+
+  changeRating: PropTypes.func,
+  changeFilterArrayItem: PropTypes.func,
   clearAll: PropTypes.func,
+  filters: PropTypes.shape({
+    filterPrices: PropTypes.array,
+    filterBrands: PropTypes.array,
+    filterCountries: PropTypes.array,
+    filterCategories: PropTypes.array,
+    filterRating: PropTypes.number,
+  }),
 };
 
 // ----------------------------------------------------------------------
@@ -230,7 +182,7 @@ function Block({ title, children, ...other }) {
         <Typography variant="h6">{title}</Typography>
 
         <Iconify
-          icon={contentOpen.value ? 'carbon:subtract' : 'carbon:add'}
+          icon={contentOpen.value ? 'fluent:minimize-20-regular' : 'fluent:add-20-regular'}
           sx={{ color: 'text.secondary' }}
         />
       </Stack>

@@ -18,4 +18,7 @@ module.exports = {
     });
     return config;
   },
+  images: {
+    domains: ['api.ludmila.vn', 'localhost'],
+  },
 };

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
-import ProductHome from '../landing/product-hompage';
 import LandingHero from '../landing/landing-hero';
+import ProductHome from '../landing/product-hompage';
 
 // ----------------------------------------------------------------------
 

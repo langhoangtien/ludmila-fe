@@ -85,7 +85,7 @@ export default function PaymentSummary({ sx, ...other }) {
 
       <Stack alignItems="center" spacing={1}>
         <Stack direction="row" alignItems="center" spacing={1}>
-          <Iconify icon="carbon:security" sx={{ color: 'success.main' }} />
+          <Iconify icon="fluent:shield-error-20-regular" sx={{ color: 'success.main' }} />
           <Typography variant="subtitle2">Secure credit card payment</Typography>
         </Stack>
 

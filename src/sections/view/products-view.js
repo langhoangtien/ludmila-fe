@@ -1,13 +1,13 @@
 'use client';
 
 import PropTypes from 'prop-types';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import { Divider } from '@mui/material';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -17,14 +17,11 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { endpoints, fetchData } from 'src/utils/fetch';
-import { encodeData, convertImagePathToUrl } from 'src/utils/common';
-
 import Iconify from 'src/components/iconify';
 
-import Filters from '../product/filters/ecommerce-filters';
 import ProductList from '../product/list/product-list';
-import ProductListBestSellers from '../product/list/product-list-best-sellers';
+import Filters from '../product/filters/ecommerce-filters';
+import ProductListNewstReview from '../product/list/product-list-newst-review';
 
 // ----------------------------------------------------------------------
 
@@ -40,19 +37,17 @@ const SORT_OPTIONS = [
 ];
 
 // ----------------------------------------------------------------------
+const defaultValues = {
+  filterBrands: [],
+  filterCategories: [],
+  filterPrices: [],
+  filterCountries: [],
+  filterRating: null,
+};
 
 export default function ProductsView({ search }) {
   const mobileOpen = useBoolean();
-  const [count, setCount] = useState(0);
-  const [page, setPage] = useState(1);
-  const [products, setProducts] = useState([]);
-
-  const [brands, setBrands] = useState([]);
-  const [rating, setRating] = useState(null);
-  const [countries, setCountries] = useState([]);
-  const [prices, setPrices] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState(defaultValues);
   const [viewMode, setViewMode] = useState('grid');
   const [sort, setSort] = useState({
     value: 'latest',
@@ -61,38 +56,24 @@ export default function ProductsView({ search }) {
     order: -1,
   });
 
-  useEffect(() => {
-    const getData = async () => {
-      setLoading(true);
-
-      const sortValue = encodeData({ orderBy: sort.orderBy, order: sort.order });
-      const limit = 10;
-      const skip = (page - 1) * limit;
-      const categoryFilter = categories.map((item) => item._id);
-
-      const filterRaw = {
-        brand: brands,
-        country: countries,
-        price: prices,
-        category: categoryFilter,
-        search,
-        rating,
-      };
-      const url = `${
-        endpoints.product.list
-      }?limit=${limit}&skip=${skip}&sort=${sortValue}&filterRaw=${encodeData(filterRaw)}`;
-      const res = await fetchData(url);
-      const productsMapped = res.items.map((product) => ({
-        ...product,
-
-        image: convertImagePathToUrl(product.image, 250),
-      }));
-      setProducts(productsMapped);
-      setCount(Math.ceil(res.count / limit));
-      setLoading(false);
-    };
-    getData();
-  }, [page, brands, countries, prices, categories, rating, search, sort]);
+  const handleChangeFilterArray = useCallback(
+    (name, value) => {
+      setFilters({
+        ...filters,
+        [name]: value,
+      });
+    },
+    [filters]
+  );
+  const handleChangeRating = useCallback(
+    (value) => {
+      setFilters({
+        ...filters,
+        filterRating: value,
+      });
+    },
+    [filters]
+  );
 
   const handleChangeViewMode = useCallback((event, newAlignment) => {
     if (newAlignment !== null) {
@@ -101,11 +82,7 @@ export default function ProductsView({ search }) {
   }, []);
 
   const handleClearAll = useCallback(() => {
-    setBrands([]);
-    setCountries([]);
-    setPrices([]);
-    setCategories([]);
-    setRating(null);
+    setFilters(defaultValues);
   }, []);
 
   const handleChangeSort = useCallback((event) => {
@@ -147,21 +124,14 @@ export default function ProductsView({ search }) {
       >
         <Stack spacing={5} divider={<Divider sx={{ borderStyle: 'dashed' }} />}>
           <Filters
-            brands={brands}
-            prices={prices}
-            setPrices={setPrices}
-            countries={countries}
-            setCountries={setCountries}
-            setBrands={setBrands}
-            categories={categories}
-            setCategories={setCategories}
+            filters={filters}
+            changeFilterArrayItem={handleChangeFilterArray}
+            changeRating={handleChangeRating}
             open={mobileOpen.value}
             onClose={mobileOpen.onFalse}
-            rating={rating}
-            setRating={setRating}
             clearAll={handleClearAll}
           />
-          <ProductListBestSellers />
+          <ProductListNewstReview />
         </Stack>
 
         <Box
@@ -199,12 +169,15 @@ export default function ProductsView({ search }) {
           </Stack>
 
           <ProductList
-            loading={loading}
             viewMode={viewMode}
-            count={count}
-            page={page}
-            setPage={setPage}
-            products={products}
+            filter={{
+              brand: filters.filterBrands,
+              country: filters.filterCountries,
+              price: filters.filterPrices,
+              category: filters.filterCategories,
+              search,
+              rating: filters.filterRating,
+            }}
           />
         </Box>
       </Stack>

@@ -61,6 +61,7 @@ ProductItemNewstReviews.propTypes = {
     productId: PropTypes.string.isRequired,
     fullName: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
+    coverUrl: PropTypes.string,
   }).isRequired,
   product: PropTypes.shape({
     coverUrl: PropTypes.string,

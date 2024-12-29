@@ -12,7 +12,7 @@ import ProductItemNewstReviews from '../item/product-item-newst-review';
 
 // ----------------------------------------------------------------------
 
-export default function ProductListBestSellers() {
+export default function ProductListNewstReview() {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +34,7 @@ export default function ProductListBestSellers() {
       <Typography variant="h6">Bình luận mới nhất</Typography>
 
       {reviews.map((review) => (
-        <ProductItemNewstReviews key={review.id} review={review} />
+        <ProductItemNewstReviews key={review._id} review={review} />
       ))}
     </Stack>
   );

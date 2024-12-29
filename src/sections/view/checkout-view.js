@@ -164,7 +164,6 @@ export default function CheckoutView() {
                 <CardContent>
                   <StepLabel title="Vận chuyển" step="3" />
                   <CheckoutPaymentMethod name="delivery" options={DELIVERY_OPTIONS} />
-                  <Divider sx={{ my: 3 }} />
                 </CardContent>
               </Card>
             </Stack>

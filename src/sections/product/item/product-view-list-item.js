@@ -80,9 +80,7 @@ export default function ProductViewListItem({ product, ...other }) {
         >
           <Iconify
             onClick={handleAddToCart}
-            icon={
-              product.variants?.length === 1 ? 'ion:bag-add-outline' : 'carbon:shopping-catalog'
-            }
+            icon={product.variants?.length === 1 ? 'ion:bag-add-outline' : 'ion:bag-outline'}
           />
         </Fab>
       </Tooltip>

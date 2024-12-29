@@ -32,7 +32,6 @@ export default function LoginView({ onChangePage = null, dialog = null }) {
   const passwordShow = useBoolean();
   const auth = useAuthContext();
   const searchParams = useSearchParams();
-  console.log('FFFF');
   const returnTo = searchParams.get('returnTo');
   const router = useRouter();
   const LoginSchema = Yup.object().shape({
@@ -48,7 +47,6 @@ export default function LoginView({ onChangePage = null, dialog = null }) {
   };
 
   const handleChangePage = () => {
-    console.log(!!onChangePage);
     if (onChangePage) onChangePage();
     else router.push(paths.register);
   };

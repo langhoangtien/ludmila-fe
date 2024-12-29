@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import {
   Box,
@@ -29,6 +29,7 @@ import { encodeData, convertImagePathToUrl } from 'src/utils/common';
 import { HOST_API } from 'src/config-global';
 
 import Iconify from 'src/components/iconify/iconify';
+import TextMaxLine from 'src/components/text-max-line';
 
 export default function SearchDemo({ sx, ...other }) {
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,13 @@ export default function SearchDemo({ sx, ...other }) {
   const router = useRouter();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
+  const searchParams = useSearchParams();
+  const valueOfS = searchParams.get('search');
+  useEffect(() => {
+    if (valueOfS) {
+      setValue(valueOfS);
+    }
+  }, [valueOfS]);
   const handleClickAway = () => {
     setIsMenuVisible(false);
   };
@@ -183,18 +191,10 @@ const Result = ({ products, handleClick, value }) => (
               borderRadius: 1,
             }}
           />
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography
-              component="span"
-              color="textPrimary"
-              sx={{
-                px: 1,
-                typography: 'body2',
-                fontWeight: 'fontWeightMedium',
-              }}
-            >
+          <Stack direction="column">
+            <TextMaxLine variant="body2" line={1}>
               {product.name}
-            </Typography>
+            </TextMaxLine>
             <Typography
               component="span"
               color="primary.main"
@@ -205,7 +205,7 @@ const Result = ({ products, handleClick, value }) => (
             >
               {fCurrency(product.price)}
             </Typography>
-          </Box>
+          </Stack>
         </ListItemButton>
         <Divider />
       </React.Fragment>
@@ -241,5 +241,5 @@ Result.propTypes = {
 };
 
 SearchDemo.propTypes = { sx: PropTypes.object };
-const SearchHistory = () => <p>lic su</p>;
+const SearchHistory = () => <p> Lịch sử</p>;
 SearchDemo.propTypes = { sx: PropTypes.object };

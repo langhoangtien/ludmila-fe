@@ -1,42 +1,23 @@
+import { notFound } from 'next/navigation';
+
 import { Stack } from '@mui/system';
 import { Box, Container, Typography } from '@mui/material';
 
 import { endpoints } from 'src/utils/fetch';
-import { encodeData, convertImagePathToUrl } from 'src/utils/common';
 
 import ProductList from 'src/sections/product/list/product-list';
 
 export default async function DetailCountryPage(props) {
   const slug = props?.params?.slug ?? null;
-  const page = props?.searchParams?.page ?? 1;
-  const id = slug.split('-').pop();
-  const limit = 20;
-  const skip = (page - 1) * limit;
-  const countryFilter = [id];
 
-  const filterRaw = {
-    country: countryFilter,
-  };
-  const url = `${endpoints.product.list}?limit=${limit}&skip=${skip}&filterRaw=${encodeData(
-    filterRaw
-  )}`;
+  const id = slug.split('-').pop();
+
   const countryUrl = `${endpoints.country.list}/${id}`;
 
   const country = await fetch(countryUrl, { method: 'GET', next: { revalidate: 3600 } });
-  const products = await fetch(url, {
-    method: 'GET',
-    next: { revalidate: 30 },
-  });
 
+  if (!country.ok) return notFound();
   const countryJson = await country.json();
-  console.log('countryJson', countryJson);
-  const productsJson = await products.json();
-  // console.log("SSS",countryJson,productsJson);
-  const productsMapped = productsJson.items.map((product) => ({
-    ...product,
-    image: convertImagePathToUrl(product.image),
-  }));
-  const count = Math.ceil(productsJson.count / limit);
   return (
     <Container
       sx={{
@@ -57,7 +38,7 @@ export default async function DetailCountryPage(props) {
             textAlign: { xs: 'center', md: 'unset' },
           }}
         >
-          Xuất xứ:&quot;
+          Xuất xứ:&nbsp;&quot;
           <Box sx={{ color: 'primary.main' }} component="span">
             {countryJson.name}
           </Box>
@@ -66,14 +47,7 @@ export default async function DetailCountryPage(props) {
       </Stack>
 
       <Stack direction="column">
-        <ProductList
-          pagination={false}
-          loading={false}
-          viewMode="grid"
-          count={count}
-          products={productsMapped}
-          homePage
-        />
+        <ProductList viewMode="grid" homePage />
       </Stack>
     </Container>
   );

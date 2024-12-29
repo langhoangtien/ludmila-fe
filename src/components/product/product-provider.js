@@ -3,6 +3,8 @@
 import PropTypes from 'prop-types';
 import React, { useMemo, useReducer, useCallback } from 'react';
 
+import { stringifyArray } from 'src/utils/common';
+
 import { ProductContext } from './product-context';
 
 function reducer(state, action) {
@@ -14,6 +16,7 @@ function reducer(state, action) {
         ...state,
         currentVariant: action.payload.currentVariant,
         slideIndex: action.payload.slideIndex,
+        attributesSelect: action.payload.attributesSelect,
       };
     default:
       throw new Error();
@@ -21,64 +24,62 @@ function reducer(state, action) {
 }
 
 export function ProductProvider({ product, children }) {
-  const initAttributesSelect = useMemo(
-    () =>
-      product.attributes.map((attr) => ({
-        name: attr.name,
-        value: null,
-      })),
-    [product.attributes]
-  );
-
   const initialState = {
-    currentVariant: product.variants.length === 1 ? product.variants[0] : null,
+    currentVariant: product.variants[0],
     slideIndex: null,
-    attributesSelect: initAttributesSelect,
+    attributesSelect: product.variants[0].attributes,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setAttribute = useCallback(
-    (index, value) => {
-      const newAttributes = [...state.attributesSelect];
-      newAttributes[index].value = value;
+  const handleSelectVariant = useCallback(
+    (name, value) => {
+      const newAtts = state.attributesSelect.map((item) => {
+        if (item.name === name) return { ...item, value };
+        return item;
+      });
 
-      dispatch({ type: 'SET_ATTRIBUTES', payload: newAttributes });
-      const variantSelect = product.variants.find(
-        (variant) =>
-          variant.attributes
-            .sort((a, b) => a.name < b.name)
-            .map((attribute) => attribute.value)
-            .toString() ===
-          newAttributes
-            .sort((a, b) => a.name < b.name)
-            .map((attr) => attr.value)
-            .toString()
+      const newAttsString = stringifyArray(newAtts);
+
+      const newVariant = product.variants.find(
+        (item) => stringifyArray(item.attributes) === newAttsString
       );
 
-      if (variantSelect) {
-        const slideIndex = product.images.indexOf(variantSelect.image);
-        dispatch({
-          type: 'SET_VARIANT',
-          payload: {
-            currentVariant: variantSelect,
-            slideIndex: slideIndex === -1 ? null : slideIndex,
-          },
-        });
-      }
+      const slideIndex = product.images.indexOf(newVariant.image);
+      dispatch({
+        type: 'SET_VARIANT',
+        payload: {
+          currentVariant: newVariant,
+          slideIndex: slideIndex === -1 ? null : slideIndex,
+          attributesSelect: newAtts,
+        },
+      });
     },
-    [state.attributesSelect, product.variants, product.images]
+    [product.images, product.variants, state.attributesSelect]
   );
 
   const contextValue = useMemo(
-    () => ({ ...state, setAttribute, product }),
-    [state, setAttribute, product]
+    () => ({ ...state, product, handleSelectVariant }),
+    [state, product, handleSelectVariant]
   );
 
   return <ProductContext.Provider value={contextValue}>{children}</ProductContext.Provider>;
 }
 
 ProductProvider.propTypes = {
-  product: PropTypes.object,
+  product: PropTypes.shape({
+    variants: PropTypes.arrayOf(
+      PropTypes.shape({
+        attributes: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            value: PropTypes.string.isRequired,
+          })
+        ).isRequired,
+        image: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }),
   children: PropTypes.node,
 };

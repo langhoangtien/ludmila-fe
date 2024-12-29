@@ -1,6 +1,6 @@
 import { MaterialDesignContent } from 'notistack';
 
-import { alpha, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
@@ -43,5 +43,5 @@ export const StyledIcon = styled('span')(({ color, theme }) => ({
   marginRight: theme.spacing(1.5),
   color: theme.palette[color].main,
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette[color].main, 0.16),
+  // backgroundColor: alpha(theme.palette[color].main, 0.16),
 }));

@@ -162,7 +162,7 @@ function OptionItem({ option, onOpen, selected, isCredit }) {
           <Button
             size="small"
             color="inherit"
-            startIcon={<Iconify icon="carbon:add" />}
+            startIcon={<Iconify icon="fluent:add-20-regular" />}
             onClick={onOpen}
             sx={{ my: 3 }}
           >

@@ -25,7 +25,7 @@ const NavItem = forwardRef(
       >
         {title}
 
-        {hasChild && <Iconify width={16} icon="carbon:chevron-down" sx={{ ml: 0.75 }} />}
+        {hasChild && <Iconify width={16} icon="fluent:chevron-down-20-regular" sx={{ ml: 0.75 }} />}
       </StyledNavItem>
     );
 
@@ -90,7 +90,7 @@ const StyledNavItem = styled(ListItemButton, {
       fontSize: 15,
       minHeight: '100%',
       fontWeight: theme.typography.fontWeightMedium,
-      fontFamily: theme.typography.fontSecondaryFamily,
+
       '&:hover': {
         backgroundColor: 'transparent',
         '&:before': {

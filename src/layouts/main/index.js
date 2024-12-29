@@ -8,7 +8,7 @@ import { HEADER } from '../config-layout';
 
 // ----------------------------------------------------------------------
 
-export default async function MainLayout({
+export default function MainLayout({
   children,
   headerOnDark = false,
   disabledSpacing = false,

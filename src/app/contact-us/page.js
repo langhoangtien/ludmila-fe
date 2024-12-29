@@ -82,8 +82,8 @@ export default function ContactUs() {
           <Stack p={2} spacing={1}>
             {' '}
             <Box>
-              <Typography color="primary" variant="h6">
-                HÀNG NGA CHÍNH HÃNG - LUDMILA
+              <Typography color="primary" variant="body1">
+                LUDMILA
               </Typography>
             </Box>
             <Box
@@ -115,7 +115,7 @@ export default function ContactUs() {
             <Stack my={2} spacing={2.5}>
               <Typography variant="body1">LIÊN HỆ VỚI CHÚNG TÔI</Typography>
               {complete && (
-                <Alert icon={<Iconify icon="carbon:checkmark" />} severity="success">
+                <Alert icon={<Iconify icon="fluent:checkmark-20-regular" />} severity="success">
                   Bạn đã gửi tin nhắn thành công
                 </Alert>
               )}

@@ -2,7 +2,7 @@ import { HOST_API } from 'src/config-global';
 
 export const encodeData = (data) => encodeURIComponent(JSON.stringify(data));
 export const convertImagePathToUrl = (filePath, dimension) => {
-  if (!filePath) return undefined;
+  if (!filePath) return '/assets/icons/ic_img-error.svg';
   return `${HOST_API}/files${dimension ? `/${dimension}x${dimension}` : ''}/${filePath}`;
 };
 
@@ -24,6 +24,11 @@ export function makeProductVariantsFromAttributes(attributes) {
     [[]]
   );
 }
+export const stringifyArray = (arrs) =>
+  arrs
+    .map((obj) => JSON.stringify(obj))
+    .sort()
+    .join();
 
 export function fDateTime(date) {
   const formatter = new Intl.DateTimeFormat('vi-VN', {
@@ -79,4 +84,19 @@ export const timeFormat = (d) => {
   const raw = fDateTime(date);
   const time = timeAgo(date);
   return { raw, time };
+};
+
+export const mappedProduct = (product) => {
+  const varitants = product.variants.map((variant) => {
+    const image = convertImagePathToUrl(variant.image, 250);
+    return {
+      ...variant,
+      image,
+    };
+  });
+  return {
+    ...product,
+    image: convertImagePathToUrl(product.image, 250),
+    variants: varitants,
+  };
 };

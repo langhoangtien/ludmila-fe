@@ -57,9 +57,9 @@ export default function NavMobile({ data }) {
         <DrawerHeader>
           <IconButton onClick={mobileOpen.onFalse}>
             {theme.direction === 'ltr' ? (
-              <Iconify icon="carbon:close" />
+              <Iconify icon="fluent:dismiss-20-regular" />
             ) : (
-              <Iconify icon="carbon:chevron-right" />
+              <Iconify icon="fluent:chevron-right-20-regular" />
             )}
           </IconButton>
         </DrawerHeader>

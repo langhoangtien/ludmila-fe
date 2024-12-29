@@ -20,22 +20,22 @@ import { useOffSetTop } from 'src/hooks/use-off-set-top';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { endpoints } from 'src/utils/fetch';
+import { convertImagePathToUrl } from 'src/utils/common';
 
 import { bgBlur } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
-import { MegaMenuDesktopHorizontal } from 'src/components/mega-menu';
 import { useCartContext } from 'src/components/cart/use-cart-context';
 
 import LoginView from 'src/sections/auth/login-view';
 import RegisterView from 'src/sections/auth/register-view';
 
 import NavMobile from './nav/mobile';
+import NavDesktop from './nav/desktop';
 import { HEADER } from '../config-layout';
 import SearchDemo from '../common/search-demo';
 import HeaderShadow from '../common/header-shadow';
-import SettingsButton from '../common/settings-button';
 
 // ----------------------------------------------------------------------
 const shakeAnimation = keyframes`
@@ -68,9 +68,11 @@ export default function Header({ headerOnDark }) {
         if (!menuLocal) {
           const response = await fetch(endpoints.home.menu);
           const data = await response.json();
-          const dataMapped = data.map((item) => ({
+          const dataMapped = data.menu.map((item) => ({
             subheader: item.name,
-            items: item.children.map((child) => ({
+            cover: convertImagePathToUrl(item.image, 250),
+            path: `${paths.category}/${item.code}-${item._id}`,
+            items: item.children.slice(0, 5).map((child) => ({
               title: child.name,
               path: `${paths.category}/${child.code}-${child._id}`,
             })),
@@ -78,12 +80,13 @@ export default function Header({ headerOnDark }) {
           const nav = [
             {
               title: 'Danh mục',
-              path: paths.pages,
+              path: paths.category,
               children: dataMapped,
             },
             { title: 'Sản phẩm', path: paths.products },
-            { title: 'Thương hiệu', path: paths.contactUs },
+            { title: 'Thương hiệu', path: paths.brands },
           ];
+
           sessionStorage.setItem('menu', JSON.stringify(nav));
           setMenu(nav);
         } else {
@@ -98,24 +101,56 @@ export default function Header({ headerOnDark }) {
   }, []);
 
   const renderContent = (
-    <Stack direction="column" pt={1} flexGrow={1}>
+    <>
       {mdUp && (
-        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+        <>
           <Box sx={{ lineHeight: 0, position: 'relative' }}>
             <Logo />
           </Box>
 
           <Stack
+            flexGrow={1}
             alignItems="center"
             sx={{
               height: 1,
               display: { xs: 'none', md: 'flex' },
             }}
           >
-            <MegaMenuDesktopHorizontal data={menu} />
+            <NavDesktop data={menu} />
           </Stack>
-          {/* <SearchDemo flexGrow={1} /> */}
+          <SearchDemo flexGrow={1} />
 
+          <Stack spacing={1} justifyContent="space-between" direction="row">
+            {/* <Searchbar /> */}
+            <Box ml={4} />
+            <Badge badgeContent={totalProduct} color="error">
+              <IconButton
+                component={RouterLink}
+                href={paths.cart}
+                size="small"
+                color="inherit"
+                sx={{ p: 0, animation: shake && `${shakeAnimation} .4s ease-in-out infinite` }}
+              >
+                <Iconify icon="fluent:cart-20-regular" height={28} width={28} />
+              </IconButton>
+            </Badge>
+            {/* <SettingsButton /> */}
+          </Stack>
+        </>
+      )}
+
+      {!mdUp && (
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={0.5}
+          flexGrow={1}
+          position={{ xs: 'relative', md: 'static' }}
+        >
+          <NavMobile data={menu} />
+
+          <SearchDemo flexGrow={1} />
           <Stack spacing={1} justifyContent="space-between" direction="row">
             <Badge badgeContent={totalProduct} color="error">
               <IconButton
@@ -128,44 +163,10 @@ export default function Header({ headerOnDark }) {
                 <Iconify icon="fluent:cart-20-regular" height={28} width={28} />
               </IconButton>
             </Badge>
-            <SettingsButton />
           </Stack>
         </Stack>
       )}
-
-      {!mdUp && (
-        <>
-          {' '}
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            spacing={0.5}
-            flexGrow={1}
-            position={{ xs: 'relative', md: 'static' }}
-          >
-            <NavMobile data={menu} />
-            {/* <Box sx={{ lineHeight: 0, position: 'relative' }}>
-              <Logo />
-            </Box> */}
-            <SearchDemo flexGrow={1} />
-            <Stack spacing={1} justifyContent="space-between" direction="row">
-              <Badge badgeContent={totalProduct} color="error">
-                <IconButton
-                  component={RouterLink}
-                  href={paths.cart}
-                  size="small"
-                  color="inherit"
-                  sx={{ p: 0, animation: shake && `${shakeAnimation} .4s ease-in-out infinite` }}
-                >
-                  <Iconify icon="fluent:cart-20-regular" height={28} width={28} />
-                </IconButton>
-              </Badge>
-            </Stack>
-          </Stack>
-        </>
-      )}
-    </Stack>
+    </>
   );
 
   return (
@@ -175,7 +176,6 @@ export default function Header({ headerOnDark }) {
           disableGutters
           sx={{
             height: {
-              xs: HEADER.H_MOBILE,
               md: HEADER.H_DESKTOP,
             },
             transition: theme.transitions.create(['height', 'background-color'], {
@@ -190,7 +190,7 @@ export default function Header({ headerOnDark }) {
               ...bgBlur({ color: theme.palette.background.header }),
               color: 'text.primary',
               height: {
-                md: HEADER.H_DESKTOP,
+                md: HEADER.H_DESKTOP - 16,
               },
             }),
           }}

@@ -1,78 +1,85 @@
+import Link from 'next/link';
+import Image from 'next/image';
+
 import { Stack } from '@mui/system';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Card, Container, Typography } from '@mui/material';
 
 import { endpoints } from 'src/utils/fetch';
-import { encodeData, convertImagePathToUrl } from 'src/utils/common';
+import { convertImagePathToUrl } from 'src/utils/common';
+
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import ProductList from 'src/sections/product/list/product-list';
 
 export default async function DetailCategoryPage(props) {
   const slug = props?.params?.slug ?? null;
-  const page = props?.searchParams?.page ?? 1;
-  const id = slug.split('-').pop();
-  const limit = 20;
-  const skip = (page - 1) * limit;
-  const categoryFilter = [id];
 
-  const filterRaw = {
-    category: categoryFilter,
-  };
-  const url = `${endpoints.product.list}?limit=${limit}&skip=${skip}&filterRaw=${encodeData(
-    filterRaw
-  )}`;
+  const id = slug.split('-').pop();
+
   const categoryUrl = `${endpoints.category.list}/${id}`;
 
-  const category = await fetch(categoryUrl, { method: 'GET', next: { revalidate: 3600 } });
-  const products = await fetch(url, {
-    method: 'GET',
-    next: { revalidate: 30 },
-  });
+  const category = await fetch(categoryUrl, { method: 'GET', next: { revalidate: 30 } });
 
   const categoryJson = await category.json();
-  const productsJson = await products.json();
-  // console.log("SSS",categoryJson,productsJson);
-  const productsMapped = productsJson.items.map((product) => ({
-    ...product,
-    image: convertImagePathToUrl(product.image),
+  const categoryChild = categoryJson.childrens?.map((child) => ({
+    ...child,
+    image: convertImagePathToUrl(child.image, 250),
   }));
-  const count = Math.ceil(productsJson.count / limit);
+
   return (
-    <Container
-      sx={{
-        py: { xs: 5, md: 8 },
-      }}
-    >
-      <Stack
-        direction={{ xs: 'column', md: 'row' }}
-        alignItems="center"
-        spacing={3}
-        sx={{
-          mb: 8,
-        }}
-      >
-        <Typography
-          variant="h5"
-          sx={{
-            textAlign: { xs: 'center', md: 'unset' },
+    <Container>
+      <CustomBreadcrumbs
+        links={[
+          {
+            name: 'Trang chủ',
+            href: '/',
+          },
+          {
+            name: 'Danh mục',
+            href: '/categories',
+          },
+          {
+            name: categoryJson.name,
+          },
+        ]}
+        sx={{ my: 5 }}
+      />
+      <Stack my={2}>
+        <Box
+          rowGap={4}
+          columnGap={3}
+          display="grid"
+          gridTemplateColumns={{
+            xs: 'repeat(2, 1fr)',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(4, 1fr)',
+            lg: 'repeat(4, 1fr)',
           }}
         >
-          Danh mục:&quot;
-          <Box sx={{ color: 'primary.main' }} component="span">
-            {categoryJson.name}
-          </Box>
-          &quot;
-        </Typography>
+          {categoryChild.map((child) => (
+            <Card key={child.id}>
+              <Link passHref legacyBehavior href={`/category/${child.code}-${child._id}`}>
+                <Stack
+                  direction={{ xs: 'column', md: 'row' }}
+                  sx={{ cursor: 'pointer', p: 2 }}
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Image
+                    style={{ borderRadius: 2, objectFit: 'cover' }}
+                    src={child.image}
+                    width={50}
+                    height={50}
+                  />
+                  <Typography variant="subtitle2">{child.name}</Typography>
+                </Stack>
+              </Link>
+            </Card>
+          ))}
+        </Box>
       </Stack>
-
       <Stack direction="column">
-        <ProductList
-          pagination={false}
-          loading={false}
-          viewMode="grid"
-          count={count}
-          products={productsMapped}
-          homePage
-        />
+        <ProductList viewMode="grid" category={categoryJson._id} homePage />
       </Stack>
     </Container>
   );

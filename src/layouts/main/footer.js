@@ -94,9 +94,6 @@ export default function Footer() {
 
               <Stack spacing={1} alignItems="flex-start">
                 <Typography variant="h6">Liên hệ</Typography>{' '}
-                <Box>
-                  <Typography variant="h5">HÀNG NGA CHÍNH HÃNG - LUDMILA</Typography>
-                </Box>
                 <Box
                   variant="body2"
                   sx={{ color: 'text.primary', alignItems: 'center', display: 'flex' }}
@@ -279,7 +276,9 @@ export function ListMobile({ list }) {
         {list.subheader}
         <Iconify
           width={16}
-          icon={listExpand.value ? 'carbon:chevron-down' : 'carbon:chevron-right'}
+          icon={
+            listExpand.value ? 'fluent:chevron-down-20-regular' : 'fluent:chevron-right-20-regular'
+          }
           sx={{ ml: 0.5 }}
         />
       </Typography>

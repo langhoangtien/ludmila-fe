@@ -3,12 +3,11 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/navigation';
 
-import { Box } from '@mui/system';
 import Stack from '@mui/material/Stack';
-import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+import { Box, Table, TableRow, TableBody, TableCell } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 
@@ -16,6 +15,8 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import { fCurrency } from 'src/utils/format-number';
 
+import Iconify from 'src/components/iconify';
+import { useSnackbar } from 'src/components/snackbar';
 import TextMaxLine from 'src/components/text-max-line';
 import { useCartContext } from 'src/components/cart/use-cart-context';
 import { useProductContext } from 'src/components/product/use-product-contex';
@@ -25,31 +26,72 @@ import ProductOptionPicker from '../../common/product-option-picker';
 
 // ----------------------------------------------------------------------
 
-const InfoDetail = ({ title, link, name }) => (
-  <Stack direction="row">
-    <Typography sx={{ fontStyle: 'italic' }} variant="body2">
-      {title}:&nbsp;
-    </Typography>
-    <Link passHref legacyBehavior href={`/${link}`}>
-      <Typography sx={{ cursor: 'pointer' }} color="primary.main" variant="body2">
-        {name}
-      </Typography>
-    </Link>
-  </Stack>
-);
-InfoDetail.propTypes = { title: PropTypes.string, link: PropTypes.string, name: PropTypes.string };
+const InfoDetail = ({ title, link, name, category }) => {
+  const renderCategory = () => {
+    if (category && category.length > 0) {
+      return (
+        <Stack>
+          {category.map((item) => (
+            <Link
+              key={item._id}
+              style={{ textDecoration: 'none' }}
+              href={`/category/${item.code}-${item._id}`}
+            >
+              <Typography sx={{ cursor: 'pointer' }} color="primary.main" variant="body2">
+                {item.name}
+              </Typography>
+            </Link>
+          ))}
+        </Stack>
+      );
+    }
+
+    if (link)
+      return (
+        <Link style={{ textDecoration: 'none' }} href={link}>
+          <Typography sx={{ cursor: 'pointer' }} color="primary.main" variant="body2">
+            {name}
+          </Typography>
+        </Link>
+      );
+    return (
+      <TextMaxLine variant="body2" line={3}>
+        {' '}
+        {name}{' '}
+      </TextMaxLine>
+    );
+  };
+  return (
+    <TableRow sx={{ display: { xs: 'flex', md: 'table' }, flexDirection: 'column' }}>
+      <TableCell
+        sx={{
+          width: 115,
+          py: { md: 1, xs: 0.5 },
+          color: { xs: 'text.secondary', md: 'inherit' },
+          px: 0,
+        }}
+      >
+        {title}
+      </TableCell>
+      <TableCell sx={{ py: { md: 1, xs: 0.5 }, px: 0 }}>{renderCategory()}</TableCell>
+    </TableRow>
+  );
+};
+InfoDetail.propTypes = {
+  title: PropTypes.string,
+  link: PropTypes.string,
+  name: PropTypes.string,
+  category: PropTypes.array,
+};
 export default function ProductDetailsInfo({ quantity, changeQuantity }) {
-  const { product, attributesSelect, setAttribute, currentVariant } = useProductContext();
+  const { product, attributesSelect, currentVariant, handleSelectVariant } = useProductContext();
 
   const {
     name,
     introduction,
     ratingAverage,
     totalReviews,
-    minPrice,
-    maxPrice,
-    minSalePrice,
-    maxSalePrice,
+
     attributes,
     brand,
     country,
@@ -59,7 +101,7 @@ export default function ProductDetailsInfo({ quantity, changeQuantity }) {
   const cart = useCartContext();
   const [error, setError] = useState(false);
   const dialog = useBoolean();
-
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const handleAddToCart = () => {
     setError(!currentVariant);
@@ -70,6 +112,7 @@ export default function ProductDetailsInfo({ quantity, changeQuantity }) {
     const variantSelected = { ...currentVariant, name, image };
 
     cart.addToCart(variantSelected, quantity);
+    enqueueSnackbar('Thêm vào giỏ hàng thành công', { variant: 'success' });
     dialog.onTrue();
   };
   const handleAddToCartAndBuyNow = () => {
@@ -85,89 +128,73 @@ export default function ProductDetailsInfo({ quantity, changeQuantity }) {
   return (
     <>
       <Stack spacing={1} sx={{ mb: 2 }}>
+        <Stack direction="row">
+          <Typography variant="body2">Thương hiệu:&nbsp;</Typography>
+          <Link passHref legacyBehavior href={`/brand/${brand.code}-${brand._id}`}>
+            <Typography sx={{ cursor: 'pointer' }} color="primary.main" variant="body2">
+              {brand.name}
+            </Typography>
+          </Link>
+        </Stack>
+
         <Typography variant="h4"> {name} </Typography>
 
-        <Stack spacing={0.5} direction="row" alignItems="center">
-          <Rating size="small" value={ratingAverage} readOnly precision={0.5} />
-
-          <Typography variant="caption" sx={{ color: 'text.disabled' }}>
-            ({totalReviews} Đánh giá)
-          </Typography>
-        </Stack>
-        <Stack direction="row">
-          <Typography sx={{ fontStyle: 'italic' }} variant="body2">
-            Mã sản phẩm:&nbsp;
-          </Typography>
-
+        <Stack spacing={2} direction="row" alignItems="center">
           <Typography variant="body2">{code}</Typography>
+
+          {!!ratingAverage && (
+            <Stack direction="row" alignItems="center" spacing={0.25}>
+              <Typography variant="subtiltle2">{ratingAverage}</Typography>
+              <Iconify width={18} icon="fluent:star-20-filled" color="warning.main" />
+              <Box
+                component="a"
+                href="#reviews"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  ml: 1,
+                  cursor: 'pointer',
+                  fontSize: '0.875rem',
+                  color: 'text.secondary',
+                  textDecoration: 'none',
+                }}
+              >
+                ({totalReviews} đánh giá)
+              </Box>
+            </Stack>
+          )}
         </Stack>
-        <InfoDetail
-          name={category.name}
-          link={`category/${category.code}-${category._id}`}
-          title="Danh mục"
-        />
 
-        <InfoDetail
-          name={brand.name}
-          link={`brand/${brand.code}-${brand._id}`}
-          title="Thương hiệu"
-        />
+        <Stack py={1} spacing={2}>
+          <Stack direction="column" spacing={0.5}>
+            <Typography variant="h3" color="primary">
+              {fCurrency(currentVariant.salePrice)}
+            </Typography>
 
-        <InfoDetail
-          name={country.name}
-          link={`country/${country.code}-${country._id}`}
-          title="Xuất xứ"
-        />
+            <Typography
+              variant="h6"
+              sx={{ color: 'text.disabled', textDecoration: 'line-through' }}
+            >
+              {currentVariant.price !== currentVariant.salePrice && fCurrency(currentVariant.price)}
+            </Typography>
+          </Stack>
+        </Stack>
+        <Table>
+          <TableBody>
+            <InfoDetail category={category} title="Danh mục" />
+            <InfoDetail
+              name={country.name}
+              link={`/country/${country.code}-${country._id}`}
+              title="Xuất xứ"
+            />
+
+            {/* <InfoDetail name="Hộp" title="Quy cách" /> */}
+            <InfoDetail name={introduction} title="Mô tả ngắn" />
+          </TableBody>
+        </Table>
       </Stack>
 
-      <Stack p={1} spacing={2}>
-        {currentVariant ? (
-          <Stack direction="row" sx={{ typography: 'h6', color: 'error.main' }}>
-            {fCurrency(currentVariant.salePrice)}
-            <Box
-              component="span"
-              sx={{
-                ml: 2,
-                color: 'text.disabled',
-                textDecoration: 'line-through',
-              }}
-            >
-              <Typography variant="h6" sx={{ color: 'text.disabled' }}>
-                {' '}
-                {currentVariant.price !== currentVariant.salePrice &&
-                  fCurrency(currentVariant.price)}
-              </Typography>
-            </Box>
-          </Stack>
-        ) : (
-          <Stack direction="row" sx={{ typography: 'h5', color: 'error.main' }}>
-            {minSalePrice !== maxSalePrice
-              ? `${fCurrency(minSalePrice)} - ${fCurrency(maxSalePrice)}`
-              : fCurrency(minSalePrice)}
-            <Box
-              component="span"
-              sx={{
-                ml: 2,
-                color: 'text.disabled',
-
-                textDecoration: 'line-through',
-              }}
-            >
-              <Typography variant="h6" sx={{ color: 'text.disabled' }}>
-                {minPrice > minSalePrice && fCurrency(minPrice)}
-                {maxPrice > maxSalePrice && ` - ${fCurrency(maxPrice)}`}
-              </Typography>
-            </Box>
-          </Stack>
-        )}
-
-        <TextMaxLine variant="body2" line={3}>
-          {' '}
-          {introduction}
-        </TextMaxLine>
-      </Stack>
-
-      <Stack p={1} spacing={3} sx={{ my: 5 }}>
+      <Stack spacing={2} sx={{ my: 5 }}>
         {attributes &&
           attributes.map((attribute, index) => (
             <Stack key={attribute.name} spacing={2}>
@@ -176,7 +203,7 @@ export default function ProductDetailsInfo({ quantity, changeQuantity }) {
               </Typography>
               <ProductOptionPicker
                 value={attributesSelect[index].value}
-                onChangeAtt={(att) => setAttribute(index, att)}
+                onChangeAtt={(att) => handleSelectVariant(attribute.name, att)}
                 options={attribute.values}
               />
             </Stack>

@@ -31,7 +31,7 @@ export default function AccountNewCardForm() {
         alignItems="center"
         sx={{ typography: 'caption', color: 'text.disabled' }}
       >
-        <Iconify icon="carbon:locked" sx={{ mr: 0.5 }} />
+        <Iconify icon="fluent:lock-closed-20-regular" sx={{ mr: 0.5 }} />
         Your transaction is secured with SSL encryption
       </Stack>
     </Stack>

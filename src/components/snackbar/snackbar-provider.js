@@ -54,7 +54,7 @@ export default function SnackbarProvider({ children }) {
       // with close as default
       action={(snackbarId) => (
         <IconButton size="small" onClick={() => closeSnackbar(snackbarId)} sx={{ p: 0.5 }}>
-          <Iconify width={16} icon="mingcute:close-line" />
+          <Iconify width={16} icon="fluent:dismiss-20-regular" />
         </IconButton>
       )}
     >

@@ -36,7 +36,7 @@ export default function CustomDialogs({ open, onClose, title, children }) {
           color: (theme) => theme.palette.grey[500],
         }}
       >
-        <Iconify icon="carbon:close" />
+        <Iconify icon="fluent:dismiss-20-regular" />
       </IconButton>
       <DialogContent dividers>{children}</DialogContent>
       <DialogActions>

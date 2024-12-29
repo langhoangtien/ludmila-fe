@@ -6,12 +6,12 @@ export const paths = {
     account: '/user/account',
   },
 
-  // E-commerce
-
   root: '',
   products: '/products',
+  brands: '/brands',
   product: `/product`,
   category: `/category`,
+  categories: `/categories`,
   cart: '/cart',
   checkout: `/checkout`,
   orderCompleted: '/order-completed',
@@ -41,9 +41,6 @@ export const paths = {
   privacyPolicy: '/privacy-policy',
   returnPolicy: '/return-policy',
   deliveryPolicy: '/delivery-policy',
-
-  // Others
-  pages: '/pages',
 
   contactUs: '/contact-us',
   aboutUs: '/about-us',

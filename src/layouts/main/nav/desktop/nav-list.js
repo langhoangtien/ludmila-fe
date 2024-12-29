@@ -27,14 +27,16 @@ export default function NavList({ data }) {
   const pathname = usePathname();
 
   const menuOpen = useBoolean();
-
   const active = useActiveLink(data.path, !!data.children);
+  const mainListLength = data.children?.length || 0;
+  const middleStart = Math.floor((6 - mainListLength) / 2);
+  const result = Array.from({ length: 6 }, (_, i) => i);
 
-  const mainList = data.children ? data.children.filter((list) => list.subheader !== 'Common') : [];
+  data.children?.forEach((item, index) => {
+    result[middleStart + index] = item; // Chèn các phần tử b
+  });
 
-  const commonList = data.children
-    ? data.children.find((list) => list.subheader === 'Common')
-    : null;
+  const mainList = mainListLength ? result : [];
 
   useEffect(() => {
     if (menuOpen.value) {
@@ -80,12 +82,13 @@ export default function NavList({ data }) {
                 boxShadow: (theme) => theme.customShadows.dialog,
               }}
             >
-              <Grid container columns={15}>
+              <Grid container columns={12}>
                 <Grid xs={12}>
                   <Box
                     gap={5}
                     display="grid"
-                    gridTemplateColumns="repeat(2, 1fr)"
+                    gridTemplateColumns="repeat(6, 1fr)"
+                    justifyContent="center"
                     sx={{
                       p: 5,
                       height: 1,
@@ -100,18 +103,19 @@ export default function NavList({ data }) {
                         cover={list.cover}
                         items={list.items}
                         isNew={list.isNew}
+                        path={list.path}
                       />
                     ))}
                   </Box>
                 </Grid>
-
+                {/* 
                 {commonList && (
                   <Grid xs={3}>
                     <Box sx={{ bgcolor: 'background.default', p: 5 }}>
                       <NavSubList subheader={commonList.subheader} items={commonList.items} />
                     </Box>
                   </Grid>
-                )}
+                )} */}
               </Grid>
             </Paper>
           </Fade>
@@ -127,10 +131,10 @@ NavList.propTypes = {
 
 // ----------------------------------------------------------------------
 
-function NavSubList({ subheader, isNew, cover, items }) {
+function NavSubList({ subheader, isNew, cover, items, path }) {
   const pathname = usePathname();
-
-  const coverPath = items.length ? items[0].path : '';
+  if (!subheader) return <div />;
+  const coverPath = path || (items.length ? items[0].path : '');
 
   const commonList = subheader === 'Common';
 
@@ -191,4 +195,5 @@ NavSubList.propTypes = {
   isNew: PropTypes.bool,
   items: PropTypes.array,
   subheader: PropTypes.string,
+  path: PropTypes.string,
 };

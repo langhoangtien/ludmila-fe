@@ -43,6 +43,7 @@ export default async function DetailProductPage(props) {
   });
   const image = convertImagePathToUrl(result.image, 800);
   const totalRating = result.ratings?.reduce((acc, cur) => acc + cur, 0) ?? 0;
+
   const product = {
     ...result,
     image,
@@ -53,6 +54,7 @@ export default async function DetailProductPage(props) {
     maxPrice,
     minSalePrice,
     maxSalePrice,
+    category: result.category.slice(0, 2),
   };
 
   return (

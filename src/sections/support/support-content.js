@@ -47,7 +47,11 @@ export default function SupportContent({ contents }) {
             </Typography>
 
             <Iconify
-              icon={expanded === faq.question ? 'carbon:chevron-down' : 'carbon:chevron-right'}
+              icon={
+                expanded === faq.question
+                  ? 'fluent:chevron-down-20-regular'
+                  : 'fluent:chevron-right-20-regular'
+              }
             />
           </AccordionSummary>
 

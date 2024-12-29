@@ -16,15 +16,15 @@ import { presetOptions } from 'src/theme/options/presets';
 const BOX_BORDER_RADIUS = 1.5;
 
 const StyledBoxWrap = styled('div')(() => ({
-  height: 104,
+  height: 64,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
 }));
 
 const StyledBoxPrimary = styled('div')(() => ({
-  width: 64,
-  height: 64,
+  width: 40,
+  height: 40,
   overflow: 'hidden',
   borderRadius: '50%',
   position: 'relative',
@@ -60,7 +60,7 @@ export default function PresetsOptions({ value, onChange }) {
         dir="ltr"
         value={value}
         onChange={onChange}
-        sx={{ gap: 2, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)' }}
+        sx={{ gap: 2, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}
       >
         {presetOptions.map((color) => (
           <OptionItem
@@ -91,8 +91,8 @@ function OptionItem({ colorName, selected, primaryColor, secondaryColor }) {
         borderRadius: BOX_BORDER_RADIUS,
         ...(selected && {
           bgcolor: alpha(primaryColor, 0.08),
-          border: `solid 1px ${primaryColor}`,
-          boxShadow: `inset 0 4px 12px 0 ${alpha(primaryColor, 0.32)}`,
+
+          boxShadow: `inset 0 4px 12px 0 ${alpha(primaryColor, 0.2)}`,
         }),
       }}
     >

@@ -57,7 +57,7 @@ export default function ProductItemHero({ product }) {
             size="large"
             color="inherit"
             variant="contained"
-            endIcon={<Iconify icon="carbon:chevron-right" />}
+            endIcon={<Iconify icon="fluent:chevron-right-20-regular" />}
           >
             Mua ngay
           </Button>
