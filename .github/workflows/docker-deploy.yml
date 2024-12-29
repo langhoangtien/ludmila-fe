@@ -27,16 +27,20 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Create .env file
+        run: |
+          echo "NEXT_PUBLIC_HOST_API=${{ secrets.NEXT_PUBLIC_HOST_API }}" > .env
+          echo "NEXT_PUBLIC_HOST=${{ secrets.NEXT_PUBLIC_HOST }}" >> .env
 
       # Bước 4: Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t your-docker-username/nextjs-app:$GITHUB_SHA .
+          docker build -t langhoangtien/nextjs-app:$GITHUB_SHA .
 
       # Bước 5: Push Docker image lên Docker Hub (hoặc registry khác)
       - name: Push Docker image
         run: |
-          docker push your-docker-username/nextjs-app:$GITHUB_SHA
+          docker push langhoangtien/nextjs-app:$GITHUB_SHA
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,7 +58,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            docker pull your-docker-username/nextjs-app:$GITHUB_SHA
+            docker pull langhoangtien/nextjs-app:$GITHUB_SHA
             docker stop nextjs-container || true
             docker rm nextjs-container || true
-            docker run -d -p 3000:3000 --name nextjs-container your-docker-username/nextjs-app:$GITHUB_SHA
+            docker run -d -p 3000:3000 --name nextjs-container langhoangtien/nextjs-app:$GITHUB_SHA
