@@ -49,6 +49,9 @@ jobs:
       # Bước 1: Checkout mã nguồn
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Print GITHUB_SHA
+        run: |
+          echo "GITHUB_SHA is: $GITHUB_SHA"
 
       # Bước 2: SSH vào server để deploy container
       - name: Deploy to Server
@@ -63,5 +66,9 @@ jobs:
             # Nếu container tồn tại, dừng và xóa nó
               docker stop nextjs-container
               docker rm nextjs-container
+            fi
+            if [ -z "$GITHUB_SHA" ]; then
+              echo "GITHUB_SHA is not set"
+              exit 1
             fi
             docker run -d -p 3000:3000 --name nextjs-container langhoangtien/nextjs-app:$GITHUB_SHA
