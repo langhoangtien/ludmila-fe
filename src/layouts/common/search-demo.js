@@ -1,7 +1,6 @@
-import Link from 'next/link';
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import {
   Box,
@@ -50,13 +49,20 @@ export default function SearchDemo({ sx, ...other }) {
     setIsMenuVisible(false);
   };
 
-  const handleClick = (path) => {
-    setIsMenuVisible(false);
-    router.push(`${paths.product}/${path}`);
-  };
+  const handleClick = useCallback(
+    (path) => {
+      setIsMenuVisible(false);
+      router.push(`${paths.product}/${path}`);
+    },
+    [router]
+  );
   const handleSearchDesktop = () => {
     setIsMenuVisible(true);
   };
+  const handleClickViewAll = useCallback(() => {
+    setIsMenuVisible(false);
+    router.push(`${paths.root}/products/?search=${value}`);
+  }, [router, value]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -154,6 +160,7 @@ export default function SearchDemo({ sx, ...other }) {
               products={options}
               debounceText={debounceText}
               loading={loading}
+              handleClickViewAll={handleClickViewAll}
             />
           </Card>
         )}
@@ -162,10 +169,24 @@ export default function SearchDemo({ sx, ...other }) {
   );
 }
 
-const WrappSearchDemo = ({ value, handleClick, products, debounceText, loading }) => {
+const WrappSearchDemo = ({
+  value,
+  handleClick,
+  products,
+  debounceText,
+  loading,
+  handleClickViewAll,
+}) => {
   if (loading) return <Loading />;
   if (products.length)
-    return <Result products={products} value={value} handleClick={handleClick} />;
+    return (
+      <Result
+        products={products}
+        value={value}
+        handleClick={handleClick}
+        handleClickViewAll={handleClickViewAll}
+      />
+    );
   if (debounceText) return <NoResult value={value} />;
   return <SearchHistory />;
 };
@@ -174,7 +195,7 @@ const Loading = () => (
     <CircularProgress />
   </Box>
 );
-const Result = ({ products, handleClick, value }) => (
+const Result = ({ products, handleClick, handleClickViewAll }) => (
   <List sx={{ width: '100%' }}>
     {products.map((product) => (
       <React.Fragment key={product.path}>
@@ -211,11 +232,14 @@ const Result = ({ products, handleClick, value }) => (
       </React.Fragment>
     ))}
     <ListItemButton component="nav">
-      <Link style={{ textDecoration: 'none' }} href={`/products?search=${value}`}>
-        <Typography textAlign="center" variant="body2" color="primary.main">
-          Xem tất cả sản phẩm
-        </Typography>
-      </Link>
+      <Typography
+        onClick={handleClickViewAll}
+        textAlign="center"
+        variant="body2"
+        color="primary.main"
+      >
+        Xem tất cả sản phẩm
+      </Typography>
     </ListItemButton>
   </List>
 );
@@ -232,12 +256,13 @@ WrappSearchDemo.propTypes = {
   products: PropTypes.array.isRequired,
   debounceText: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
+  handleClickViewAll: PropTypes.func.isRequired,
 };
 
 Result.propTypes = {
   products: PropTypes.array.isRequired,
   handleClick: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  handleClickViewAll: PropTypes.func.isRequired,
 };
 
 SearchDemo.propTypes = { sx: PropTypes.object };

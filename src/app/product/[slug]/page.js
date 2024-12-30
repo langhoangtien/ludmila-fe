@@ -26,7 +26,7 @@ export default async function DetailProductPage(props) {
   const images = result.images.map((img) => convertImagePathToUrl(img, 800));
   const variants = result.variants.map((item) => ({
     ...item,
-    image: convertImagePathToUrl(item.image, 800),
+    image: item.image ? convertImagePathToUrl(item.image, 800) : undefined,
   }));
   const variantsImages = variants.filter((item) => item.image).map((variant) => variant.image);
   const firstVariant = variants[0];
