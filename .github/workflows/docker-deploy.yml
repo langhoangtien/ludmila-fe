@@ -35,12 +35,12 @@ jobs:
       # Bước 4: Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t langhoangtien/nextjs-app:${{ github.sha }} .
+          docker build -t langhoangtien/ludmila-fe:${{ github.sha }} .
 
       # Bước 5: Push Docker image lên Docker Hub (hoặc registry khác)
       - name: Push Docker image
         run: |
-          docker push langhoangtien/nextjs-app:${{ github.sha }}
+          docker push langhoangtien/ludmila-fe:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -58,11 +58,11 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            docker pull langhoangtien/nextjs-app:${{ github.sha }}
-            if [ $(docker ps -a -q -f name=nextjs-container) ]; then
+            docker pull langhoangtien/ludmila-fe:${{ github.sha }}
+            if [ $(docker ps -a -q -f name=ludmila-fe-container) ]; then
             # Nếu container tồn tại, dừng và xóa nó
-              docker stop nextjs-container
-              docker rm nextjs-container
+              docker stop ludmila-fe-container
+              docker rm ludmila-fe-container
             fi
             # Tạo container mới từ image vừa pull
-            docker run -d -p 3000:3000 --name nextjs-container langhoangtien/nextjs-app:${{ github.sha }}
+            docker run -d -p 5000:5000 --name ludmila-fe-container langhoangtien/ludmila-fe:${{ github.sha }}
