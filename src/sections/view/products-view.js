@@ -55,7 +55,7 @@ export default function ProductsView({ search }) {
     orderBy: 'createdAt',
     order: -1,
   });
-
+  // const filters = useMemo(() => filtersRaw, [filtersRaw]);
   const handleChangeFilterArray = useCallback(
     (name, value) => {
       setFilters({
@@ -89,6 +89,8 @@ export default function ProductsView({ search }) {
     const sortValue = SORT_OPTIONS.find((option) => option.value === event.target.value);
     setSort(sortValue);
   }, []);
+
+  console.log('filters', filters);
 
   return (
     <Container>
@@ -174,7 +176,7 @@ export default function ProductsView({ search }) {
               brand: filters.filterBrands,
               country: filters.filterCountries,
               price: filters.filterPrices,
-              category: filters.filterCategories,
+              category: filters.filterCategories.map((item) => item._id),
               search,
               rating: filters.filterRating,
             }}

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import { memo, useState, useEffect } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Drawer from '@mui/material/Drawer';
@@ -31,79 +31,73 @@ const PRICE_FILTERS = [
   { name: '500.000₫ - 1.000.000₫', _id: '500000-1000000' },
   { name: 'Trên 1.000.000₫', _id: '1000000' },
 ];
-export default function Filters({
-  open,
-  onClose,
-  filters,
-  changeRating,
-  changeFilterArrayItem,
-  clearAll,
-}) {
-  useEffect(() => {
-    const fetchProductSelectInfo = async () => {
-      const response = await fetchData(endpoints.home.selectInfo);
-      setDataFilter(response);
-      // return data;
-    };
-    fetchProductSelectInfo();
-  }, []);
-  const [dataFilter, setDataFilter] = useState({ categories: [], brands: [], countries: [] });
-  const mdUp = useResponsive('up', 'md');
+const Filters = memo(
+  ({ open, onClose, filters, changeRating, changeFilterArrayItem, clearAll }) => {
+    useEffect(() => {
+      const fetchProductSelectInfo = async () => {
+        const response = await fetchData(endpoints.home.selectInfo);
+        setDataFilter(response);
+        // return data;
+      };
+      fetchProductSelectInfo();
+    }, []);
+    const [dataFilter, setDataFilter] = useState({ categories: [], brands: [], countries: [] });
+    const mdUp = useResponsive('up', 'md');
 
-  const renderContent = (
-    <Stack
-      spacing={2.5}
-      // alignItems="flex-start"
-      sx={{
-        flexShrink: 0,
-        width: { xs: 1, md: 280 },
-      }}
-    >
-      <Block title="Giá">
-        <FilterChecked
-          setChecked={(value) => changeFilterArrayItem('filterPrices', value)}
-          checked={filters.filterPrices}
-          sx={{ mt: 2 }}
-          _id="value"
-          name="price"
-          options={PRICE_FILTERS}
-        />
-      </Block>
-      <Block title="Thương hiệu">
-        <FilterChecked
-          sx={{ mt: 2 }}
-          name="brand"
-          setChecked={(value) => changeFilterArrayItem('filterBrands', value)}
-          checked={filters.filterBrands}
-          options={dataFilter.brands}
-        />
-      </Block>
-      <Block title="Xuất xứ">
-        <FilterChecked
-          sx={{ mt: 2 }}
-          name="country"
-          setChecked={(value) => changeFilterArrayItem('filterCountries', value)}
-          checked={filters.filterCountries}
-          options={dataFilter.countries}
-        />
-      </Block>
+    const renderContent = (
+      <Stack
+        spacing={2.5}
+        // alignItems="flex-start"
+        sx={{
+          flexShrink: 0,
+          width: { xs: 1, md: 280 },
+        }}
+      >
+        <Block title="Giá">
+          <FilterChecked
+            setChecked={(value) => changeFilterArrayItem('filterPrices', value)}
+            checked={filters.filterPrices}
+            sx={{ mt: 2 }}
+            _id="value"
+            name="price"
+            options={PRICE_FILTERS}
+          />
+        </Block>
+        <Block title="Thương hiệu">
+          <FilterChecked
+            sx={{ mt: 2 }}
+            name="brand"
+            setChecked={(value) => changeFilterArrayItem('filterBrands', value)}
+            checked={filters.filterBrands}
+            options={dataFilter.brands}
+          />
+        </Block>
+        <Block title="Xuất xứ">
+          <FilterChecked
+            sx={{ mt: 2 }}
+            name="country"
+            setChecked={(value) => changeFilterArrayItem('filterCountries', value)}
+            checked={filters.filterCountries}
+            options={dataFilter.countries}
+          />
+        </Block>
 
-      <BlockFull title="Danh mục">
-        <FilterAutocompleteChecked
-          setChecked={(value) => changeFilterArrayItem('filterCategories', value)}
-          checked={filters.filterCategories}
-          name="category"
-          options={dataFilter.categories}
-        />
-      </BlockFull>
+        <BlockFull title="Danh mục">
+          <FilterAutocompleteChecked
+            setChecked={(value) => changeFilterArrayItem('filterCategories', value)}
+            checked={filters.filterCategories}
+            name="category"
+            options={dataFilter.categories}
+          />
+        </BlockFull>
 
-      <Block title="Ratings">
-        <FilterRating rating={filters.filterRating} setRating={changeRating} sx={{ mt: 2 }} />
-      </Block>
+        <Block title="Ratings">
+          <FilterRating rating={filters.filterRating} setRating={changeRating} sx={{ mt: 2 }} />
+        </Block>
 
-      {/* <FilterStock filterStock={filters.filterStock} onChangeStock={handleChangeStock} /> */}
+        {/* <FilterStock filterStock={filters.filterStock} onChangeStock={handleChangeStock} /> */}
 
-      {/* <Block title="Tags">
+        {/* <Block title="Tags">
         <FilterTag
           filterTag={filters.filterTag}
           onChangeTag={handleChangeTag}
@@ -112,42 +106,43 @@ export default function Filters({
         />
       </Block> */}
 
-      <Button
-        fullWidth
-        color="inherit"
-        size="large"
-        variant="contained"
-        startIcon={<Iconify icon="fluent:delete-20-regular" />}
-        onClick={clearAll}
-      >
-        Xóa
-      </Button>
-    </Stack>
-  );
-
-  return (
-    <>
-      {mdUp ? (
-        renderContent
-      ) : (
-        <Drawer
-          anchor="right"
-          open={open}
-          onClose={onClose}
-          PaperProps={{
-            sx: {
-              pt: 3,
-              px: 3,
-              width: 280,
-            },
-          }}
+        <Button
+          fullWidth
+          color="inherit"
+          size="large"
+          variant="contained"
+          startIcon={<Iconify icon="fluent:delete-20-regular" />}
+          onClick={clearAll}
         >
-          {renderContent}
-        </Drawer>
-      )}
-    </>
-  );
-}
+          Xóa
+        </Button>
+      </Stack>
+    );
+
+    return (
+      <>
+        {mdUp ? (
+          renderContent
+        ) : (
+          <Drawer
+            anchor="right"
+            open={open}
+            onClose={onClose}
+            PaperProps={{
+              sx: {
+                pt: 3,
+                px: 3,
+                width: 280,
+              },
+            }}
+          >
+            {renderContent}
+          </Drawer>
+        )}
+      </>
+    );
+  }
+);
 
 Filters.propTypes = {
   onClose: PropTypes.func,
@@ -165,6 +160,7 @@ Filters.propTypes = {
   }),
 };
 
+export default Filters;
 // ----------------------------------------------------------------------
 
 function Block({ title, children, ...other }) {
