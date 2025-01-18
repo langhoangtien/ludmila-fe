@@ -19,15 +19,15 @@ export default function CartSummary({ total, subtotal, shipping, discount }) {
     <Stack spacing={2}>
       <Card>
         <Stack
-          spacing={3}
+          spacing={2}
           sx={{
-            p: 5,
+            p: 2,
             borderRadius: 2,
           }}
         >
           <Typography variant="h6"> Đơn hàng </Typography>
 
-          <Stack spacing={2}>
+          <Stack spacing={1}>
             <Row label="Giá trị đơn hàng" value={fCurrency(subtotal)} />
 
             <Row label="Phí vận chuyển" value={fCurrency(shipping)} />
@@ -39,7 +39,11 @@ export default function CartSummary({ total, subtotal, shipping, discount }) {
 
           <Row
             label="Thanh toán"
-            value={fCurrency(total)}
+            value={
+              <Box component="span" sx={{ color: 'primary.main' }}>
+                {fCurrency(total)}
+              </Box>
+            }
             sx={{
               typography: 'h6',
               '& span': { typography: 'h6' },
@@ -79,10 +83,12 @@ function Row({ label, value, sx, ...other }) {
       sx={{ typography: 'subtitle2', ...sx }}
       {...other}
     >
-      <Box component="span" sx={{ typography: 'body2', color: 'text.secondary' }}>
+      <Box component="span" sx={{ typography: 'caption', color: 'text.secondary' }}>
         {label}
       </Box>
-      {value}
+      <Typography component="span" variant="subtitle2">
+        {value}
+      </Typography>
     </Stack>
   );
 }

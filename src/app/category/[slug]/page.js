@@ -1,8 +1,5 @@
-import Link from 'next/link';
-import Image from 'next/image';
-
 import { Stack } from '@mui/system';
-import { Box, Card, Container, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 
 import { endpoints } from 'src/utils/fetch';
 import { convertImagePathToUrl } from 'src/utils/common';
@@ -10,6 +7,8 @@ import { convertImagePathToUrl } from 'src/utils/common';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
 import ProductList from 'src/sections/product/list/product-list';
+
+import ListCategory from '../list-category';
 
 export default async function DetailCategoryPage(props) {
   const slug = props?.params?.slug ?? null;
@@ -36,7 +35,6 @@ export default async function DetailCategoryPage(props) {
           },
           {
             name: 'Danh mục',
-            href: '/categories',
           },
           {
             name: categoryJson.name,
@@ -45,40 +43,12 @@ export default async function DetailCategoryPage(props) {
         sx={{ my: 5 }}
       />
       <Stack my={2}>
-        <Box
-          rowGap={4}
-          columnGap={3}
-          display="grid"
-          gridTemplateColumns={{
-            xs: 'repeat(2, 1fr)',
-            sm: 'repeat(2, 1fr)',
-            md: 'repeat(4, 1fr)',
-            lg: 'repeat(4, 1fr)',
-          }}
-        >
-          {categoryChild.map((child) => (
-            <Card key={child.id}>
-              <Link passHref legacyBehavior href={`/category/${child.code}-${child._id}`}>
-                <Stack
-                  direction={{ xs: 'column', md: 'row' }}
-                  sx={{ cursor: 'pointer', p: 2 }}
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <Image
-                    style={{ borderRadius: 2, objectFit: 'cover' }}
-                    src={child.image}
-                    width={50}
-                    height={50}
-                  />
-                  <Typography variant="subtitle2">{child.name}</Typography>
-                </Stack>
-              </Link>
-            </Card>
-          ))}
-        </Box>
+        <ListCategory categories={categoryChild} />
       </Stack>
       <Stack direction="column">
+        <Typography variant="h5" sx={{ py: 2, fontWeight: 'fontWeightBold' }}>
+          Danh sách sản phẩm
+        </Typography>
         <ProductList viewMode="grid" category={categoryJson._id} homePage />
       </Stack>
     </Container>

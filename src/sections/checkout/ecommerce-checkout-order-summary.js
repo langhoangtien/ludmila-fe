@@ -32,17 +32,17 @@ export default function CheckoutOrderSummary({
         <Stack
           spacing={3}
           sx={{
-            p: 5,
+            p: 2,
             borderRadius: 2,
           }}
         >
           <Typography variant="h6"> Thông tin đơn hàng </Typography>
-          <Typography color="text.secondary" variant="subtitle2">
+          <Typography sx={{ fontStyle: 'italic' }} color="text.secondary" variant="caption">
             {' '}
             Miễn phí vận chuyển cho đơn hàng tù {fCurrency(SHIPPING_THRESHOLD)} trở lên
           </Typography>
 
-          <Stack spacing={2}>
+          <Stack spacing={1}>
             <Row label="Tạm tính" value={fCurrency(subtotal)} />
 
             <Row label="Phí vận chuyển" value={fCurrency(shipping)} />
@@ -56,7 +56,7 @@ export default function CheckoutOrderSummary({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <Button>Áp dụng</Button>
+                  <Button color="primary">Áp dụng</Button>
                 </InputAdornment>
               ),
             }}
@@ -66,7 +66,11 @@ export default function CheckoutOrderSummary({
 
           <Row
             label="Tổng cộng"
-            value={fCurrency(total)}
+            value={
+              <Box component="span" sx={{ color: 'primary.main' }}>
+                {fCurrency(total)}
+              </Box>
+            }
             sx={{
               typography: 'h6',
               '& span': { typography: 'h6' },
@@ -150,9 +154,10 @@ function Row({ label, value, sx, ...other }) {
       sx={{ typography: 'subtitle2', ...sx }}
       {...other}
     >
-      <Box component="span" sx={{ typography: 'body2' }}>
+      <Box component="span" sx={{ typography: 'caption', color: 'text.secondary' }}>
         {label}
       </Box>
+
       {value}
     </Stack>
   );

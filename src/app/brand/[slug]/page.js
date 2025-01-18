@@ -44,11 +44,11 @@ export default async function DetailBrandPage(props) {
         <Card>
           {' '}
           <Grid container sx={{ p: 1 }} spacing={2}>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={3} sx={{ display: 'flex', alignItems: 'center' }}>
               <Image
                 width={200}
                 height={200}
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: 'cover', width: '100%', height: 'auto' }}
                 src={convertImagePathToUrl(brandJson.image, 250)}
                 title="green iguana"
               />
@@ -67,6 +67,9 @@ export default async function DetailBrandPage(props) {
         </Card>
 
         <Stack direction="column">
+          <Typography variant="h5" sx={{ py: 2, fontWeight: 'fontWeightBold' }}>
+            Danh sách sản phẩm
+          </Typography>
           <ProductList viewMode="grid" brand={brandJson._id} homePage />
         </Stack>
       </Stack>

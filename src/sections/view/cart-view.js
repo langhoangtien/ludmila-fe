@@ -63,7 +63,7 @@ export default function CartView() {
                 tax={7}
                 total={cart.totalPrice}
                 subtotal={cart.subTotal}
-                shipping={cart.shippingPrice}
+                shipping={cart.shippingFee}
                 discount={0}
               />
             </Grid>

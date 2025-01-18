@@ -83,11 +83,10 @@ export default function ProductList({
 
   return (
     <>
-      {' '}
       {viewMode === 'grid' ? (
         <Box
-          rowGap={4}
-          columnGap={3}
+          rowGap={{ xs: 1, sm: 2, md: 4 }}
+          columnGap={{ xs: 1, sm: 2, md: 3 }}
           display="grid"
           gridTemplateColumns={
             homePage
@@ -107,7 +106,7 @@ export default function ProductList({
         >
           {(loading ? [...Array(16)] : products).map((product, index) => (
             <Card key={product ? product.id : index}>
-              <CardContent>
+              <CardContent sx={{ padding: { xs: 2, sm: 3 } }}>
                 {product ? (
                   <ProductViewGridItem product={product} />
                 ) : (
@@ -121,7 +120,7 @@ export default function ProductList({
         <Stack spacing={4}>
           {(loading ? [...Array(16)] : products).map((product, index) => (
             <Card key={product ? product.id : index}>
-              <CardContent>
+              <CardContent sx={{ padding: { xs: 2, sm: 3 } }}>
                 {product ? (
                   <ProductViewListItem product={product} />
                 ) : (
