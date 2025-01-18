@@ -282,7 +282,7 @@ export default function AccountPersonalView() {
                     <IconButton onClick={passwordShow.onToggle} edge="end">
                       <Iconify
                         icon={
-                          passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-20-regular-off'
+                          passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-off-20-regular'
                         }
                       />
                     </IconButton>
@@ -302,7 +302,7 @@ export default function AccountPersonalView() {
                     <IconButton onClick={passwordShow.onToggle} edge="end">
                       <Iconify
                         icon={
-                          passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-20-regular-off'
+                          passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-off-20-regular'
                         }
                       />
                     </IconButton>
@@ -322,7 +322,7 @@ export default function AccountPersonalView() {
                     <IconButton onClick={passwordShow.onToggle} edge="end">
                       <Iconify
                         icon={
-                          passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-20-regular-off'
+                          passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-off-20-regular'
                         }
                       />
                     </IconButton>

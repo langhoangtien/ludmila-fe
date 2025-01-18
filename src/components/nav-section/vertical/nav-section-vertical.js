@@ -53,7 +53,7 @@ function Group({ subheader, items, slotProps }) {
             disableSticky
             onClick={handleToggle}
             sx={{
-              fontSize: 11,
+              fontSize: 10,
               cursor: 'pointer',
               typography: 'overline',
               display: 'inline-flex',

@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { Button } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Unstable_Grid2';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { Card, Button, CardContent } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
@@ -143,29 +143,22 @@ export default function CheckoutView() {
       </Typography>
 
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <Grid container spacing={{ xs: 5, md: 8 }}>
+        <Grid container spacing={{ xs: 4, md: 6 }}>
           <Grid xs={12} md={8}>
             <Stack spacing={5} divider={<Divider sx={{ borderStyle: 'dashed' }} />}>
-              <Card>
-                <CardContent>
-                  <StepLabel title="Thông tin người nhận" step="1" />
-                  <CheckoutPersonalDetails />
-                </CardContent>
-              </Card>
+              <Stack>
+                <StepLabel title="Thông tin người nhận" step="1" />
+                <CheckoutPersonalDetails />
+              </Stack>
+              <Stack>
+                <StepLabel title="Phương thức thanh toán" step="2" />
 
-              <Card>
-                <CardContent>
-                  <StepLabel title="Phương thức thanh toán" step="2" />
-
-                  <CheckoutPaymentMethod name="paymentMethod" options={PAYMENT_OPTIONS} />
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent>
-                  <StepLabel title="Vận chuyển" step="3" />
-                  <CheckoutPaymentMethod name="delivery" options={DELIVERY_OPTIONS} />
-                </CardContent>
-              </Card>
+                <CheckoutPaymentMethod name="paymentMethod" options={PAYMENT_OPTIONS} />
+              </Stack>
+              <Stack>
+                <StepLabel title="Vận chuyển" step="3" />
+                <CheckoutPaymentMethod name="delivery" options={DELIVERY_OPTIONS} />
+              </Stack>
             </Stack>
           </Grid>
 

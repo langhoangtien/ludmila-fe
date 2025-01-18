@@ -14,8 +14,8 @@ export function textField(theme) {
   };
 
   const font = {
-    label: theme.typography.body1,
-    value: theme.typography.body2,
+    label: theme.typography.body2,
+    value: theme.typography.caption,
   };
 
   return {
@@ -37,7 +37,7 @@ export function textField(theme) {
           color: color.placeholder,
           [`&.${inputLabelClasses.shrink}`]: {
             ...font.label,
-            fontWeight: 600,
+            fontWeight: 400,
             color: color.active,
             [`&.${inputLabelClasses.focused}`]: {
               color: color.focused,

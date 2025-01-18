@@ -124,7 +124,7 @@ export default function LoginView({ onChangePage = null, dialog = null }) {
                 <IconButton onClick={passwordShow.onToggle} edge="end">
                   <Iconify
                     icon={
-                      passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-20-regular-off'
+                      passwordShow.value ? 'fluent:eye-20-regular' : 'fluent:eye-off-20-regular'
                     }
                   />
                 </IconButton>
