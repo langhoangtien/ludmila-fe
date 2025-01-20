@@ -57,6 +57,7 @@ function timeAgo(date) {
 
   if (diff < oneMinute) {
     const seconds = Math.floor(diff / 1000);
+    if (seconds <= 0) return 'Vừa xong';
     return seconds === 1 ? '1 giây trước' : `${seconds} giây trước`;
   }
   if (diff < oneHour) {

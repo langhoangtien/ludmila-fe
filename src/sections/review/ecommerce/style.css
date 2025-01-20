@@ -1,0 +1,19 @@
+.comment_comment-branch__b5nbp {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  top: 14px;
+  left: 28px;
+  background-color: #e5e7eb;
+  z-index: 1;
+}
+
+.comment_reply-branch__NKquM {
+  position: absolute;
+  width: 25px;
+  border-bottom-left-radius: 10px;
+  height: 20px;
+  border-left: 2px solid #e5e7eb;
+  border-bottom: 2px solid #e5e7eb;
+  left: 28px;
+}

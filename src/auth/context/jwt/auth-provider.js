@@ -99,9 +99,18 @@ export function AuthProvider({ children }) {
 
   // LOGIN
   const login = useCallback(async (data, provider = 'email') => {
-    const response = await fetchData(endpoints.auth[provider], data);
-    const { token, user } = response;
-    if (!token) return;
+    const response = await fetch(endpoints.auth[provider], {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Login failed');
+    }
+    const responseJson = await response.json();
+    const { token, user } = responseJson;
+    if (!token) throw new Error('Server did not return a token');
     setSession(token);
     dispatch({
       type: 'LOGIN',

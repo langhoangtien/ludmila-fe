@@ -11,7 +11,6 @@ import ProductView from 'src/sections/view/product-view';
 async function getData(url) {
   const res = await fetch(url);
   if (res.status !== 200) {
-    console.log('Failed to fetch data');
     return null;
   }
   return res.json();

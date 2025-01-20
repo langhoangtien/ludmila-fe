@@ -71,20 +71,28 @@ export const endpoints = {
   },
 };
 
-export async function fetchData(url = '', data, method) {
-  if (data) {
-    const response = await fetch(url, {
-      method: method?.toUpperCase() ?? 'POST',
-      headers: {
+export async function fetchData(url = '', data, method, authenticated) {
+  try {
+    if (data) {
+      const headers = {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+      };
+      if (authenticated) {
+        headers.Authorization = `Bearer ${sessionStorage.getItem('token')}`;
+      }
+      const response = await fetch(url, {
+        method: method?.toUpperCase() ?? 'POST',
+        headers,
+        body: JSON.stringify(data),
+      });
+      return response.json();
+    }
+    const response = await fetch(url);
     return response.json();
+  } catch (error) {
+    throw new Error(error);
   }
-  const response = await fetch(url);
-  return response.json();
 }
 
 export async function fetchDataWithToken(url = '', data, method) {

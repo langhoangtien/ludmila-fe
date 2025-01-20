@@ -1,6 +1,7 @@
 'use client';
 
 import * as Yup from 'yup';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,6 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { Box, Alert } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -29,6 +31,7 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function LoginView({ onChangePage = null, dialog = null }) {
+  const [errorMess, setErrorMess] = useState('');
   const passwordShow = useBoolean();
   const auth = useAuthContext();
   const searchParams = useSearchParams();
@@ -69,6 +72,7 @@ export default function LoginView({ onChangePage = null, dialog = null }) {
         router.push(returnTo || '/');
       }
     } catch (error) {
+      setErrorMess(error.message);
       console.error(error);
     }
   });
@@ -112,6 +116,13 @@ export default function LoginView({ onChangePage = null, dialog = null }) {
   const renderForm = (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Stack spacing={2.5} alignItems="flex-end">
+        {!!errorMess && (
+          <Box sx={{ width: '100%' }}>
+            {' '}
+            <Alert severity="error">{errorMess}</Alert>
+          </Box>
+        )}
+
         <RHFTextField name="email" label="Email address" />
 
         <RHFTextField

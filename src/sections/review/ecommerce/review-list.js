@@ -18,10 +18,14 @@ export default function ReviewList({ loading, reviews, count, handleChange, page
             fullName={
               review.user ? `${review.user.firstName} ${review.user.lastName}` : review.fullName
             }
-            avatarUrl={review.avatarUrl}
+            id={review._id}
+            avatarUrl={review.photo}
             createdAt={review.createdAt}
             content={review.content}
             rating={review.rating}
+            productId={review.productId}
+            childrens={review.childrens}
+            childNumber={review.childNumber || 0}
           />
         ) : (
           <ReviewItemSkeleton key={index} />

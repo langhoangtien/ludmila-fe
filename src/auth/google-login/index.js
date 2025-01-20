@@ -41,7 +41,7 @@ const GoogleAuth = ({ callback }) => {
   }, []);
 
   function handleCredentialResponse(response) {
-    console.log(`Encoded JWT ID token: ${response.credential}`);
+    // console.log(`Encoded JWT ID token: ${response.credential}`);
     callback({ idToken: response.credential });
   }
 

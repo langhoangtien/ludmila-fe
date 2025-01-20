@@ -90,8 +90,6 @@ export default function ProductsView({ search }) {
     setSort(sortValue);
   }, []);
 
-  console.log('filters', filters);
-
   return (
     <Container>
       <Stack

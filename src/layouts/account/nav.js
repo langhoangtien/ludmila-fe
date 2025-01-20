@@ -11,8 +11,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemButton from '@mui/material/ListItemButton';
 
 import { paths } from 'src/routes/paths';
-import { useActiveLink } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
+import { useRouter, useActiveLink } from 'src/routes/hooks';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
@@ -59,7 +59,12 @@ const navigations = [
 export default function Nav({ open, onClose }) {
   const mdUp = useResponsive('up', 'md');
   const auth = useAuthContext();
-
+  const router = useRouter();
+  const handleLogout = () => {
+    alert('Đăng xuất thành công');
+    auth.logout();
+    router.push(paths.root);
+  };
   const renderContent = (
     <Card>
       <Stack
@@ -102,6 +107,7 @@ export default function Nav({ open, onClose }) {
 
         <Stack sx={{ my: 1, px: 2 }}>
           <ListItemButton
+            onClick={handleLogout}
             sx={{
               px: 1,
               height: 44,

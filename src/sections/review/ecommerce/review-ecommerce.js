@@ -5,11 +5,12 @@ import Container from '@mui/material/Container';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { encodeData } from 'src/utils/common';
-import { endpoints, fetchData, fetchDataWithToken } from 'src/utils/fetch';
+import { endpoints, fetchData } from 'src/utils/fetch';
+import { encodeData, convertImagePathToUrl } from 'src/utils/common';
 
 import { useAuthContext } from 'src/auth/hooks';
 
+import './style.css';
 import ReviewList from './review-list';
 import ReviewSummary from './review-summary';
 import ReviewNewForm from '../common/review-new-form';
@@ -20,6 +21,7 @@ export default function Review({ id }) {
   const { authenticated } = useAuthContext();
   const formOpen = useBoolean();
   const [page, setPage] = useState(1);
+
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -28,12 +30,12 @@ export default function Review({ id }) {
   const [count, setCount] = useState(1);
   const [star, setStar] = useState(0);
   const [loading, setLoading] = useState(true);
+
   const submitComment = async (data) => {
     try {
       const newData = { ...data, productId: id };
 
-      if (authenticated) await fetchDataWithToken(endpoints.comment.list, newData, 'POST');
-      if (!authenticated) await fetchData(endpoints.comment.list, newData, 'POST');
+      await fetchData(endpoints.comment.list, newData, 'POST', authenticated);
       setReload((prev) => !prev);
     } catch (error) {
       console.error(error);
@@ -54,7 +56,12 @@ export default function Review({ id }) {
             (page - 1) * 5
           }&filter=${encodeData(filter)}`
         );
-        setReviews(response.items);
+        const items = response.items.map((item) => ({
+          ...item,
+          fullName: item.user ? `${item.user.firstName} ${item.user.lastName}` : item.fullName,
+          photo: item.user?.photo ? convertImagePathToUrl(item.user?.photo, 250) : undefined,
+        }));
+        setReviews(items);
         setCount(Math.ceil(response.count / 5));
       } catch (error) {
         console.error(error);
@@ -63,9 +70,13 @@ export default function Review({ id }) {
     };
     getData();
   }, [id, reload, page, star]);
+  const handleOpenReview = () => {
+    formOpen.onTrue();
+  };
+
   return (
     <>
-      <ReviewSummary star={star} setStar={handleSetStar} onOpenForm={formOpen.onTrue} />
+      <ReviewSummary star={star} setStar={handleSetStar} onOpenForm={handleOpenReview} />
 
       <Container id="reviews">
         <ReviewList
