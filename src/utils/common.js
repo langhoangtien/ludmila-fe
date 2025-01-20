@@ -1,8 +1,9 @@
 import { HOST_API } from 'src/config-global';
 
 export const encodeData = (data) => encodeURIComponent(JSON.stringify(data));
-export const convertImagePathToUrl = (filePath, dimension) => {
-  if (!filePath) return '/assets/icons/ic_img-error.svg';
+export const convertImagePathToUrl = (filePath, dimension, errorImage = true) => {
+  if (!filePath && errorImage) return '/assets/icons/ic_img-error.svg';
+  if (!filePath) return undefined;
   return `${HOST_API}/files${dimension ? `/${dimension}x${dimension}` : ''}/${filePath}`;
 };
 
@@ -89,7 +90,7 @@ export const timeFormat = (d) => {
 
 export const mappedProduct = (product) => {
   const varitants = product.variants.map((variant) => {
-    const image = convertImagePathToUrl(variant.image, 250);
+    const image = convertImagePathToUrl(variant.image, 250, false);
     return {
       ...variant,
       image,

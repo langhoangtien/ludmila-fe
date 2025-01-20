@@ -43,6 +43,7 @@ export default function ProductViewGridItem({ product, sx, ...other }) {
       name: product.name,
       image: product.variants[0].image || product.image,
     };
+
     addToCart(variant, 1);
     enqueueSnackbar('Thêm vào giỏ hàng thành công', { variant: 'success' });
   };

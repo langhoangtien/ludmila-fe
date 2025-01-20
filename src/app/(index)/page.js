@@ -14,12 +14,21 @@ export default async function LandingPage() {
   const url = endpoints.home.root;
   const respon = await fetchData(url);
 
-  const topNewestProducts = respon.topNewestProducts.map((product) => ({
-    ...product,
-    image: convertImagePathToUrl(product.image, 250),
-  }));
+  const topNewestProducts = respon.topNewestProducts.map((product) => {
+    const variants = product.variants.map((variant) => ({
+      ...variant,
+      image: variant.image ? convertImagePathToUrl(variant.image, 450) : undefined,
+    }));
+
+    return {
+      ...product,
+      image: convertImagePathToUrl(product.image, 250),
+      variants,
+    };
+  });
   const topDiscountProducts = respon.topDiscountProducts.map((product) => {
     const images = product.images.map((image) => convertImagePathToUrl(image));
+
     return {
       ...product,
       image: convertImagePathToUrl(product.image, 450),
