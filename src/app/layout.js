@@ -47,6 +47,7 @@ export default function RootLayout({ children }) {
       <meta name="referrer" content="no-referrer-when-downgrade" />
       <meta name="Cross-Origin-Opener-Policy" content="same-origin-allow-popups" />
       <meta name="google-signin-client_id" content={GOOGLE_CLIENT_ID} />
+      <meta name="google-site-verification" content="dBh_OXHizr7KzdTrU7Wt0qNMuslfaF4V59M2XsM6LDA" />
 
       <body>
         <AuthProvider>
