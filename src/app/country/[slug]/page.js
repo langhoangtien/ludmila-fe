@@ -47,7 +47,7 @@ export default async function DetailCountryPage(props) {
       </Stack>
 
       <Stack direction="column">
-        <ProductList viewMode="grid" homePage />
+        <ProductList viewMode="grid" country={countryJson._id} homePage />
       </Stack>
     </Container>
   );

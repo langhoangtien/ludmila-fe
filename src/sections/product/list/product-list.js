@@ -23,6 +23,7 @@ export default function ProductList({
   viewMode,
   category,
   brand,
+  country,
   pagination = true,
   homePage = false,
   perPage = 12,
@@ -53,6 +54,7 @@ export default function ProductList({
         const filterRaw = {};
         if (category) filterRaw.category = [category];
         if (brand) filterRaw.brand = [brand];
+        if (country) filterRaw.country = [country];
 
         const url = `${HOST_API}/products/?limit=${limit}&skip=${skip}&sort=${sortValue}&filterRaw=${encodeData(
           filter || filterRaw
@@ -157,6 +159,7 @@ ProductList.propTypes = {
   viewMode: PropTypes.string,
   category: PropTypes.string,
   brand: PropTypes.string,
+  country: PropTypes.string,
   pagination: PropTypes.bool,
   homePage: PropTypes.bool,
   perPage: PropTypes.number,
